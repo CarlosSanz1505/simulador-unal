@@ -12,6 +12,38 @@ function MisSimulaciones() {
     }
   }
 
+  const editarSimulacion = (id, nuevoNombre) => {
+    setSimulaciones(simulaciones.map(sim => 
+      sim.id === id ? { ...sim, nombre: nuevoNombre } : sim
+    ))
+  }
+
+  const importarSimulacion = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json'
+    input.onchange = (e) => {
+      const file = e.target.files[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          try {
+            const simulacionImportada = JSON.parse(e.target.result)
+            // Asignar nuevo ID para evitar conflictos
+            simulacionImportada.id = Date.now().toString()
+            simulacionImportada.nombre = `${simulacionImportada.nombre} (Importada)`
+            setSimulaciones([...simulaciones, simulacionImportada])
+            alert('Simulación importada exitosamente')
+          } catch (error) {
+            alert('Error al importar el archivo. Asegúrate de que sea un archivo JSON válido.')
+          }
+        }
+        reader.readAsText(file)
+      }
+    }
+    input.click()
+  }
+
   const crearNuevaSimulacion = () => {
     const nombre = prompt('Nombre de la nueva simulación:')
     if (nombre && nombre.trim()) {
@@ -44,7 +76,7 @@ function MisSimulaciones() {
               <span>➕</span>
               <span>Nueva</span>
             </Button>
-            <Button variant="secondary">
+            <Button variant="secondary" onClick={importarSimulacion}>
               <span>📥</span>
               <span>Importar</span>
             </Button>
@@ -69,6 +101,7 @@ function MisSimulaciones() {
                 key={simulacion.id}
                 simulacion={simulacion}
                 onDelete={eliminarSimulacion}
+                onEdit={editarSimulacion}
               />
             ))}
           </div>
