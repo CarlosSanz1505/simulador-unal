@@ -4,23 +4,22 @@
 
 Aplicación web para estudiantes de Ingeniería de Sistemas e Informática (Malla Curricular 3534) de la UNAL Medellín para organizar y simular su plan de estudios.
 
-**Desarrollado por:** Persona 3 - Simulaciones y Matrículas
 
-## ✨ Funcionalidades Implementadas
+## Funcionalidades Implementadas
 
-### ✅ **Gestión de Simulaciones**
+### **Gestión de Simulaciones**
 - Crear múltiples simulaciones de plan de estudios
 - Eliminar simulaciones con confirmación
 - Editar nombres de simulaciones
 - Vista de listado con cards responsive
 
-### ✅ **Gestión de Matrículas**
+### **Gestión de Matrículas**
 - Crear matrículas (semestres) dentro de cada simulación
 - Eliminar matrículas con confirmación
 - Indicador visual de matrícula activa (borde verde)
 - Organización por posición cronológica
 
-### ✅ **Panel de Créditos**
+### **Panel de Créditos**
 - Visualización de créditos por tipología:
   - Fundamentación Obligatoria
   - Fundamentación Optativa
@@ -29,25 +28,14 @@ Aplicación web para estudiantes de Ingeniería de Sistemas e Informática (Mall
   - Libre Elección
   - **Total**
 
-### ✅ **Modal Instructivo**
+### **Modal Instructivo**
 - Se muestra automáticamente en la primera visita
 - Pasos numerados explicando el uso del simulador
 - Se guarda preferencia en localStorage
 
-### ✅ **Navegación**
-- React Router para navegación entre páginas
-- Breadcrumbs y botones de retorno
-- URLs amigables (`/simulacion/:id`)
 
-## 🛠️ Stack Tecnológico
 
-- **Frontend:** React 18 + Vite
-- **Styling:** CSS Vanilla (sin frameworks)
-- **Routing:** React Router DOM
-- **State:** useState/useEffect (local state)
-- **Icons:** Emojis Unicode
-
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 src/
@@ -71,7 +59,7 @@ src/
     └── index.css
 ```
 
-## 🚀 Instalación y Uso
+## Instalación y Uso
 
 ### Prerrequisitos
 - Node.js 16+
@@ -95,11 +83,8 @@ npm install react-router-dom
 npm start
 ```
 
-### URLs Disponibles
-- **Inicio:** `http://localhost:5173/`
-- **Simulación:** `http://localhost:5173/simulacion/:id`
 
-## 🎨 Componentes Principales
+## Componentes Principales
 
 ### **SimulationCard**
 Card reutilizable para mostrar información de simulaciones en la vista principal.
@@ -113,14 +98,14 @@ Modal que aparece en la primera visita para explicar el uso del simulador.
 ### **CreditCounter**
 Contador individual para cada tipología de créditos.
 
-## 📱 Responsive Design
+## Responsive Design
 
 - **Mobile:** 1 columna (Grid responsive)
 - **Tablet:** 2 columnas 
 - **Desktop:** 3-4 columnas
 - **Breakpoints:** 768px (md), 1024px (lg)
 
-## 🔄 Estados de la Aplicación
+## Estados de la Aplicación
 
 ### **Página Principal**
 - Lista de simulaciones
@@ -133,7 +118,7 @@ Contador individual para cada tipología de créditos.
 - Matrícula activa con borde verde
 - Estado vacío cuando no hay matrículas
 
-## 🎯 Próximas Funcionalidades
+## Próximas Funcionalidades
 
 - [ ] Drag & drop de asignaturas entre matrículas
 - [ ] Validación de prerrequisitos en tiempo real
@@ -141,7 +126,7 @@ Contador individual para cada tipología de créditos.
 - [ ] Exportar/importar simulaciones (JSON)
 - [ ] Integración con backend para persistencia
 
-## 👥 Integración con el Equipo
+## Integración con el Equipo
 
 Este frontend está diseñado para integrarse con:
 - **Persona 1:** Sistema de autenticación
@@ -149,7 +134,7 @@ Este frontend está diseñado para integrarse con:
 - **Persona 4:** Catálogo de asignaturas y drag & drop
 - **Persona 5:** Exportación/importación
 
-## 📝 Notas de Desarrollo
+## Notas de Desarrollo
 
 - Código comentado y estructura clara
 - Uso de CSS vanilla para máximo control
