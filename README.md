@@ -1,6 +1,6 @@
-# simula# 🎓 Simulador UNAL - Frontend
+Simulador UNAL - Frontend
 
-## 📋 Descripción
+## Descripción
 
 Aplicación web para estudiantes de Ingeniería de Sistemas e Informática (Malla Curricular 3534) de la UNAL Medellín para organizar y simular su plan de estudios.
 
