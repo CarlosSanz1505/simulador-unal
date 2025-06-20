@@ -1,4 +1,151 @@
-# simulador-unal
+Simulador UNAL - Frontend
+
+## Descripción
+
+Aplicación web para estudiantes de Ingeniería de Sistemas e Informática (Malla Curricular 3534) de la UNAL Medellín para organizar y simular su plan de estudios.
+
+
+## Funcionalidades Implementadas
+
+### **Gestión de Simulaciones**
+- Crear múltiples simulaciones de plan de estudios
+- Eliminar simulaciones con confirmación
+- Editar nombres de simulaciones
+- Vista de listado con cards responsive
+
+### **Gestión de Matrículas**
+- Crear matrículas (semestres) dentro de cada simulación
+- Eliminar matrículas con confirmación
+- Indicador visual de matrícula activa (borde verde)
+- Organización por posición cronológica
+
+### **Panel de Créditos**
+- Visualización de créditos por tipología:
+  - Fundamentación Obligatoria
+  - Fundamentación Optativa
+  - Disciplinar Obligatoria
+  - Disciplinar Optativa
+  - Libre Elección
+  - **Total**
+
+### **Modal Instructivo**
+- Se muestra automáticamente en la primera visita
+- Pasos numerados explicando el uso del simulador
+- Se guarda preferencia en localStorage
+
+
+
+## Estructura del Proyecto
+
+```
+src/
+├── components/
+│   ├── atoms/          # Componentes básicos
+│   │   ├── Button.jsx
+│   │   ├── Card.jsx
+│   │   └── Modal.jsx
+│   ├── molecules/      # Componentes con lógica específica
+│   │   ├── SimulationCard.jsx
+│   │   ├── CreditCounter.jsx
+│   │   └── MatriculaColumn.jsx
+│   └── organisms/      # Componentes complejos
+│       └── InstructiveModal.jsx
+├── pages/              # Páginas de la aplicación
+│   ├── MisSimulaciones.jsx
+│   └── SimulacionDetalle.jsx
+├── data/               # Datos de ejemplo
+│   └── mockData.js
+└── styles/             # Estilos CSS
+    └── index.css
+```
+
+## Instalación y Uso
+
+### Prerrequisitos
+- Node.js 16+
+- npm o yarn
+
+### Instalación
+```bash
+# Clonar el repositorio
+git clone https://github.com/CarlosSanz1505/simulador-unal
+
+# Navegar al directorio
+cd simulador-unal
+
+# Instalar dependencias
+npm install
+
+# Instalar React Router
+npm install react-router-dom
+
+# Iniciar servidor de desarrollo
+npm start
+```
+
+
+## Componentes Principales
+
+### **SimulationCard**
+Card reutilizable para mostrar información de simulaciones en la vista principal.
+
+### **MatriculaColumn**
+Componente para mostrar cada matrícula con sus asignaturas, drag & drop área y acciones.
+
+### **InstructiveModal**
+Modal que aparece en la primera visita para explicar el uso del simulador.
+
+### **CreditCounter**
+Contador individual para cada tipología de créditos.
+
+## Responsive Design
+
+- **Mobile:** 1 columna (Grid responsive)
+- **Tablet:** 2 columnas 
+- **Desktop:** 3-4 columnas
+- **Breakpoints:** 768px (md), 1024px (lg)
+
+## Estados de la Aplicación
+
+### **Página Principal**
+- Lista de simulaciones
+- Estado vacío cuando no hay simulaciones
+- Modal instructivo en primera visita
+
+### **Página de Simulación**
+- Panel de créditos por tipología
+- Grid de matrículas
+- Matrícula activa con borde verde
+- Estado vacío cuando no hay matrículas
+
+## Próximas Funcionalidades
+
+- [ ] Drag & drop de asignaturas entre matrículas
+- [ ] Validación de prerrequisitos en tiempo real
+- [ ] Búsqueda y filtrado de asignaturas
+- [ ] Exportar/importar simulaciones (JSON)
+- [ ] Integración con backend para persistencia
+
+## Integración con el Equipo
+
+Este frontend está diseñado para integrarse con:
+- **Persona 1:** Sistema de autenticación
+- **Persona 2:** Gestión de asignaturas (Admin)
+- **Persona 4:** Catálogo de asignaturas y drag & drop
+- **Persona 5:** Exportación/importación
+
+## Notas de Desarrollo
+
+- Código comentado y estructura clara
+- Uso de CSS vanilla para máximo control
+- Componentes reutilizables siguiendo Atomic Design
+- Estados locales simples (no Context API)
+- Datos mock para desarrollo independiente
+
+---
+
+**Desarrollado para:** UNAL Medellín - Ingeniería de Sistemas e Informática  
+**Curso:** Desarrollo Web 2025-1
 Proyecto para organizar Plan de Estudios de la asignatura de Desarrollo Web I en la Universidad Nacional de Colombia, sede Medellín.
 
 # Getting Started
