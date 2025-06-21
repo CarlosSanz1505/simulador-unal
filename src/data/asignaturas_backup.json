@@ -1,0 +1,649 @@
+{
+  "asignaturas": [
+    {
+      "codigo": "1000008",
+      "nombre": "Geometría Vectorialy Analítica",
+      "creditos": 4,
+      "tipologia": "fundamentacion_obligatoria",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Introducción al cálculo diferencial, límites, derivadas y aplicaciones."
+    },
+    {
+      "codigo": "1000002",
+      "nombre": "Álgebra Lineal",
+      "creditos": 3,
+      "tipologia": "fundamentacion_obligatoria",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Estudio de vectores, matrices, sistemas de ecuaciones lineales y espacios vectoriales."
+    },
+    {
+      "codigo": "1000003",
+      "nombre": "Cálculo Integral",
+      "creditos": 4,
+      "tipologia": "fundamentacion_obligatoria",
+      "prerrequisitos": ["1000001"],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Técnicas de integración, aplicaciones del cálculo integral."
+    },
+    {
+      "codigo": "1000004",
+      "nombre": "Introducción a la Programación",
+      "creditos": 3,
+      "tipologia": "disciplinar_obligatoria",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Fundamentos de programación, algoritmos básicos, estructuras de datos."
+    },
+    {
+      "codigo": "1000044-M",
+      "nombre": "INGLÉS I",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes al término de este primer nivel de inglés, puedan comprender textos expositivos cortos relacionados con temáticas de tipo académico y que además, puedan expresar de manera oral y escrita información de tipo personal. Con base en un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante a partir del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué información le sirve, por qué y cómo usarla."
+    },
+    {
+      "codigo": "1000048-M",
+      "nombre": "INGLÉS I - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes al término de este primer nivel de inglés, puedan comprender textos expositivos cortos relacionados con temáticas de tipo académico y que además, puedan expresar de manera oral y escrita información de tipo personal. Con base en un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante a partir del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué información le sirve, por qué y cómo usarla."
+    },
+    {
+      "codigo": "1000045-M",
+      "nombre": "INGLÉS II",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del segundo nivel, puedan comprender textos expositivos y narrativos relacionados con temáticas de tipo académico y de cultura general. Se espera que en términos de comprensión escrita, el estudiante pueda identificar relaciones de temporalidad y secuencia, de contraste y de causa y efecto. Además se espera que puedan expresar de manera oral y escrita información relacionada con la descripción detallada de lugares, de estados de salud, eventos del pasado y planes. A partir de un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante, a través del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué le sirve, por qué y cómo usarlo. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000049-M",
+      "nombre": "INGLÉS II - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del segundo nivel, puedan comprender textos expositivos y narrativos relacionados con temáticas de tipo académico y de cultura general. Se espera que en términos de comprensión escrita, el estudiante pueda identificar relaciones de temporalidad y secuencia, de contraste y de causa y efecto. Además se espera que puedan expresar de manera oral y escrita información relacionada con la descripción detallada de lugares, de estados de salud, eventos del pasado y planes. A partir de un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante, a través del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué le sirve, por qué y cómo usarlo. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000046-M",
+      "nombre": "INGLÉS III",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del tercer nivel, puedan leer y comprender textos auténticos de tipo académico y cultural, en los que, por ejemplo, se narren eventos o se describa un concepto a través del tiempo, se presente información de tipo periodístico, se explique el desarrollo de un fenómeno a través de una línea de relaciones de causa y efecto o se presente de manera sustentada un determinado punto de vista. Además se espera que puedan expresar de manera oral y escrita información relacionada con los conceptos trabajados a partir de la comprensión de lectura, que puedan sustentar su punto de vista y hacer reporte de la información que otras personas les transmitan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000050-M",
+      "nombre": "INGLÉS III - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del tercer nivel, puedan leer y comprender textos auténticos de tipo académico y cultural, en los que, por ejemplo, se narren eventos o se describa un concepto a través del tiempo, se presente información de tipo periodístico, se explique el desarrollo de un fenómeno a través de una línea de relaciones de causa y efecto o se presente de manera sustentada un determinado punto de vista. Además se espera que puedan expresar de manera oral y escrita información relacionada con los conceptos trabajados a partir de la comprensión de lectura, que puedan sustentar su punto de vista y hacer reporte de la información que otras personas les transmitan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000053-M",
+      "nombre": "INGLÉS III Y IV - INTENSIVO",
+      "creditos": 6,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "El objetivo general de los cuatro niveles de lengua en el Programa ALEX es desarrollar la competencia comunicativa en la lengua extranjera elegida por el estudiante (con énfasis en comprensión de lectura) y, paralelamente, su capacidad para tomar decisiones con respecto al proceso de aprendizaje. Se espera que los estudiantes, al término del tercer y cuarto nivel intensivo, puedan leer y comprender textos auténticos de tipo académico y cultural, en los que, por ejemplo, se narren eventos o se describa un concepto a través del tiempo, se presente información de tipo periodístico, se explique el desarrollo de un fenómeno a través de una línea de relaciones de causa y efecto o se presente de manera sustentada un determinado punto de vista. Además se espera que puedan expresar de manera oral y escrita información relacionada con los conceptos trabajados a partir de la comprensión de lectura, que puedan sustentar su punto de vista y hacer reporte de la información que otras personas les transmitan. Igualmente, se espera que puedan leer y comprender textos auténticos de tipo académico con mayor énfasis en reportes de tipo investigativo y argumentativo. Identifican, por lo tanto, los principales aspectos en un reporte de investigación y los argumentos y contra argumentos que aparecen en un ensayo. También participan de manera oral en debates en torno a situaciones de tipo académico y cultural y redactan textos con el rigor que se requiere para expresar su punto de vista con respecto a un tema específico y los diferentes argumentos que lo sustentan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua y que se relacionan directamente con los contenidos que el curso plantea."
+    },
+    {
+      "codigo": "1000047-M",
+      "nombre": "INGLÉS IV",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "El objetivo general de los cuatro niveles de lengua en el Programa ALEX es desarrollar la competencia comunicativa en la lengua extranjera elegida por el estudiante (con énfasis en comprensión de lectura) y, paralelamente, su capacidad para tomar decisiones con respecto al proceso de aprendizaje. Se espera que los estudiantes, al término del cuarto nivel puedan leer y comprender textos auténticos de tipo académico con mayor énfasis en reportes de tipo investigativo y argumentativo. Identifican, por lo tanto, los principales aspectos en un reporte de investigación y los argumentos y contra argumentos que aparecen en un ensayo. También participan de manera oral en debates en torno a situaciones de tipo académico y cultural y redactan textos con el rigor que se requiere para expresar su punto de vista con respecto a un tema específico y los diferentes argumentos que lo sustentan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua y que se relacionan directamente con los contenidos que el curso plantea."
+    },
+    {
+      "codigo": "1000051-M",
+      "nombre": "INGLÉS IV - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "El objetivo general de los cuatro niveles de lengua en el Programa ALEX es desarrollar la competencia comunicativa en la lengua extranjera elegida por el estudiante (con énfasis en comprensión de lectura) y, paralelamente, su capacidad para tomar decisiones con respecto al proceso de aprendizaje. Se espera que los estudiantes, al término del cuarto nivel puedan leer y comprender textos auténticos de tipo académico con mayor énfasis en reportes de tipo investigativo y argumentativo. Identifican, por lo tanto, los principales aspectos en un reporte de investigación y los argumentos y contra argumentos que aparecen en un ensayo. También participan de manera oral en debates en torno a situaciones de tipo académico y cultural y redactan textos con el rigor que se requiere para expresar su punto de vista con respecto a un tema específico y los diferentes argumentos que lo sustentan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua y que se relacionan directamente con los contenidos que el curso plantea."
+    },
+    {
+      "codigo": "1000002-M",
+      "nombre": "LECTO-ESCRITURA",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "La organización del curso se articula alrededor de cuatro estrategias esenciales orientadas a: 1. Analizar y comprender textos orales y escritos. 2. Aprender a redactar con cohesión y coherencia. 3. Dominar diversos formatos especializados de escritura dirigidos a diferentes públicos. 4. Potenciar la capacidad para hablar en público con seguridad y fluidez; para ello proponemos el siguiente objetivo: asumir actos de responsabilidad frente a los procesos comunicativos, esto es, la lectura y la producción oral y escrita. 5. Fomentar la lectura y escritura, entendiéndolas como actividades mentales complejas y como herramientas fundamentales, para el desempeño adecuado en la vida académica y el desempeño profesional. Se recomienda a los estudiantes que requieran esta nivelación inscribir el curso en la primera o segunda matrícula."
+    },
+    {
+      "codigo": "3008171",
+      "nombre": "LECTO-ESCRITURA",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "La organización del curso se articula alrededor de cuatro estrategias esenciales orientadas a: 1. Analizar y comprender textos orales y escritos. 2. Aprender a redactar con cohesión y coherencia. 3. Dominar diversos formatos especializados de escritura dirigidos a diferentes públicos. 4. Potenciar la capacidad para hablar en público con seguridad y fluidez; para ello se propone asumir actos de responsabilidad frente a los procesos comunicativos, esto es, la lectura y la producción oral y escrita. 5. Fomentar la lectura y escritura, entendiéndolas como actividades mentales complejas y como herramientas fundamentales, para el desempeño adecuado en la vida académica y el desempeño profesional."
+    },
+    {
+      "codigo": "1000001-M",
+      "nombre": "MATEMÁTICAS BÁSICAS",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "OBJETIVOS: Ofrecer al alumno con una formación matemática deficiente la oportunidad de asumir sus cursos posteriores en mejores condiciones, lo que puede de paso bajar los índices de repitencia a nivel de primer semestre. Presentar elementos básicos de lógica que permitan al estudiante incorporar formalismo y validez a sus argumentos. Desarrollar habilidades básicas para el manejo de operaciones aritméticas y entre conjuntos Lograr un manejo adecuado de las expresiones algebraicas. Familiarizar al alumno with la noción de función, su representación gráfica e interpretación, y trabajar con algunas funciones fundamentales tales como las lineales, cuadráticas, exponenciales, logarítmicas y trigonométricas. Repasar elementos de la geometría euclidiana básica y de la trigonometría elemental. METODOLOGÍA: La modalidad de cursos magistrales consiste de un sistema integrado de conferencias teóricas, talleres y asesorías. Cada curso magistral tiene dos conferencias teóricas a la semana, de dos horas cada una, y son atendidas por profesores de planta, por monitores académicos de posgrado y en casos excepcionales por docentes ocasionales. El estudiante de un curso magistral tiene la opción de asistir a un taller semanal de dos horas, que sirve de refuerzo a la clase teórica y que está a cargo de un monitor académico de posgrado o de pregrado. Así mismo el estudiante puede ser atendido de manera individual en las asesorías. Las asesorías son brinadadas, tanto por los profesores de planta como por los monitores académicos de posgrado y pregrado. En las asesorías el estudiante consulta las dudas teóricas y recibe orientación acerca de los ejercicios que no pudo resolver en su trabajo personal. La asistencia de los estudiantes a las asesorías es opcional."
+    },
+    {
+      "codigo": "3008170",
+      "nombre": "MATEMÁTICAS BÁSICAS",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "OBJETIVOS: Ofrecer al alumno con una formación matemática deficiente la oportunidad de asumir sus cursos posteriores en mejores condiciones, lo que puede de paso bajar los índices de repitencia a nivel de primer semestre. Presentar elementos básicos de lógica que permitan al estudiante incorporar formalismo y validez a sus argumentos. Desarrollar habilidades básicas para el manejo de operaciones aritméticas y entre conjuntos Lograr un manejo adecuado de las expresiones algebraicas. Familiarizar al alumno con la noción de función, su representación gráfica e interpretación, y trabajar con algunas funciones fundamentales tales como las lineales, cuadráticas, exponenciales, logarítmicas y trigonométricas. Repasar elementos de la geometría euclidiana básica y de la trigonometría elemental. METODOLOGÍA: La modalidad de cursos magistrales consiste de un sistema integrado de conferencias teóricas, talleres y asesorías. Cada curso magistral tiene dos conferencias teóricas a la semana, de dos horas cada una, y son atendidas por profesores de planta, por monitores académicos de posgrado y en casos excepcionales por docentes ocasionales. El estudiante de un curso magistral tiene la opción de asistir a un taller semanal de dos horas, que sirve de refuerzo a la clase teórica y que está a cargo de un monitor académico de posgrado o de pregrado. Así mismo el estudiante puede ser atendido de manera individual en las asesorías. Las asesorías son brinadadas, tanto por los profesores de planta como por los monitores académicos de posgrado y pregrado. En las asesorías el estudiante consulta las dudas teóricas y recibe orientación acerca de los ejercicios que no pudo resolver en su trabajo personal. La asistencia de los estudiantes a las asesorías es opcional."
+    },
+    {
+      "codigo": "1000074-M",
+      "nombre": "Suficiencia en Lengua Extranjera",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Esta asignatura deberá ser ingresada por introducción manual de líneas de acta para indicar el cumplimiento del requisito de idioma (los cuatro niveles de inglés) en las historias académicas de los estudiantes que no han superado ningún nivel de inglés y que demuestran la suficiencia en lengua extranjera a través de la presentación de un certificado, previo cumplimiento de las condiciones establecidas por la Universidad."
+    },
+    {
+      "codigo": "3007506",
+      "nombre": "SUFICIENCIA IDIOMA ALEMÁN",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma alemán."
+    },
+    {
+      "codigo": "3007507",
+      "nombre": "SUFICIENCIA IDIOMA FRANCÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma francés."
+    },
+    {
+      "codigo": "3007508",
+      "nombre": "SUFICIENCIA IDIOMA INGLÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma inglés."
+    },
+    {
+      "codigo": "3007509",
+      "nombre": "SUFICIENCIA IDIOMA ITALIANO",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma italiano."
+    },
+    {
+      "codigo": "3007510",
+      "nombre": "SUFICIENCIA IDIOMA JAPONÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma japonés."
+    },
+    {
+      "codigo": "3007511",
+      "nombre": "SUFICIENCIA IDIOMA PORTUGUÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma portugués."
+    }
+  ],
+      "facultad": "Ingeniería",
+      "disponible": true,
+      "descripcion": "Fundamentos de programación, algoritmos básicos y estructuras de datos elementales."
+    },
+    {
+      "codigo": "1000005",
+      "nombre": "Matemáticas Discretas",
+      "creditos": 3,
+      "tipologia": "fundamentacion_obligatoria",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "semestre_recomendado": 2,
+      "area_conocimiento": "Matemáticas",
+      "facultad": "Ciencias",
+      "disponible": true,
+      "descripcion": "Lógica matemática, teoría de conjuntos, grafos y combinatoria."
+    },
+    {
+      "codigo": "1000006",
+      "nombre": "Programación Orientada a Objetos",
+      "creditos": 3,
+      "tipologia": "disciplinar_obligatoria",
+      "prerrequisitos": ["1000004"],
+      "correrquisitos": [],
+      "semestre_recomendado": 2,
+      "area_conocimiento": "Programación",
+      "facultad": "Ingeniería",
+      "disponible": true,
+      "descripcion": "Paradigma de programación orientada a objetos, encapsulación, herencia y polimorfismo."
+    },
+    {
+      "codigo": "1000007",
+      "nombre": "Estructuras de Datos",
+      "creditos": 4,
+      "tipologia": "disciplinar_obligatoria",
+      "prerrequisitos": ["1000006", "1000005"],
+      "correrquisitos": [],
+      "semestre_recomendado": 3,
+      "area_conocimiento": "Programación",
+      "facultad": "Ingeniería",
+      "disponible": true,
+      "descripcion": "Estructuras de datos avanzadas, árboles, grafos, algoritmos de búsqueda y ordenamiento."
+    },
+    {
+      "codigo": "1000008",
+      "nombre": "Cálculo Vectorial",
+      "creditos": 4,
+      "tipologia": "fundamentacion_obligatoria",
+      "prerrequisitos": ["1000003", "1000002"],
+      "correrquisitos": [],
+      "semestre_recomendado": 3,
+      "area_conocimiento": "Matemáticas",
+      "facultad": "Ciencias",
+      "disponible": true,
+      "descripcion": "Cálculo en varias variables, derivadas parciales, integrales múltiples."
+    },
+    {
+      "codigo": "1000009",
+      "nombre": "Física Mecánica",
+      "creditos": 4,
+      "tipologia": "fundamentacion_obligatoria",
+      "prerrequisitos": ["1000001"],
+      "correrquisitos": ["1000003"],
+      "semestre_recomendado": 2,
+      "area_conocimiento": "Física",
+      "facultad": "Ciencias",
+      "disponible": true,
+      "descripcion": "Principios fundamentales de la mecánica clásica, cinemática y dinámica."
+    },
+    {
+      "codigo": "1000010",
+      "nombre": "Bases de Datos",
+      "creditos": 3,
+      "tipologia": "disciplinar_obligatoria",
+      "prerrequisitos": ["1000007"],
+      "correrquisitos": [],
+      "semestre_recomendado": 4,
+      "area_conocimiento": "Bases de Datos",
+      "facultad": "Ingeniería",
+      "disponible": true,
+      "descripcion": "Diseño y gestión de bases de datos relacionales, SQL y normalización."
+    },
+    {
+      "codigo": "2000001",
+      "nombre": "Inglés I",
+      "creditos": 2,
+      "tipologia": "fundamentacion_optativa",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "semestre_recomendado": 1,
+      "area_conocimiento": "Idiomas",
+      "facultad": "Humanidades",
+      "disponible": true,
+      "descripcion": "Nivel básico de inglés, gramática fundamental y vocabulario básico."
+    },
+    {
+      "codigo": "2000002",
+      "nombre": "Inglés II",
+      "creditos": 2,
+      "tipologia": "fundamentacion_optativa",
+      "prerrequisitos": ["2000001"],
+      "correrquisitos": [],
+      "semestre_recomendado": 2,
+      "area_conocimiento": "Idiomas",
+      "facultad": "Humanidades",
+      "disponible": true,
+      "descripcion": "Nivel intermedio de inglés, conversación básica y comprensión de lectura."
+    },
+    {
+      "codigo": "3000001",
+      "nombre": "Ética Profesional",
+      "creditos": 2,
+      "tipologia": "disciplinar_optativa",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "semestre_recomendado": 6,
+      "area_conocimiento": "Humanidades",
+      "facultad": "Humanidades",
+      "disponible": true,
+      "descripcion": "Principios éticos en el ejercicio profesional y responsabilidad social."
+    },
+    {
+      "codigo": "3000002",
+      "nombre": "Inteligencia Artificial",
+      "creditos": 4,
+      "tipologia": "disciplinar_optativa",
+      "prerrequisitos": ["1000007", "1000008"],
+      "correrquisitos": [],
+      "semestre_recomendado": 7,
+      "area_conocimiento": "Inteligencia Artificial",
+      "facultad": "Ingeniería",
+      "disponible": true,
+      "descripcion": "Fundamentos de IA, algoritmos de búsqueda, aprendizaje automático básico."
+    },
+    {
+      "codigo": "4000001",
+      "nombre": "Electiva de Libre Elección I",
+      "creditos": 3,
+      "tipologia": "libre_eleccion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "semestre_recomendado": 5,
+      "area_conocimiento": "Libre",
+      "facultad": "Cualquiera",
+      "disponible": true,
+      "descripcion": "Asignatura de libre elección según intereses del estudiante."
+    },
+    {
+      "codigo": "4000002",
+      "nombre": "Electiva de Libre Elección II",
+      "creditos": 3,
+      "tipologia": "libre_eleccion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "semestre_recomendado": 6,
+      "area_conocimiento": "Libre",
+      "facultad": "Cualquiera",
+      "disponible": true,
+      "descripcion": "Segunda asignatura de libre elección según intereses del estudiante."
+    },
+    {
+      "codigo": "1000044-M",
+      "nombre": "INGLÉS I",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes al término de este primer nivel de inglés, puedan comprender textos expositivos cortos relacionados con temáticas de tipo académico y que además, puedan expresar de manera oral y escrita información de tipo personal. Con base en un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante a partir del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué información le sirve, por qué y cómo usarla."
+    },
+    {
+      "codigo": "1000048-M",
+      "nombre": "INGLÉS I - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes al término de este primer nivel de inglés, puedan comprender textos expositivos cortos relacionados con temáticas de tipo académico y que además, puedan expresar de manera oral y escrita información de tipo personal. Con base en un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante a partir del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué información le sirve, por qué y cómo usarla."
+    },
+    {
+      "codigo": "1000045-M",
+      "nombre": "INGLÉS II",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del segundo nivel, puedan comprender textos expositivos y narrativos relacionados con temáticas de tipo académico y de cultura general. Se espera que en términos de comprensión escrita, el estudiante pueda identificar relaciones de temporalidad y secuencia, de contraste y de causa y efecto. Además se espera que puedan expresar de manera oral y escrita información relacionada con la descripción detallada de lugares, de estados de salud, eventos del pasado y planes. A partir de un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante, a través del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué le sirve, por qué y cómo usarlo. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000049-M",
+      "nombre": "INGLÉS II - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del segundo nivel, puedan comprender textos expositivos y narrativos relacionados con temáticas de tipo académico y de cultura general. Se espera que en términos de comprensión escrita, el estudiante pueda identificar relaciones de temporalidad y secuencia, de contraste y de causa y efecto. Además se espera que puedan expresar de manera oral y escrita información relacionada con la descripción detallada de lugares, de estados de salud, eventos del pasado y planes. A partir de un listado de descriptores predeterminados, el profesor selecciona el material que puede utilizar y ayuda al estudiante, a través del uso de estrategias de aprendizaje, para que poco a poco sea él o ella quien tenga el criterio para saber qué le sirve, por qué y cómo usarlo. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000046-M",
+      "nombre": "INGLÉS III",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del tercer nivel, puedan leer y comprender textos auténticos de tipo académico y cultural, en los que, por ejemplo, se narren eventos o se describa un concepto a través del tiempo, se presente información de tipo periodístico, se explique el desarrollo de un fenómeno a través de una línea de relaciones de causa y efecto o se presente de manera sustentada un determinado punto de vista. Además se espera que puedan expresar de manera oral y escrita información relacionada con los conceptos trabajados a partir de la comprensión de lectura, que puedan sustentar su punto de vista y hacer reporte de la información que otras personas les transmitan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000050-M",
+      "nombre": "INGLÉS III - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "Se espera que los estudiantes, al término del tercer nivel, puedan leer y comprender textos auténticos de tipo académico y cultural, en los que, por ejemplo, se narren eventos o se describa un concepto a través del tiempo, se presente información de tipo periodístico, se explique el desarrollo de un fenómeno a través de una línea de relaciones de causa y efecto o se presente de manera sustentada un determinado punto de vista. Además se espera que puedan expresar de manera oral y escrita información relacionada con los conceptos trabajados a partir de la comprensión de lectura, que puedan sustentar su punto de vista y hacer reporte de la información que otras personas les transmitan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua."
+    },
+    {
+      "codigo": "1000053-M",
+      "nombre": "INGLÉS III Y IV - INTENSIVO",
+      "creditos": 6,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "El objetivo general de los cuatro niveles de lengua en el Programa ALEX es desarrollar la competencia comunicativa en la lengua extranjera elegida por el estudiante (con énfasis en comprensión de lectura) y, paralelamente, su capacidad para tomar decisiones con respecto al proceso de aprendizaje. Se espera que los estudiantes, al término del tercer y cuarto nivel intensivo, puedan leer y comprender textos auténticos de tipo académico y cultural, en los que, por ejemplo, se narren eventos o se describa un concepto a través del tiempo, se presente información de tipo periodístico, se explique el desarrollo de un fenómeno a través de una línea de relaciones de causa y efecto o se presente de manera sustentada un determinado punto de vista. Además se espera que puedan expresar de manera oral y escrita información relacionada con los conceptos trabajados a partir de la comprensión de lectura, que puedan sustentar su punto de vista y hacer reporte de la información que otras personas les transmitan. Igualmente, se espera que puedan leer y comprender textos auténticos de tipo académico con mayor énfasis en reportes de tipo investigativo y argumentativo. Identifican, por lo tanto, los principales aspectos en un reporte de investigación y los argumentos y contra argumentos que aparecen en un ensayo. También participan de manera oral en debates en torno a situaciones de tipo académico y cultural y redactan textos con el rigor que se requiere para expresar su punto de vista con respecto a un tema específico y los diferentes argumentos que lo sustentan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua y que se relacionan directamente con los contenidos que el curso plantea."
+    },
+    {
+      "codigo": "1000047-M",
+      "nombre": "INGLÉS IV",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "El objetivo general de los cuatro niveles de lengua en el Programa ALEX es desarrollar la competencia comunicativa en la lengua extranjera elegida por el estudiante (con énfasis en comprensión de lectura) y, paralelamente, su capacidad para tomar decisiones con respecto al proceso de aprendizaje. Se espera que los estudiantes, al término del cuarto nivel puedan leer y comprender textos auténticos de tipo académico con mayor énfasis en reportes de tipo investigativo y argumentativo. Identifican, por lo tanto, los principales aspectos en un reporte de investigación y los argumentos y contra argumentos que aparecen en un ensayo. También participan de manera oral en debates en torno a situaciones de tipo académico y cultural y redactan textos con el rigor que se requiere para expresar su punto de vista con respecto a un tema específico y los diferentes argumentos que lo sustentan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua y que se relacionan directamente con los contenidos que el curso plantea."
+    },
+    {
+      "codigo": "1000051-M",
+      "nombre": "INGLÉS IV - VIRTUAL",
+      "creditos": 3,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "El objetivo general de los cuatro niveles de lengua en el Programa ALEX es desarrollar la competencia comunicativa en la lengua extranjera elegida por el estudiante (con énfasis en comprensión de lectura) y, paralelamente, su capacidad para tomar decisiones con respecto al proceso de aprendizaje. Se espera que los estudiantes, al término del cuarto nivel puedan leer y comprender textos auténticos de tipo académico con mayor énfasis en reportes de tipo investigativo y argumentativo. Identifican, por lo tanto, los principales aspectos en un reporte de investigación y los argumentos y contra argumentos que aparecen en un ensayo. También participan de manera oral en debates en torno a situaciones de tipo académico y cultural y redactan textos con el rigor que se requiere para expresar su punto de vista con respecto a un tema específico y los diferentes argumentos que lo sustentan. Se cuenta con un Centro de Recursos que le brinda tanto a profesores como estudiantes un buen número de recursos para la enseñanza y aprendizaje de la lengua y que se relacionan directamente con los contenidos que el curso plantea."
+    },
+    {
+      "codigo": "1000002-M",
+      "nombre": "LECTO-ESCRITURA",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "La organización del curso se articula alrededor de cuatro estrategias esenciales orientadas a: 1. Analizar y comprender textos orales y escritos. 2. Aprender a redactar con cohesión y coherencia. 3. Dominar diversos formatos especializados de escritura dirigidos a diferentes públicos. 4. Potenciar la capacidad para hablar en público con seguridad y fluidez; para ello proponemos el siguiente objetivo: asumir actos de responsabilidad frente a los procesos comunicativos, esto es, la lectura y la producción oral y escrita. 5. Fomentar la lectura y escritura, entendiéndolas como actividades mentales complejas y como herramientas fundamentales, para el desempeño adecuado en la vida académica y el desempeño profesional. Se recomienda a los estudiantes que requieran esta nivelación inscribir el curso en la primera o segunda matrícula."
+    },
+    {
+      "codigo": "3008171",
+      "nombre": "LECTO-ESCRITURA",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "La organización del curso se articula alrededor de cuatro estrategias esenciales orientadas a: 1. Analizar y comprender textos orales y escritos. 2. Aprender a redactar con cohesión y coherencia. 3. Dominar diversos formatos especializados de escritura dirigidos a diferentes públicos. 4. Potenciar la capacidad para hablar en público con seguridad y fluidez; para ello se propone asumir actos de responsabilidad frente a los procesos comunicativos, esto es, la lectura y la producción oral y escrita. 5. Fomentar la lectura y escritura, entendiéndolas como actividades mentales complejas y como herramientas fundamentales, para el desempeño adecuado en la vida académica y el desempeño profesional."
+    },
+    {
+      "codigo": "1000001-M",
+      "nombre": "MATEMÁTICAS BÁSICAS",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": true,
+      "descripcion": "OBJETIVOS: Ofrecer al alumno con una formación matemática deficiente la oportunidad de asumir sus cursos posteriores en mejores condiciones, lo que puede de paso bajar los índices de repitencia a nivel de primer semestre. Presentar elementos básicos de lógica que permitan al estudiante incorporar formalismo y validez a sus argumentos. Desarrollar habilidades básicas para el manejo de operaciones aritméticas y entre conjuntos Lograr un manejo adecuado de las expresiones algebraicas. Familiarizar al alumno con la noción de función, su representación gráfica e interpretación, y trabajar con algunas funciones fundamentales tales como las lineales, cuadráticas, exponenciales, logarítmicas y trigonométricas. Repasar elementos de la geometría euclidiana básica y de la trigonometría elemental. METODOLOGÍA: La modalidad de cursos magistrales consiste de un sistema integrado de conferencias teóricas, talleres y asesorías. Cada curso magistral tiene dos conferencias teóricas a la semana, de dos horas cada una, y son atendidas por profesores de planta, por monitores académicos de posgrado y en casos excepcionales por docentes ocasionales. El estudiante de un curso magistral tiene la opción de asistir a un taller semanal de dos horas, que sirve de refuerzo a la clase teórica y que está a cargo de un monitor académico de posgrado o de pregrado. Así mismo el estudiante puede ser atendido de manera individual en las asesorías. Las asesorías son brinadadas, tanto por los profesores de planta como por los monitores académicos de posgrado y pregrado. En las asesorías el estudiante consulta las dudas teóricas y recibe orientación acerca de los ejercicios que no pudo resolver en su trabajo personal. La asistencia de los estudiantes a las asesorías es opcional."
+    },
+    {
+      "codigo": "3008170",
+      "nombre": "MATEMÁTICAS BÁSICAS",
+      "creditos": 4,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "OBJETIVOS: Ofrecer al alumno con una formación matemática deficiente la oportunidad de asumir sus cursos posteriores en mejores condiciones, lo que puede de paso bajar los índices de repitencia a nivel de primer semestre. Presentar elementos básicos de lógica que permitan al estudiante incorporar formalismo y validez a sus argumentos. Desarrollar habilidades básicas para el manejo de operaciones aritméticas y entre conjuntos Lograr un manejo adecuado de las expresiones algebraicas. Familiarizar al alumno con la noción de función, su representación gráfica e interpretación, y trabajar con algunas funciones fundamentales tales como las lineales, cuadráticas, exponenciales, logarítmicas y trigonométricas. Repasar elementos de la geometría euclidiana básica y de la trigonometría elemental. METODOLOGÍA: La modalidad de cursos magistrales consiste de un sistema integrado de conferencias teóricas, talleres y asesorías. Cada curso magistral tiene dos conferencias teóricas a la semana, de dos horas cada una, y son atendidas por profesores de planta, por monitores académicos de posgrado y en casos excepcionales por docentes ocasionales. El estudiante de un curso magistral tiene la opción de asistir a un taller semanal de dos horas, que sirve de refuerzo a la clase teórica y que está a cargo de un monitor académico de posgrado o de pregrado. Así mismo el estudiante puede ser atendido de manera individual en las asesorías. Las asesorías son brinadadas, tanto por los profesores de planta como por los monitores académicos de posgrado y pregrado. En las asesorías el estudiante consulta las dudas teóricas y recibe orientación acerca de los ejercicios que no pudo resolver en su trabajo personal. La asistencia de los estudiantes a las asesorías es opcional."
+    },
+    {
+      "codigo": "1000074-M",
+      "nombre": "Suficiencia en Lengua Extranjera",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Esta asignatura deberá ser ingresada por introducción manual de líneas de acta para indicar el cumplimiento del requisito de idioma (los cuatro niveles de inglés) en las historias académicas de los estudiantes que no han superado ningún nivel de inglés y que demuestran la suficiencia en lengua extranjera a través de la presentación de un certificado, previo cumplimiento de las condiciones establecidas por la Universidad."
+    },
+    {
+      "codigo": "3007506",
+      "nombre": "SUFICIENCIA IDIOMA ALEMÁN",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma alemán."
+    },
+    {
+      "codigo": "3007507",
+      "nombre": "SUFICIENCIA IDIOMA FRANCÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma francés."
+    },
+    {
+      "codigo": "3007508",
+      "nombre": "SUFICIENCIA IDIOMA INGLÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma inglés."
+    },
+    {
+      "codigo": "3007509",
+      "nombre": "SUFICIENCIA IDIOMA ITALIANO",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma italiano."
+    },
+    {
+      "codigo": "3007510",
+      "nombre": "SUFICIENCIA IDIOMA JAPONÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma japonés."
+    },
+    {
+      "codigo": "3007511",
+      "nombre": "SUFICIENCIA IDIOMA PORTUGUÉS",
+      "creditos": 12,
+      "tipologia": "nivelacion",
+      "prerrequisitos": [],
+      "correrquisitos": [],
+      "disponible": false,
+      "descripcion": "Certificación de suficiencia en idioma portugués."
+    }
+  ],
+  "tipologias": {
+    "fundamentacion_obligatoria": {
+      "nombre": "Fundamentación Obligatoria",
+      "descripcion": "Asignaturas básicas obligatorias del programa",
+      "creditos_minimos": 45,
+      "color": "#dc2626"
+    },
+    "fundamentacion_optativa": {
+      "nombre": "Fundamentación Optativa",
+      "descripcion": "Asignaturas básicas optativas del programa",
+      "creditos_minimos": 12,
+      "color": "#2563eb"
+    },
+    "disciplinar_obligatoria": {
+      "nombre": "Disciplinar Obligatoria",
+      "descripcion": "Asignaturas específicas obligatorias del programa",
+      "creditos_minimos": 78,
+      "color": "#57844A"
+    },
+    "disciplinar_optativa": {
+      "nombre": "Disciplinar Optativa",
+      "descripcion": "Asignaturas específicas optativas del programa",
+      "creditos_minimos": 15,
+      "color": "#7c3aed"
+    },
+    "libre_eleccion": {
+      "nombre": "Libre Elección",
+      "descripcion": "Asignaturas de libre elección del estudiante",
+      "creditos_minimos": 6,
+      "color": "#059669"
+    },
+    "nivelacion": {
+      "nombre": "Nivelación",
+      "descripcion": "Asignaturas de nivelación académica",
+      "creditos_minimos": 0,
+      "color": "#7c3aed"
+    }
+  },
+  "configuracion": {
+    "creditos_totales_programa": 156,
+    "semestres_programa": 10,
+    "creditos_maximos_por_semestre": 20,
+    "creditos_minimos_por_semestre": 12
+  }
+}
