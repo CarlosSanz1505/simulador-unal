@@ -140,13 +140,6 @@ Contador individual para cada tipología de créditos.
 - Matrícula activa con borde verde
 - Estado vacío cuando no hay matrículas
 
-## Próximas Funcionalidades
-
-- [ ] Drag & drop de asignaturas entre matrículas
-- [ ] Validación de prerrequisitos en tiempo real
-- [ ] Búsqueda y filtrado de asignaturas
-- [ ] Exportar/importar simulaciones (JSON)
-- [ ] Integración con backend para persistencia
 
 ## Integración con el Equipo
 

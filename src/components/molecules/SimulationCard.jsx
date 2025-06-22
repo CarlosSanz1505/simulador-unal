@@ -4,7 +4,7 @@ import iconoCancelar from '../../assets/iconos/cancelar.svg'
 import iconoConfirmar from '../../assets/iconos/confirmar.svg'
 import iconoEditar from '../../assets/iconos/editar.svg'
 import iconoEliminar from '../../assets/iconos/eliminar.svg'
-import iconoExportar from '../../assets/iconos/exportar.png'
+import iconoExportar from '../../assets/iconos/exportar.svg'
 import Button from '../atoms/Button'
 import Card from '../atoms/Card'
 
