@@ -4,6 +4,7 @@ import Header from './components/organisms/Header'
 import InstructiveModal from './components/organisms/InstructiveModal'
 import MisSimulaciones from './pages/MisSimulaciones'
 import SimulacionDetalle from './pages/SimulacionDetalle'
+import Login from './pages/Login'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MisSimulaciones />} />
           <Route path="/simulacion/:id" element={<SimulacionDetalle />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
       <Footer />
