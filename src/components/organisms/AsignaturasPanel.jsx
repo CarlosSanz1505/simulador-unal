@@ -1,12 +1,15 @@
 import { useMemo, useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
 import { asignaturas } from '../../data/asignaturas.json'
+import PrerequisitosModal from '../atoms/PrerequisitosModal'
 
-function AsignaturasPanel({ onSelectAsignaturas, onClose, selectedAsignaturas = [], matriculaActiva, todasLasAsignaturas = [], showPanel = true, setShowPanel, isDesktop = false }) {
+function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todasLasAsignaturas = [], showPanel = true, setShowPanel, isDesktop = false, simulacion }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchBy, setSearchBy] = useState('nombre')
   const [localSelectedAsignaturas, setLocalSelectedAsignaturas] = useState([]) // Inicializar vacío
   const [collapsedTipologias, setCollapsedTipologias] = useState({}) // Estado para colapsar tipologías
+  const [showPrerequisitosModal, setShowPrerequisitosModal] = useState(false)
+  const [prerequisitosFaltantes, setPrerrequisitosFaltantes] = useState([])
 
   // Filtrar asignaturas según el término de búsqueda y excluir las ya agregadas
   const filteredAsignaturas = useMemo(() => {
@@ -33,7 +36,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, selectedAsignaturas = 
     })
   }, [searchTerm, searchBy, todasLasAsignaturas])
 
-  // Agrupar asignaturas por tipología
+  // Agrupar asignaturas por tipología con orden específico
   const asignaturasPorTipologia = useMemo(() => {
     const grupos = {}
     filteredAsignaturas.forEach(asignatura => {
@@ -42,15 +45,90 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, selectedAsignaturas = 
       }
       grupos[asignatura.tipologia].push(asignatura)
     })
-    return grupos
+    
+    // Definir el orden deseado de las tipologías
+    const ordenTipologias = [
+      'fundamentacion_obligatoria',
+      'fundamentacion_optativa', 
+      'disciplinar_obligatoria',
+      'disciplinar_optativa',
+      'trabajo_de_grado',
+      'libre_eleccion'
+    ]
+    
+    // Crear objeto ordenado
+    const gruposOrdenados = {}
+    ordenTipologias.forEach(tipologia => {
+      if (grupos[tipologia]) {
+        gruposOrdenados[tipologia] = grupos[tipologia]
+      }
+    })
+    
+    // Agregar cualquier tipología no definida en el orden
+    Object.keys(grupos).forEach(tipologia => {
+      if (!gruposOrdenados[tipologia]) {
+        gruposOrdenados[tipologia] = grupos[tipologia]
+      }
+    })
+    
+    return gruposOrdenados
   }, [filteredAsignaturas])
 
   const handleAsignaturaToggle = (asignatura) => {
     const isSelected = localSelectedAsignaturas.some(a => a.codigo === asignatura.codigo)
     
     if (isSelected) {
+      // Si está seleccionada, la removemos
       setLocalSelectedAsignaturas(prev => prev.filter(a => a.codigo !== asignatura.codigo))
     } else {
+      // VALIDACIÓN DE PRERREQUISITOS
+      // Solo validar si la asignatura tiene prerrequisitos
+      if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
+        console.log('🔍 Validando prerrequisitos para:', asignatura.nombre)
+        console.log('🔍 Prerrequisitos requeridos:', asignatura.prerrequisitos)
+        
+        // Obtener todas las asignaturas ya agregadas en matrículas anteriores
+        let asignaturasAprobadas = []
+        
+        if (simulacion && matriculaActiva) {
+          const matriculaActual = simulacion.matriculas.find(m => m.id === matriculaActiva)
+          if (matriculaActual) {
+            // Obtener asignaturas de matrículas con posición menor
+            asignaturasAprobadas = simulacion.matriculas
+              .filter(m => m.posicion < matriculaActual.posicion)
+              .flatMap(m => m.asignaturas.map(a => a.codigo))
+          }
+        }
+        
+        console.log('🔍 Asignaturas ya aprobadas:', asignaturasAprobadas)
+        
+        // Verificar si todos los prerrequisitos están cumplidos
+        const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo => 
+          !asignaturasAprobadas.includes(prereqCodigo)
+        )
+        
+        console.log('🔍 Prerrequisitos faltantes:', prerequisitosFaltantes)
+        
+        if (prerequisitosFaltantes.length > 0) {
+          // Obtener información de los prerrequisitos faltantes
+          const prerequisitosInfo = prerequisitosFaltantes.map(codigo => {
+            const asignatura = asignaturas.find(a => a.codigo === codigo)
+            return asignatura ? {
+              codigo: asignatura.codigo,
+              nombre: asignatura.nombre,
+              creditos: asignatura.creditos
+            } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
+          })
+          
+          console.log('❌ Mostrando modal de prerrequisitos')
+          setPrerrequisitosFaltantes(prerequisitosInfo)
+          setShowPrerequisitosModal(true)
+          return // No agregar la asignatura
+        }
+      }
+      
+      console.log('✅ Agregando asignatura:', asignatura.nombre)
+      // Agregar la asignatura
       setLocalSelectedAsignaturas(prev => [...prev, asignatura])
     }
   }
@@ -71,7 +149,6 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, selectedAsignaturas = 
   }
 
   const tipologiaLabels = {
-    'nivelacion': 'Nivelación',
     'fundamentacion_obligatoria': 'Fund. Obligatoria',
     'fundamentacion_optativa': 'Fund. Optativa',
     'disciplinar_obligatoria': 'Disciplinar Obligatoria',
@@ -81,13 +158,12 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, selectedAsignaturas = 
   }
 
   const tipologiaColors = {
-    'nivelacion': '#7c3aed',
     'fundamentacion_obligatoria': '#dc2626',
     'fundamentacion_optativa': '#ea580c',
     'disciplinar_obligatoria': '#059669',
     'disciplinar_optativa': '#2563eb',
-    'trabajo_de_grado': '#7c2d12',
-    'libre_eleccion': '#059669'
+    'trabajo_de_grado': '#7c3aed',
+    'libre_eleccion': '#f59e0b'
   }
 
   return (
@@ -233,6 +309,13 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, selectedAsignaturas = 
           )}
         </div>
       </div>
+
+      {/* Modal de prerrequisitos */}
+      <PrerequisitosModal
+        isOpen={showPrerequisitosModal}
+        onClose={() => setShowPrerequisitosModal(false)}
+        prerequisitosFaltantes={prerequisitosFaltantes}
+      />
     </>
   )
 }

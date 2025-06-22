@@ -51,7 +51,7 @@ function MisSimulaciones() {
             const simulacion = JSON.parse(e.target.result)
             simulacion.id = Date.now().toString()
             setSimulaciones([...simulaciones, simulacion])
-          } catch (error) {
+          } catch {
             alert('Error al importar la simulación')
           }
         }

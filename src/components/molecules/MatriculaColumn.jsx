@@ -5,6 +5,48 @@ import Card from '../atoms/Card'
 function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignatura, isActive = false }) {
   const [isDragOver, setIsDragOver] = useState(false)
 
+  // Colores suavizados para las tipologías (más claros que los del header)
+  const tipologiaColors = {
+    'fundamentacion_obligatoria': { 
+      border: '#f87171', // red-400
+      background: '#fef2f2', // red-50
+      text: '#dc2626' // red-600
+    },
+    'fundamentacion_optativa': { 
+      border: '#fb923c', // orange-400
+      background: '#fff7ed', // orange-50
+      text: '#ea580c' // orange-600
+    },
+    'disciplinar_obligatoria': { 
+      border: '#34d399', // emerald-400
+      background: '#ecfdf5', // emerald-50
+      text: '#059669' // emerald-600
+    },
+    'disciplinar_optativa': { 
+      border: '#60a5fa', // blue-400
+      background: '#eff6ff', // blue-50
+      text: '#2563eb' // blue-600
+    },
+    'trabajo_de_grado': { 
+      border: '#a78bfa', // violet-400
+      background: '#f5f3ff', // violet-50
+      text: '#7c3aed' // violet-600
+    },
+    'libre_eleccion': { 
+      border: '#fbbf24', // amber-400
+      background: '#fffbeb', // amber-50
+      text: '#f59e0b' // amber-500
+    }
+  }
+
+  const getAsignaturaStyle = (tipologia) => {
+    const colors = tipologiaColors[tipologia] || tipologiaColors['libre_eleccion']
+    return {
+      borderLeft: `4px solid ${colors.border}`,
+      backgroundColor: colors.background
+    }
+  }
+
   const handleDelete = () => {
     onDelete(matricula.id)
   }
@@ -91,6 +133,7 @@ function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignat
               <div 
                 key={asignatura.codigo}
                 className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow"
+                style={getAsignaturaStyle(asignatura.tipologia)}
                 title={asignatura.descripcion}
               >
                 <div className="flex justify-between items-start mb-2">
@@ -107,7 +150,7 @@ function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignat
                 </div>
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-gray-600 font-mono">{asignatura.codigo}</span>
-                  <span className="px-2 py-1 bg-unal-green-100 text-unal-green-800 rounded-full text-xs font-medium">
+                  <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
                     {asignatura.creditos} Créditos
                   </span>
                 </div>
