@@ -1,5 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import iconoCancelar from '../../assets/iconos/cancelar.svg'
+import iconoConfirmar from '../../assets/iconos/confirmar.svg'
+import iconoEditar from '../../assets/iconos/editar.svg'
+import iconoEliminar from '../../assets/iconos/eliminar.svg'
+import iconoExportar from '../../assets/iconos/exportar.png'
 import Button from '../atoms/Button'
 import Card from '../atoms/Card'
 
@@ -9,9 +14,7 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
 
   const handleDelete = (e) => {
     e.preventDefault() // Evitar que el Link se active
-    if (confirm('¿Estás seguro de eliminar esta simulación?')) {
-      onDelete(simulacion.id)
-    }
+    onDelete(simulacion.id)
   }
 
   const handleExport = (e) => {
@@ -55,96 +58,62 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
 
   return (
     <Card>
-      <div className="flex-between mb-4">
+      <div className="flex justify-between items-center mb-4">
         {isEditing ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
+          <div className="flex items-center gap-2 w-full">
             <input
               type="text"
               value={editedName}
               onChange={(e) => setEditedName(e.target.value)}
               onKeyDown={handleKeyPress}
               autoFocus
-              style={{
-                flex: 1,
-                padding: '4px 8px',
-                border: '2px solid #57844A',
-                borderRadius: '4px',
-                fontSize: '16px',
-                fontWeight: '600'
-              }}
+              className="flex-1 px-2 py-1 border-2 border-unal-green-500 rounded text-base font-semibold focus:outline-none focus:ring-2 focus:ring-unal-green-300"
             />
             <button 
               onClick={handleSaveEdit}
-              style={{
-                background: '#57844A', 
-                color: 'white',
-                border: 'none', 
-                borderRadius: '4px',
-                padding: '4px 8px',
-                cursor: 'pointer',
-                fontSize: '12px'
-              }}
+              className="bg-unal-green-500 text-white border-none rounded px-2 py-1 cursor-pointer text-xs hover:bg-unal-green-700 transition-colors"
               title="Guardar"
             >
-              ✓
+              <img src={iconoConfirmar} alt="Guardar" className="w-8 h-8" />
             </button>
             <button 
               onClick={handleCancelEdit}
-              style={{
-                background: '#6b7280', 
-                color: 'white',
-                border: 'none', 
-                borderRadius: '4px',
-                padding: '4px 8px',
-                cursor: 'pointer',
-                fontSize: '12px'
-              }}
+              className="bg-gray-500 text-white border-none rounded px-2 py-1 cursor-pointer text-xs hover:bg-gray-600 transition-colors"
               title="Cancelar"
             >
-              ✕
+              <img src={iconoCancelar} alt="Cancelar" className="w-8 h-8" />
             </button>
           </div>
         ) : (
           <>
-            <h3 className="text-lg font-semibold" style={{ cursor: 'pointer' }} onClick={handleEdit}>
+            <h3 
+              className="text-lg font-semibold cursor-pointer hover:text-unal-green-500 transition-colors" 
+              onClick={handleEdit}
+            >
               {simulacion.nombre}
             </h3>
-            <div style={{ display: 'flex', gap: '4px' }}>
+            <div className="flex gap-1">
               <button 
                 onClick={handleEdit}
-                style={{
-                  background: 'none', 
-                  border: 'none', 
-                  color: '#57844A', 
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  padding: '2px'
-                }}
+                className="bg-transparent border-none text-unal-green-500 cursor-pointer p-2 hover:bg-gray-100 rounded transition-colors"
                 title="Editar nombre"
               >
-                ✏️
+                <img src={iconoEditar} alt="Editar" className="w-8 h-8" />
               </button>
               <button 
                 onClick={handleDelete}
-                style={{
-                  background: 'none', 
-                  border: 'none', 
-                  color: '#dc2626', 
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  padding: '2px'
-                }}
+                className="bg-transparent border-none text-red-600 cursor-pointer text-sm p-1 hover:bg-gray-100 rounded transition-colors"
                 title="Eliminar simulación"
               >
-                🗑️
+                <img src={iconoEliminar} alt="Eliminar" className="w-6 h-6" />
               </button>
             </div>
           </>
         )}
       </div>
 
-      <div className="flex-between mb-4" style={{gap: '8px'}}>
-        <div style={{flex: 1}}>
+      <div className="flex justify-between items-start gap-2 mb-4">
+        <div className="flex-1">
           <p className="text-sm text-gray-600 mb-2">
             Creada: {simulacion.fechaCreacion}
           </p>
@@ -161,27 +130,19 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
         
         <button 
           onClick={handleExport}
-          style={{
-            background: '#3b82f6', 
-            color: 'white',
-            border: 'none', 
-            borderRadius: '4px',
-            padding: '6px 12px',
-            cursor: 'pointer',
-            fontSize: '12px',
-            height: 'fit-content'
-          }}
+          className="bg-unal-green-500 text-white border-none rounded px-3 py-2 cursor-pointer text-sm hover:bg-green-600 transition-colors whitespace-nowrap flex items-center gap-2"
           title="Exportar simulación"
         >
-          📥 Exportar
+          <img src={iconoExportar} alt="Exportar" className="w-8 h-8" />
+          Exportar
         </button>
       </div>
 
       <Link 
         to={`/simulacion/${simulacion.id}`}
-        style={{textDecoration: 'none'}}
+        className="block w-full no-underline"
       >
-        <Button variant="primary" style={{width: '100%'}}>
+        <Button variant="primary" className="w-full">
           Ver simulación →
         </Button>
       </Link>

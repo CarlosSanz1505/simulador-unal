@@ -54,52 +54,67 @@ const ImportarAsignaturasModal = ({ isOpen, onClose, onImportSuccess }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Importar Asignaturas">
-      <div className="import-modal-content">
-        <div className="import-instructions">
-          <h3>Instrucciones para importar asignaturas</h3>
-          <ul>
-            <li>Selecciona un archivo HTML que contenga una tabla con las asignaturas</li>
-            <li>La tabla debe tener las columnas: Código, Nombre, Créditos, Tipología, Descripción</li>
-            <li>Las asignaturas se importarán como tipo "nivelación"</li>
-            <li>Se validarán los datos antes de agregarlos a la base de datos</li>
+      <div className="max-w-2xl max-h-[70vh] overflow-y-auto">
+        <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
+          <h3 className="text-lg font-semibold text-blue-700 mb-3">Instrucciones para importar asignaturas</h3>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-500">•</span>
+              <span>Selecciona un archivo HTML que contenga una tabla con las asignaturas</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-500">•</span>
+              <span>La tabla debe tener las columnas: Código, Nombre, Créditos, Tipología, Descripción</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-500">•</span>
+              <span>Las asignaturas se importarán como tipo "nivelación"</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-500">•</span>
+              <span>Se validarán los datos antes de agregarlos a la base de datos</span>
+            </li>
           </ul>
         </div>
 
-        <div className="file-input-section">
+        <div className="text-center my-6">
           <input
             ref={fileInputRef}
             type="file"
             accept=".html"
             onChange={handleFileSelect}
-            style={{ display: 'none' }}
+            className="hidden"
           />
           
           <Button
             onClick={handleSelectFile}
             disabled={isLoading}
             variant="primary"
+            className="px-6 py-3"
           >
             {isLoading ? 'Procesando...' : 'Seleccionar archivo HTML'}
           </Button>
         </div>
 
         {importResult && (
-          <div className="import-results">
-            <h3>Resultados de la importación</h3>
-            <div className="result-summary">
-              <p><strong>{importResult.mensaje}</strong></p>
+          <div className="mt-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Resultados de la importación</h3>
+            <div>
+              <p className="font-medium text-gray-700 mb-4">{importResult.mensaje}</p>
               
               {importResult.exitosas.length > 0 && (
-                <div className="success-section">
-                  <h4>✅ Asignaturas importadas exitosamente ({importResult.exitosas.length})</h4>
-                  <div className="success-list">
+                <div className="mb-6">
+                  <h4 className="text-base font-semibold text-green-700 mb-3">
+                    ✅ Asignaturas importadas exitosamente ({importResult.exitosas.length})
+                  </h4>
+                  <div className="max-h-48 overflow-y-auto space-y-2">
                     {importResult.exitosas.slice(0, 5).map((asignatura, index) => (
-                      <div key={index} className="import-item success">
-                        <strong>{asignatura.codigo}</strong> - {asignatura.nombre} ({asignatura.creditos} créditos)
+                      <div key={index} className="p-3 bg-green-50 border-l-3 border-green-400 rounded text-sm">
+                        <span className="font-medium">{asignatura.codigo}</span> - {asignatura.nombre} ({asignatura.creditos} créditos)
                       </div>
                     ))}
                     {importResult.exitosas.length > 5 && (
-                      <div className="more-items">
+                      <div className="p-2 text-center text-gray-500 italic text-sm">
                         ... y {importResult.exitosas.length - 5} más
                       </div>
                     )}
@@ -108,19 +123,23 @@ const ImportarAsignaturasModal = ({ isOpen, onClose, onImportSuccess }) => {
               )}
 
               {importResult.errores.length > 0 && (
-                <div className="error-section">
-                  <h4>❌ Errores encontrados ({importResult.errores.length})</h4>
-                  <div className="error-list">
+                <div className="mb-4">
+                  <h4 className="text-base font-semibold text-red-700 mb-3">
+                    ❌ Errores encontrados ({importResult.errores.length})
+                  </h4>
+                  <div className="max-h-48 overflow-y-auto space-y-2">
                     {importResult.errores.slice(0, 5).map((error, index) => (
-                      <div key={index} className="import-item error">
-                        <strong>Error:</strong> {error.error}
+                      <div key={index} className="p-3 bg-red-50 border-l-3 border-red-400 rounded text-sm">
+                        <div className="font-medium text-red-800">Error: {error.error}</div>
                         {error.asignatura && (
-                          <div>Asignatura: {error.asignatura.codigo} - {error.asignatura.nombre}</div>
+                          <div className="text-red-600 mt-1">
+                            Asignatura: {error.asignatura.codigo} - {error.asignatura.nombre}
+                          </div>
                         )}
                       </div>
                     ))}
                     {importResult.errores.length > 5 && (
-                      <div className="more-items">
+                      <div className="p-2 text-center text-gray-500 italic text-sm">
                         ... y {importResult.errores.length - 5} errores más
                       </div>
                     )}
@@ -131,112 +150,12 @@ const ImportarAsignaturasModal = ({ isOpen, onClose, onImportSuccess }) => {
           </div>
         )}
 
-        <div className="modal-actions">
-          <Button onClick={handleClose} variant="secondary">
+        <div className="mt-6 flex justify-end">
+          <Button onClick={handleClose} variant="secondary" className="px-6">
             Cerrar
           </Button>
         </div>
       </div>
-
-      <style jsx>{`
-        .import-modal-content {
-          max-width: 600px;
-          max-height: 70vh;
-          overflow-y: auto;
-        }
-
-        .import-instructions {
-          margin-bottom: 20px;
-          padding: 15px;
-          background-color: #f8f9fa;
-          border-radius: 5px;
-          border-left: 4px solid #007bff;
-        }
-
-        .import-instructions h3 {
-          margin-top: 0;
-          color: #007bff;
-        }
-
-        .import-instructions ul {
-          margin: 10px 0;
-          padding-left: 20px;
-        }
-
-        .import-instructions li {
-          margin-bottom: 5px;
-          line-height: 1.4;
-        }
-
-        .file-input-section {
-          text-align: center;
-          margin: 20px 0;
-        }
-
-        .import-results {
-          margin-top: 20px;
-          padding: 15px;
-          border: 1px solid #ddd;
-          border-radius: 5px;
-          background-color: #f9f9f9;
-        }
-
-        .import-results h3 {
-          margin-top: 0;
-          color: #333;
-        }
-
-        .result-summary {
-          margin-top: 10px;
-        }
-
-        .success-section, .error-section {
-          margin: 15px 0;
-        }
-
-        .success-section h4 {
-          color: #28a745;
-          margin-bottom: 10px;
-        }
-
-        .error-section h4 {
-          color: #dc3545;
-          margin-bottom: 10px;
-        }
-
-        .success-list, .error-list {
-          max-height: 200px;
-          overflow-y: auto;
-        }
-
-        .import-item {
-          padding: 8px 12px;
-          margin-bottom: 5px;
-          border-radius: 3px;
-          font-size: 14px;
-        }
-
-        .import-item.success {
-          background-color: #d4edda;
-          border-left: 3px solid #28a745;
-        }
-
-        .import-item.error {
-          background-color: #f8d7da;
-          border-left: 3px solid #dc3545;
-        }
-
-        .more-items {
-          padding: 8px 12px;
-          font-style: italic;
-          color: #666;
-        }
-
-        .modal-actions {
-          margin-top: 20px;
-          text-align: right;
-        }
-      `}</style>
     </Modal>
   );
 };

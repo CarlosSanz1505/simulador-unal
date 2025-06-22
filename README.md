@@ -39,24 +39,44 @@ Aplicación web para estudiantes de Ingeniería de Sistemas e Informática (Mall
 
 ```
 src/
+├── assets/             # Recursos estáticos
+│   ├── images/         # Imágenes del proyecto
+│   │   ├── bloques-simulacion.jpg
+│   │   └── fondo-unal.jpg
+│   └── iconos/         # Iconos y logos
+│       ├── logo-unal.svg
+│       └── sesion.png
 ├── components/
-│   ├── atoms/          # Componentes básicos
+│   ├── atoms/          # Componentes básicos reutilizables
 │   │   ├── Button.jsx
 │   │   ├── Card.jsx
+│   │   ├── ConfirmModal.jsx
 │   │   └── Modal.jsx
 │   ├── molecules/      # Componentes con lógica específica
-│   │   ├── SimulationCard.jsx
 │   │   ├── CreditCounter.jsx
-│   │   └── MatriculaColumn.jsx
+│   │   ├── MatriculaColumn.jsx
+│   │   └── SimulationCard.jsx
 │   └── organisms/      # Componentes complejos
+│       ├── AsignaturasModal.jsx
+│       ├── AsignaturasPanel.jsx
+│       ├── Footer.jsx
+│       ├── Header.jsx
+│       ├── ImportarAsignaturasModal.jsx
 │       └── InstructiveModal.jsx
+├── data/               # Datos y servicios
+│   ├── asignaturas.json
+│   ├── asignaturas_backup.json
+│   ├── asignaturasService.js
+│   └── mockData.js
 ├── pages/              # Páginas de la aplicación
 │   ├── MisSimulaciones.jsx
 │   └── SimulacionDetalle.jsx
-├── data/               # Datos de ejemplo
-│   └── mockData.js
-└── styles/             # Estilos CSS
-    └── index.css
+├── styles/             # Estilos con Tailwind CSS
+│   └── globals.css
+├── utils/              # Utilidades
+│   └── htmlToJsonConverter.js
+├── App.jsx
+└── main.jsx
 ```
 
 ## Instalación y Uso
@@ -78,6 +98,8 @@ npm install
 
 # Instalar React Router
 npm install react-router-dom
+
+cd simulador-unal && npm run dev
 
 # Iniciar servidor de desarrollo
 npm start
@@ -134,13 +156,22 @@ Este frontend está diseñado para integrarse con:
 - **Persona 4:** Catálogo de asignaturas y drag & drop
 - **Persona 5:** Exportación/importación
 
+## Stack Tecnológico
+
+- **Frontend:** React 19.1.0 + Vite 6.3.5
+- **Estilos:** Tailwind CSS 3.4.16 con clases personalizadas
+- **Routing:** React Router DOM 7.6.2
+- **Utilidades:** clsx, tailwind-merge
+- **Arquitectura:** Atomic Design Pattern
+
 ## Notas de Desarrollo
 
 - Código comentado y estructura clara
-- Uso de CSS vanilla para máximo control
+- **Tailwind CSS** con configuración personalizada para colores UNAL
 - Componentes reutilizables siguiendo Atomic Design
 - Estados locales simples (no Context API)
 - Datos mock para desarrollo independiente
+- Diseño responsive mobile-first
 
 ---
 

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import logoUnal from '../../assets/iconos/logo-unal.svg'
+import iconoSesion from '../../assets/iconos/sesion.png'
 
 function Header() {
   return (
@@ -6,7 +8,7 @@ function Header() {
       <div className="header-content">
         <div className="instructive-header-title">
           <img 
-            src="/images/logo-unal.svg" 
+            src={logoUnal} 
             alt="Logo UNAL" 
             className="instructive-logo"
           />
@@ -14,58 +16,15 @@ function Header() {
             Mis Simulaciones
           </Link>
         </div>
-        <nav className="header-nav">
-          <Link to="/admin/asignaturas" className="nav-link">
-            ⚙️ Administrar
-          </Link>
-          <button className="instructive-close-btn">
-            <span>Cerrar sesión</span>
-            <img 
-              src="/iconos/sesion.png" 
-              alt="Sesión" 
-              style={{width: '20px', height: '20px'}}
-            />
-          </button>
-        </nav>
+        <button className="instructive-close-btn">
+          <span>Cerrar sesión</span>
+          <img 
+            src={iconoSesion} 
+            alt="Sesión" 
+            className="w-5 h-5"
+          />
+        </button>
       </div>
-
-      <style jsx>{`
-        .header-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .header-nav {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-        }
-
-        .nav-link {
-          color: white;
-          text-decoration: none;
-          padding: 8px 15px;
-          border-radius: 5px;
-          transition: background-color 0.3s;
-          font-size: 0.9rem;
-        }
-
-        .nav-link:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        @media (max-width: 768px) {
-          .header-nav {
-            gap: 10px;
-          }
-
-          .nav-link {
-            padding: 6px 10px;
-            font-size: 0.8rem;
-          }
-        }
-      `}</style>
     </header>
   )
 }
