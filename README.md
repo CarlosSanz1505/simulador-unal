@@ -177,12 +177,68 @@ Este frontend está diseñado para integrarse con:
 
 **Desarrollado para:** UNAL Medellín - Ingeniería de Sistemas e Informática  
 **Curso:** Desarrollo Web 2025-1
-Proyecto para organizar Plan de Estudios de la asignatura de Desarrollo Web I en la Universidad Nacional de Colombia, sede Medellín.
 
-# Getting Started
-```
-npm run start
-```
+## 🚀 Instalación y Ejecución
+
+### Prerrequisitos
+- Node.js (versión 16 o superior)
+- npm o yarn
+- Git
+
+### Pasos para ejecutar el proyecto
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/CarlosSanz1505/simulador-unal.git
+   cd simulador-unal
+   ```
+
+2. **Cambiar al branch de desarrollo**
+   ```bash
+   git checkout feature/simulaciones-matriculas
+   ```
+
+3. **Navegar al directorio del proyecto**
+   ```bash
+   cd simulador-unal
+   ```
+
+4. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
+
+5. **Ejecutar en modo desarrollo**
+   ```bash
+   npm start
+   ```
+
+6. **Abrir en el navegador**
+   - La aplicación se abrirá automáticamente en `http://localhost:5173`
+   - Si no se abre automáticamente, navega manualmente a esa URL
+
+### Comandos adicionales
+
+- **Build para producción:**
+  ```bash
+  npm run build
+  ```
+
+- **Vista previa del build:**
+  ```bash
+  npm run preview
+  ```
+
+- **Linting:**
+  ```bash
+  npm run lint
+  ```
+
+### Solución de problemas comunes
+
+- **Error de dependencias:** Eliminar `node_modules` y `package-lock.json`, luego ejecutar `npm install`
+- **Puerto ocupado:** Vite automáticamente usará el siguiente puerto disponible
+- **Problemas de permisos:** Ejecutar con `sudo` en sistemas Unix/Linux si es necesario
 
 # React + Vite
 
