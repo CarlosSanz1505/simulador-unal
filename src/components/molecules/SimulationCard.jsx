@@ -130,7 +130,7 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
         
         <button 
           onClick={handleExport}
-          className="bg-unal-green-500 text-white border-none rounded px-3 py-2 cursor-pointer text-sm hover:bg-green-600 transition-colors whitespace-nowrap flex items-center gap-2"
+          className="bg-unal-green-500 text-white border-none rounded px-3 py-2 cursor-pointer text-sm hover:bg-unal-green-700 transition-colors whitespace-nowrap flex items-center gap-2"
           title="Exportar simulación"
         >
           <img src={iconoExportar} alt="Exportar" className="w-8 h-8" />

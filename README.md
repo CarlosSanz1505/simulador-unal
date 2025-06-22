@@ -87,21 +87,21 @@ src/
 
 ### Instalación
 ```bash
-# Clonar el repositorio
-git clone https://github.com/CarlosSanz1505/simulador-unal
+git clone https://github.com/CarlosSanz1505/simulador-unal.git
 
-# Navegar al directorio
+# 2. Entrar al directorio
 cd simulador-unal
 
-# Instalar dependencias
+# 3. Cambiar al branch correcto (donde están tus cambios)
+git checkout feature/simulaciones-matriculas
+
+# 4. Entrar al subdirectorio del proyecto
+cd simulador-unal
+
+# 5. Instalar dependencias
 npm install
 
-# Instalar React Router
-npm install react-router-dom
-
-cd simulador-unal && npm run dev
-
-# Iniciar servidor de desarrollo
+# 6. Ejecutar el proyecto
 npm start
 ```
 
