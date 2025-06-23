@@ -12,9 +12,9 @@ function App() {
       <Header />
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<MisSimulaciones />} />
+          <Route path="/simulacion" element={<MisSimulaciones />} />
           <Route path="/simulacion/:id" element={<SimulacionDetalle />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
         </Routes>
       </div>
       <Footer />

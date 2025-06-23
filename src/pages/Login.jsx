@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GOOGLE_CLIENT_ID = '62094170016-ohbgt13m3tum4upbk7ql3r3mj9fpf5qs.apps.googleusercontent.com';
-const REDIRECT_URI = 'http://localhost:5173'; // Cambia esto según tu entorno
+const REDIRECT_URI = 'http://localhost:5173/simulacion'; // Cambia esto según tu entorno
 
 const getGoogleOAuthURL = () => {
     const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
