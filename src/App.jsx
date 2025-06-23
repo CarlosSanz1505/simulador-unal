@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Footer from './components/organisms/Footer'
 import Header from './components/organisms/Header'
 import InstructiveModal from './components/organisms/InstructiveModal'

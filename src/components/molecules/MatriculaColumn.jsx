@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
+import iconoEditar from '../../assets/iconos/editar.svg'
 import Card from '../atoms/Card'
 
-function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignatura, isActive = false }) {
+function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignatura, onEditName, isActive = false }) {
   const [isDragOver, setIsDragOver] = useState(false)
+  const [isEditingName, setIsEditingName] = useState(false)
+  const [editedName, setEditedName] = useState(matricula.nombre || `Matrícula ${matricula.posicion}`)
 
   // Colores suavizados para las tipologías (más claros que los del header)
   const tipologiaColors = {
@@ -51,6 +54,30 @@ function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignat
     onDelete(matricula.id)
   }
 
+  const handleEditName = () => {
+    setIsEditingName(true)
+  }
+
+  const handleSaveName = () => {
+    if (editedName.trim() && onEditName) {
+      onEditName(matricula.id, editedName.trim())
+    }
+    setIsEditingName(false)
+  }
+
+  const handleCancelEdit = () => {
+    setEditedName(matricula.nombre || `Matrícula ${matricula.posicion}`)
+    setIsEditingName(false)
+  }
+
+  const handleNameKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSaveName()
+    } else if (e.key === 'Escape') {
+      handleCancelEdit()
+    }
+  }
+
   const handleDrop = (e) => {
     e.preventDefault()
     setIsDragOver(false)
@@ -88,12 +115,36 @@ function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignat
   return (
     <Card active={isActive} className="animate-fade-in">
       <div className="flex justify-between items-center mb-4">
-        <h4 className="font-semibold text-gray-900">
-          Matrícula {matricula.posicion}
-        </h4>
+        <div className="flex items-center gap-2 flex-1">
+          {isEditingName ? (
+            <input
+              type="text"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              onBlur={handleSaveName}
+              onKeyDown={handleNameKeyPress}
+              className="font-semibold text-gray-900 bg-transparent border-b-2 border-unal-green-500 focus:outline-none focus:border-unal-green-600 px-1"
+              autoFocus
+              maxLength={50}
+            />
+          ) : (
+            <>
+              <h4 className="font-semibold text-gray-900">
+                {matricula.nombre || `Matrícula ${matricula.posicion}`}
+              </h4>
+              <button
+                onClick={handleEditName}
+                className="text-gray-400 hover:text-unal-green-600 hover:bg-unal-green-50 p-1 rounded transition-colors"
+                title="Editar nombre"
+              >
+                <img src={iconoEditar} alt="Editar" className="w-7 h-7" />
+              </button>
+            </>
+          )}
+        </div>
         <button 
           onClick={handleDelete}
-          className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded transition-colors"
+          className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded transition-colors ml-2"
           title="Eliminar matrícula"
         >
           <img src={iconoCancelar} alt="Eliminar" className="w-8 h-8" />

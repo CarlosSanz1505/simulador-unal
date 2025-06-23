@@ -84,6 +84,17 @@ function SimulacionDetalle() {
     setConfirmModal({ show: false, matriculaId: null })
   }
 
+  const editarNombreMatricula = (matriculaId, nuevoNombre) => {
+    setSimulacion(prev => ({
+      ...prev,
+      matriculas: prev.matriculas.map(m => 
+        m.id === matriculaId 
+          ? { ...m, nombre: nuevoNombre }
+          : m
+      )
+    }))
+  }
+
   const agregarAsignaturaAMatricula = (matriculaId, asignatura) => {
     // VALIDACIÓN DE PRERREQUISITOS PARA DRAG & DROP
     if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
@@ -394,6 +405,7 @@ function SimulacionDetalle() {
                   <MatriculaColumn
                     matricula={matricula}
                     onDelete={eliminarMatricula}
+                    onEditName={editarNombreMatricula}
                     onAddAsignatura={agregarAsignaturaAMatricula}
                     onRemoveAsignatura={removerAsignaturaDeMatricula}
                     isActive={matriculaActiva === matricula.id}
