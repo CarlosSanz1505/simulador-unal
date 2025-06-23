@@ -170,7 +170,7 @@ Este frontend está diseñado para integrarse con:
 **Desarrollado para:** UNAL Medellín - Ingeniería de Sistemas e Informática  
 **Curso:** Desarrollo Web 2025-1
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ### Prerrequisitos
 - Node.js (versión 16 o superior)
@@ -206,7 +206,7 @@ Este frontend está diseñado para integrarse con:
    ```
 
 6. **Abrir en el navegador**
-   - La aplicación se abrirá automáticamente en `http://localhost:5173`
+   - La aplicación se abrirá automáticamente en `http://localhost:5173/misimulacion/`
    - Si no se abre automáticamente, navega manualmente a esa URL
 
 ### Comandos adicionales
