@@ -1,12 +1,16 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import iconoAyuda from '../../assets/iconos/ayuda.svg'
+import iconoCerrarSesion from '../../assets/iconos/cerrar-sesion.svg'
 import logoUnal from '../../assets/iconos/logo-unal.svg'
-import iconoSesion from '../../assets/iconos/sesion.png'
 import InstructiveModal from './InstructiveModal'
 
 function Header() {
   const [showInstructive, setShowInstructive] = useState(false)
+  const location = useLocation()
+  
+  // Verificar si estamos en la página de Mis Simulaciones
+  const isInMisSimulaciones = location.pathname === '/misimulacion/' || location.pathname === '/misimulacion'
 
   const handleOpenInstructive = () => {
     setShowInstructive(true)
@@ -26,33 +30,39 @@ function Header() {
               alt="Logo UNAL" 
               className="instructive-logo"
             />
-            <Link to="/misimulacion/" className="header-title-link">
-              Mis Simulaciones
-            </Link>
+            {!isInMisSimulaciones && (
+              <Link 
+                to="/misimulacion/" 
+                className="flex items-center gap-1 sm:gap-2 px-1.5 sm:px-3 py-1.5 sm:py-2 bg-unal-green-100 hover:bg-unal-green-200 text-unal-green-700 rounded-lg transition-colors border border-unal-green-300 text-xs sm:text-sm font-medium whitespace-nowrap"
+                title="Ir a Mis Simulaciones"
+              >
+                Mis Simulaciones
+              </Link>
+            )}
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* Botón de instructivo */}
             <button 
               onClick={handleOpenInstructive}
-              className="flex items-center gap-2 px-3 py-2 bg-unal-green-100 hover:bg-unal-green-200 text-unal-green-700 rounded-lg transition-colors border border-unal-green-300"
+              className="flex items-center gap-1 sm:gap-2 px-1.5 sm:px-3 py-1.5 sm:py-2 bg-unal-green-100 hover:bg-unal-green-200 text-unal-green-700 rounded-lg transition-colors border border-unal-green-300 text-xs sm:text-sm"
               title="Instructivo - Cómo usar el simulador"
             >
               <img 
                 src={iconoAyuda} 
                 alt="Instructivo" 
-                className="w-5 h-5"
+                className="w-3.5 h-3.5 sm:w-5 sm:h-5 flex-shrink-0"
               />
-              <span className="text-sm font-medium">Instructivo</span>
+              <span className="font-medium whitespace-nowrap">Instructivo</span>
             </button>
 
             {/* Botón de cerrar sesión */}
             <button className="instructive-close-btn">
-              <span>Cerrar sesión</span>
+              <span className="text-xs sm:text-sm">Cerrar sesión</span>
               <img 
-                src={iconoSesion} 
-                alt="Sesión" 
-                className="w-5 h-5"
+                src={iconoCerrarSesion} 
+                alt="Cerrar sesión" 
+                className="w-4 h-4 sm:w-5 sm:h-5"
               />
             </button>
           </div>

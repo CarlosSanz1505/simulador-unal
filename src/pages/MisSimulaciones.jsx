@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import iconoAgregar from '../assets/iconos/agregar.svg'
+import iconoImportar from '../assets/iconos/importar.svg'
 import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import Modal from '../components/atoms/Modal'
@@ -143,16 +145,16 @@ function MisSimulaciones() {
         {/* Contenedor centrado con fondo blanco como en el panel de matrículas */}
         <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header del panel */}
-          <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-800">Mis Simulaciones</h2>
-            <div className="flex gap-3">
+          <div className="bg-gray-50 px-4 sm:px-6 py-4 border-b flex items-center justify-between">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Mis Simulaciones</h2>
+            <div className="flex gap-2 sm:gap-3">
               <Button variant="primary" onClick={crearNuevaSimulacion}>
-                <span>➕</span>
-                <span>Nueva</span>
+                <img src={iconoAgregar} alt="Nueva" className="w-4 h-4" />
+                <span className="text-xs sm:text-sm">Nueva</span>
               </Button>
               <Button variant="secondary" onClick={importarSimulacion}>
-                <span>📥</span>
-                <span>Importar</span>
+                <img src={iconoImportar} alt="Importar" className="w-4 h-4" />
+                <span className="text-xs sm:text-sm">Importar</span>
               </Button>
             </div>
           </div>
