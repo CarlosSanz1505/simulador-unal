@@ -1,5 +1,3 @@
-import Card from '../atoms/Card'
-
 function MatriculaColumn({ matricula, onDelete, isActive = false }) {
   const handleDelete = () => {
     if (confirm('¿Estás seguro de eliminar esta matrícula?')) {
@@ -8,7 +6,7 @@ function MatriculaColumn({ matricula, onDelete, isActive = false }) {
   }
 
   return (
-    <Card active={isActive} className="fade-in">
+    <div active={isActive} className="card fade-in">
       <div className="flex-between mb-4">
         <h4 className="font-semibold text-gray-900">
           Matrícula {matricula.posicion}
@@ -61,7 +59,7 @@ function MatriculaColumn({ matricula, onDelete, isActive = false }) {
           </div>
         )}
       </div>
-    </Card>
+    </div>
   )
 }
 

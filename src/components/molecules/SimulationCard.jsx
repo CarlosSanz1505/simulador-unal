@@ -11,7 +11,7 @@ function SimulationCard({ simulacion, onDelete }) {
   }
 
   return (
-    <Card>
+    <div className="card">
       <div className="flex-between mb-4">
         <h3 className="text-lg font-semibold">
           {simulacion.nombre}
@@ -51,7 +51,7 @@ function SimulationCard({ simulacion, onDelete }) {
           Ver simulación →
         </Button>
       </Link>
-    </Card>
+    </div>
   )
 }
 
