@@ -3,12 +3,12 @@ import { Link, useParams } from 'react-router-dom'
 import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import PrerequisitosModal from '../components/atoms/PrerequisitosModal'
-import CreditCounter from '../components/molecules/CreditCounter'
 import MatriculaColumn from '../components/molecules/MatriculaColumn'
 import AsignaturasPanel from '../components/organisms/AsignaturasPanel'
 import { simulacionesEjemplo } from '../data/mockData'
 import { faDownload, faEdit, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CreditosPanel from '../components/organisms/CreditosPanel'
 
 function SimulacionDetalle() {
   const { id } = useParams()
@@ -97,67 +97,58 @@ function SimulacionDetalle() {
   const agregarAsignaturaAMatricula = (matriculaId, asignatura) => {
     // VALIDACIÓN DE PRERREQUISITOS PARA DRAG & DROP
     if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
-      console.log('🔍 [DRAG&DROP] Validando prerrequisitos para:', asignatura.nombre)
       
       // Encontrar la matrícula de destino
-      const matriculaDestino = simulacion.matriculas.find(m => m.id === matriculaId)
+      const matriculaDestino = simulacion.matriculas.find(m => m.id === matriculaId);
       
       if (matriculaDestino) {
         // Obtener asignaturas aprobadas hasta la matrícula anterior
         const asignaturasAprobadas = simulacion.matriculas
-          .filter(m => m.posicion < matriculaDestino.posicion)
-          .flatMap(m => m.asignaturas.map(a => a.codigo))
-        
-        console.log('🔍 [DRAG&DROP] Asignaturas ya aprobadas:', asignaturasAprobadas)
-        console.log('🔍 [DRAG&DROP] Prerrequisitos requeridos:', asignatura.prerrequisitos)
+          .filter(m => m.posicion <= matriculaDestino.posicion)
+          .flatMap(m => m.asignaturas.map(a => a.codigo));
         
         // Verificar prerrequisitos faltantes
         const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo => 
           !asignaturasAprobadas.includes(prereqCodigo)
-        )
+        );
         
-        if (prerequisitosFaltantes.length > 0) {
-          console.log('❌ [DRAG&DROP] Prerrequisitos no cumplidos, mostrando modal')
-          
+        if (prerequisitosFaltantes.length > 0) {          
           // Obtener información de los prerrequisitos faltantes
           import('../data/asignaturas.json').then(({ asignaturas }) => {
             const prerequisitosInfo = prerequisitosFaltantes.map(codigo => {
-              const asignaturaInfo = asignaturas.find(a => a.codigo === codigo)
+              const asignaturaInfo = asignaturas.find(a => a.codigo === codigo);
               return asignaturaInfo ? {
                 codigo: asignaturaInfo.codigo,
                 nombre: asignaturaInfo.nombre,
                 creditos: asignaturaInfo.creditos
               } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
-            })
+            });
             
-            setPrerrequisitosFaltantes(prerequisitosInfo)
-            setShowPrerequisitosModal(true)
+            setPrerrequisitosFaltantes(prerequisitosInfo);
+            setShowPrerequisitosModal(true);
           })
           
-          return // No agregar la asignatura
+          return; // No agregar la asignatura
         }
       }
     }
-    
-    // Si llegamos aquí, los prerrequisitos están cumplidos o no hay prerrequisitos
-    console.log('✅ [DRAG&DROP] Agregando asignatura:', asignatura.nombre)
     
     setSimulacion(prev => ({
       ...prev,
       matriculas: prev.matriculas.map(matricula => {
         if (matricula.id === matriculaId) {
           // Verificar si la asignatura ya existe
-          const yaExiste = matricula.asignaturas.some(a => a.codigo === asignatura.codigo)
+          const yaExiste = matricula.asignaturas.some(a => a.codigo === asignatura.codigo);
           if (!yaExiste) {
             return {
               ...matricula,
               asignaturas: [...matricula.asignaturas, asignatura]
-            }
+            };
           }
         }
-        return matricula
+        return matricula;
       })
-    }))
+    }));
   }
 
   const removerAsignaturaDeMatricula = (matriculaId, asignaturaCodigo) => {
@@ -184,69 +175,6 @@ function SimulacionDetalle() {
       })
     }
   }
-
-  const calcularCreditos = () => {
-    // Límites máximos para cada tipología
-    const limites = {
-      fundamentacion_obligatoria: 27,
-      fundamentacion_optativa: 16,
-      disciplinar_obligatoria: 57,
-      disciplinar_optativa: 22,
-      libre_eleccion: 32,
-      trabajo_de_grado: 6
-    }
-
-    const creditos = {
-      fundamentacionObligatoria: 0,
-      fundamentacionOptativa: 0,
-      disciplinarObligatoria: 0,
-      disciplinarOptativa: 0,
-      libreEleccion: 0,
-      trabajoGrado: 0,
-      total: 0
-    }
-
-    // Calcular créditos basándose en las asignaturas de todas las matrículas
-    simulacion.matriculas.forEach(matricula => {
-      matricula.asignaturas.forEach(asignatura => {
-        const creditosAsignatura = parseInt(asignatura.creditos) || 0
-        
-        switch (asignatura.tipologia) {
-          case 'fundamentacion_obligatoria':
-            creditos.fundamentacionObligatoria += creditosAsignatura
-            break
-          case 'fundamentacion_optativa':
-            creditos.fundamentacionOptativa += creditosAsignatura
-            break
-          case 'disciplinar_obligatoria':
-            creditos.disciplinarObligatoria += creditosAsignatura
-            break
-          case 'disciplinar_optativa':
-            creditos.disciplinarOptativa += creditosAsignatura
-            break
-          case 'libre_eleccion':
-            creditos.libreEleccion += creditosAsignatura
-            break
-          case 'trabajo_de_grado':
-            creditos.trabajoGrado += creditosAsignatura
-            break
-        }
-      })
-    })
-
-    // Calcular total aplicando límites máximos para cada tipología
-    creditos.total = 
-      Math.min(creditos.fundamentacionObligatoria, limites.fundamentacion_obligatoria) +
-      Math.min(creditos.fundamentacionOptativa, limites.fundamentacion_optativa) +
-      Math.min(creditos.disciplinarObligatoria, limites.disciplinar_obligatoria) +
-      Math.min(creditos.disciplinarOptativa, limites.disciplinar_optativa) +
-      Math.min(creditos.libreEleccion, limites.libre_eleccion) +
-      Math.min(creditos.trabajoGrado, limites.trabajo_de_grado)
-
-    return creditos
-  }
-
-  const creditosActuales = calcularCreditos()
 
   const handleSelectAsignaturas = (asignaturasSeleccionadas) => {
     if (matriculaActiva && asignaturasSeleccionadas.length > 0) {
@@ -303,80 +231,7 @@ function SimulacionDetalle() {
           </div>
 
           {/* Panel de créditos */}
-          <div className="px-6 py-4 bg-white">
-            <h3 className="text-lg font-semibold mb-4">Créditos Acumulados</h3>
-            <div className="credit-grid">
-              <CreditCounter 
-                label="Fund. Obligatoria" 
-                value={creditosActuales.fundamentacionObligatoria}
-                total={27}
-                tipologia="fundamentacion_obligatoria"
-              />
-              <CreditCounter 
-                label="Fund. Optativa" 
-                value={creditosActuales.fundamentacionOptativa}
-                total={16}
-                tipologia="fundamentacion_optativa"
-              />
-              <CreditCounter 
-                label="Disciplinar Obligatoria" 
-                value={creditosActuales.disciplinarObligatoria}
-                total={57}
-                tipologia="disciplinar_obligatoria"
-              />
-              <CreditCounter 
-                label="Disciplinar Optativa" 
-                value={creditosActuales.disciplinarOptativa}
-                total={22}
-                tipologia="disciplinar_optativa"
-              />
-              <CreditCounter 
-                label="Libre Elección" 
-                value={creditosActuales.libreEleccion}
-                total={32}
-                tipologia="libre_eleccion"
-              />
-              <CreditCounter 
-                label="Trabajo de Grado" 
-                value={creditosActuales.trabajoGrado || 0}
-                total={6}
-                tipologia="trabajo_grado"
-              />
-              <CreditCounter 
-                label="TOTAL" 
-                value={creditosActuales.total} 
-                total={160}
-                isTotal={true}
-              />
-            </div>
-            
-            {/* Mensaje especial de graduación */}
-            {creditosActuales.total >= 160 && (
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <div className="text-center">
-                  <div className="bg-gradient-to-br from-yellow-50 via-green-50 to-blue-50 border-2 border-yellow-300 rounded-xl p-6 shadow-lg">
-                    <div className="text-4xl mb-4">
-                      🎓🎉✨
-                    </div>
-                    <h2 className="text-2xl font-bold text-green-800 mb-3">
-                      ¡Felicitaciones, te graduaste! 🎊
-                    </h2>
-                    <p className="text-lg text-gray-700 mb-2 leading-relaxed">
-                      Has completado exitosamente todos los créditos académicos de la 
-                      <span className="font-semibold text-green-700"> Universidad Nacional de Colombia</span>, 
-                      la mejor universidad del país 🏆
-                    </p>
-                    <p className="text-base text-gray-600 font-medium">
-                      ¡Muchos éxitos en tu vida profesional y laboral! 🚀💼✨
-                    </p>
-                    <div className="mt-4 text-2xl">
-                      🌟🎯💪
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <CreditosPanel simulacion={simulacion} />
 
           {/* Grid de matrículas */}
           <div className="px-6 py-4">

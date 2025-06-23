@@ -4,44 +4,44 @@ import Card from '../atoms/Card'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+// Colores suavizados para las tipologías (más claros que los del header)
+const tipologiaColors = {
+  'fundamentacion_obligatoria': { 
+    border: '#f87171', // red-400
+    background: '#fef2f2', // red-50
+    text: '#dc2626' // red-600
+  },
+  'fundamentacion_optativa': { 
+    border: '#fb923c', // orange-400
+    background: '#fff7ed', // orange-50
+    text: '#ea580c' // orange-600
+  },
+  'disciplinar_obligatoria': { 
+    border: '#34d399', // emerald-400
+    background: '#ecfdf5', // emerald-50
+    text: '#059669' // emerald-600
+  },
+  'disciplinar_optativa': { 
+    border: '#60a5fa', // blue-400
+    background: '#eff6ff', // blue-50
+    text: '#2563eb' // blue-600
+  },
+  'trabajo_de_grado': { 
+    border: '#a78bfa', // violet-400
+    background: '#f5f3ff', // violet-50
+    text: '#7c3aed' // violet-600
+  },
+  'libre_eleccion': { 
+    border: '#fbbf24', // amber-400
+    background: '#fffbeb', // amber-50
+    text: '#f59e0b' // amber-500
+  }
+};
+
 function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignatura, onEditName, isActive = false }) {
   const [isDragOver, setIsDragOver] = useState(false)
   const [isEditingName, setIsEditingName] = useState(false)
   const [editedName, setEditedName] = useState(matricula.nombre || `Matrícula ${matricula.posicion}`)
-
-  // Colores suavizados para las tipologías (más claros que los del header)
-  const tipologiaColors = {
-    'fundamentacion_obligatoria': { 
-      border: '#f87171', // red-400
-      background: '#fef2f2', // red-50
-      text: '#dc2626' // red-600
-    },
-    'fundamentacion_optativa': { 
-      border: '#fb923c', // orange-400
-      background: '#fff7ed', // orange-50
-      text: '#ea580c' // orange-600
-    },
-    'disciplinar_obligatoria': { 
-      border: '#34d399', // emerald-400
-      background: '#ecfdf5', // emerald-50
-      text: '#059669' // emerald-600
-    },
-    'disciplinar_optativa': { 
-      border: '#60a5fa', // blue-400
-      background: '#eff6ff', // blue-50
-      text: '#2563eb' // blue-600
-    },
-    'trabajo_de_grado': { 
-      border: '#a78bfa', // violet-400
-      background: '#f5f3ff', // violet-50
-      text: '#7c3aed' // violet-600
-    },
-    'libre_eleccion': { 
-      border: '#fbbf24', // amber-400
-      background: '#fffbeb', // amber-50
-      text: '#f59e0b' // amber-500
-    }
-  }
 
   const getAsignaturaStyle = (tipologia) => {
     const colors = tipologiaColors[tipologia] || tipologiaColors['libre_eleccion']
@@ -184,7 +184,8 @@ function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignat
             {matricula.asignaturas.map((asignatura) => (
               <div 
                 key={asignatura.codigo}
-                className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow"
+                className={`bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow
+                  ${asignatura.error ? 'border-red-500' : 'border-gray-200'}`}
                 style={getAsignaturaStyle(asignatura.tipologia)}
                 title={asignatura.descripcion}
               >
