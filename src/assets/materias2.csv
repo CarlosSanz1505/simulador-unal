@@ -1,0 +1,51 @@
+﻿nombre;codigo;creditos;tipologia;prerrequisitos
+ÁLGEBRA LINEAL;1000003-M;4;Fund. Obligatoria;1000008-M
+Análisis y Diseño de Algoritmos;3009430;3;Disc. Optativa;3007741
+BASE DE DATOS I;3007847;3;Disc. Obligatoria;3007741
+BASE DE DATOS II;3007848;3;Disc. Optativa;3007847
+BIOLOGÍA GENERAL;1000009-M;3;Fund. Optativa;
+CÁLCULO DIFERENCIAL;1000004-M;4;Fund. Obligatoria;
+CÁLCULO EN VARIAS VARIABLES;1000006-M;4;Fund. Optativa;1000005-M
+CÁLCULO INTEGRAL;1000005-M;4;Fund. Obligatoria;1000004-M
+Calidad de software;3010440;3;Disc. Obligatoria;3007852
+Cátedra de sistemas: una visión histórico-cultural de la computación;3010836;3;Disc. Optativa;3010438
+Cátedra Industria TI;3011169;2;Disc. Optativa;3010438
+Cátedra Lovelace-Turing;3011170;2;Disc. Optativa;3010438
+Ciberseguridad;3011167;3;Disc. Optativa;3007865
+Ciencias de la computación y aplicaciones móviles;3010757;3;Disc. Optativa;3007847,3007865
+Computación paralela;3011093;3;Disc. Optativa;3007741
+Creación de videojuegos;3010585;3;Disc. Optativa;3007744
+Creación multimedia;3011018;3;Disc. Optativa;3007744
+Criptografía;3011168;3;Disc. Optativa;3007741,3006914
+CURSOS DE POSGRADO;3007869;6;Disc. Obligatoria;
+Desarrollo móvil;3011171;3;Disc. Optativa;3007847
+Desarrollo web I;3011019;3;Disc. Optativa;3007847,3007865
+Desarrollo web II;3011172;3;Disc. Optativa;3011019
+DINAMICA DE SISTEMAS;3007311;3;Disc. Optativa;3007331
+Diseño de experiencia de usuario;3011173;3;Disc. Optativa;3007852
+DISEÑO Y CONSTRUCCIÓN DE PRODUCTOS DE SOFTWARE;3007850;3;Disc. Optativa;3010440
+ECUACIONES DIFERENCIALES;1000007-M;4;Fund. Optativa;1000003-M,1000005-M
+ESTADÍSTICA DESCRIPTIVA Y EXPLORATORIA;3006927;4;Fund. Optativa;3006931
+Estadística I;3010651;3;Fund. Obligatoria;1000005-M
+ESTADÍSTICA II;3006915;4;Fund. Optativa;3010651
+Estadística III;3009137;4;Fund. Optativa;3006915
+ESTRUCTURA DE DATOS;3007741;3;Disc. Obligatoria;3007744
+Estructuración y evaluación de proyectos de ingeniería;3010407;3;Disc. Obligatoria;3010408
+FÍSICA DE ELECTRICIDAD Y MAGNETISMO;1000017-M;4;Fund. Optativa;1000019-M
+FÍSICA DE OSCILACIONES, ONDAS Y ÓPTICA;1000020-M;4;Fund. Optativa;1000007-M
+FÍSICA MECÁNICA;1000019-M;4;Fund. Obligatoria;1000004-M,1000008-M
+Fundamentos de analítica;3011020;3;Disc. Obligatoria;3010651,3007847
+FUNDAMENTOS DE ECONOMÍA;3007202;3;Disc. Optativa;
+Fundamentos de matemáticas;3010334;4;Fund. Optativa;
+Fundamentos de mercadeo;3010524;3;Disc. Optativa;3010425
+Fundamentos de programación;3010435;3;Disc. Obligatoria;3010438
+Fundamentos de proyectos en ingeniería;3010408;3;Disc. Obligatoria;3010435
+Fundamentos de sistemas de información e inteligencia de negocios;3011166;3;Disc. Optativa;1000003-M
+Geometría Aplicada;3010391;4;Fund. Optativa;
+GEOMETRÍA VECTORIAL Y ANALÍTICA;1000008-M;4;Fund. Obligatoria;
+GESTIÓN DE PROYECTOS DE SOFTWARE;3007851;3;Disc. Optativa;3010440
+Gestión del talento humano;3010500;3;Disc. Optativa;3010425
+INGENIERÍA DE REQUISITOS;3007852;3;Disc. Obligatoria;3007853
+INGENIERÍA DE SOFTWARE;3007853;3;Disc. Obligatoria;3007744
+Integración y despliegue de software;3011174;3;Disc. Optativa;3011034
+Introducción a la ingeniería de sistemas e informática;3010438;2;Disc. Obligatoria;
