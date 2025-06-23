@@ -39,24 +39,43 @@ Aplicación web para estudiantes de Ingeniería de Sistemas e Informática (Mall
 
 ```
 src/
+├── assets/             # Recursos estáticos
+│   ├── images/         # Imágenes del proyecto
+│   │   ├── bloques-simulacion.jpg
+│   │   └── fondo-unal.jpg
+│   └── iconos/         # Iconos y logos
+│       ├── logo-unal.svg
+│       └── sesion.png
 ├── components/
-│   ├── atoms/          # Componentes básicos
+│   ├── atoms/          # Componentes básicos reutilizables
 │   │   ├── Button.jsx
 │   │   ├── Card.jsx
-│   │   └── Modal.jsx
+│   │   ├── ConfirmModal.jsx
+│   │   ├── Modal.jsx
+│   │   └── PrerequisitosModal.jsx
 │   ├── molecules/      # Componentes con lógica específica
-│   │   ├── SimulationCard.jsx
 │   │   ├── CreditCounter.jsx
-│   │   └── MatriculaColumn.jsx
+│   │   ├── MatriculaColumn.jsx
+│   │   └── SimulationCard.jsx
 │   └── organisms/      # Componentes complejos
+│       ├── AsignaturasPanel.jsx
+│       ├── Footer.jsx
+│       ├── Header.jsx
 │       └── InstructiveModal.jsx
+├── data/               # Datos y servicios
+│   ├── asignaturas.json
+│   ├── asignaturasService.js
+│   └── mockData.js
 ├── pages/              # Páginas de la aplicación
 │   ├── MisSimulaciones.jsx
 │   └── SimulacionDetalle.jsx
-├── data/               # Datos de ejemplo
-│   └── mockData.js
-└── styles/             # Estilos CSS
-    └── index.css
+├── styles/             # Estilos con Tailwind CSS
+│   └── globals.css
+├── utils/              # Utilidades
+│   ├── htmlToJsonConverter.js
+│   └── prerequisitosValidation.js
+├── App.jsx
+└── main.jsx
 ```
 
 ## Instalación y Uso
@@ -67,19 +86,21 @@ src/
 
 ### Instalación
 ```bash
-# Clonar el repositorio
-git clone https://github.com/CarlosSanz1505/simulador-unal
+git clone https://github.com/CarlosSanz1505/simulador-unal.git
 
-# Navegar al directorio
+# 2. Entrar al directorio
 cd simulador-unal
 
-# Instalar dependencias
+# 3. Cambiar al branch correcto (donde están tus cambios)
+git checkout feature/simulaciones-matriculas
+
+# 4. Entrar al subdirectorio del proyecto
+cd simulador-unal
+
+# 5. Instalar dependencias
 npm install
 
-# Instalar React Router
-npm install react-router-dom
-
-# Iniciar servidor de desarrollo
+# 6. Ejecutar el proyecto
 npm start
 ```
 
@@ -118,13 +139,6 @@ Contador individual para cada tipología de créditos.
 - Matrícula activa con borde verde
 - Estado vacío cuando no hay matrículas
 
-## Próximas Funcionalidades
-
-- [ ] Drag & drop de asignaturas entre matrículas
-- [ ] Validación de prerrequisitos en tiempo real
-- [ ] Búsqueda y filtrado de asignaturas
-- [ ] Exportar/importar simulaciones (JSON)
-- [ ] Integración con backend para persistencia
 
 ## Integración con el Equipo
 
@@ -134,24 +148,89 @@ Este frontend está diseñado para integrarse con:
 - **Persona 4:** Catálogo de asignaturas y drag & drop
 - **Persona 5:** Exportación/importación
 
+## Stack Tecnológico
+
+- **Frontend:** React 19.1.0 + Vite 6.3.5
+- **Estilos:** Tailwind CSS 3.4.16 con clases personalizadas
+- **Routing:** React Router DOM 7.6.2
+- **Utilidades:** clsx, tailwind-merge
+- **Arquitectura:** Atomic Design Pattern
+
 ## Notas de Desarrollo
 
 - Código comentado y estructura clara
-- Uso de CSS vanilla para máximo control
+- **Tailwind CSS** con configuración personalizada para colores UNAL
 - Componentes reutilizables siguiendo Atomic Design
 - Estados locales simples (no Context API)
 - Datos mock para desarrollo independiente
+- Diseño responsive mobile-first
 
 ---
 
 **Desarrollado para:** UNAL Medellín - Ingeniería de Sistemas e Informática  
 **Curso:** Desarrollo Web 2025-1
-Proyecto para organizar Plan de Estudios de la asignatura de Desarrollo Web I en la Universidad Nacional de Colombia, sede Medellín.
 
-# Getting Started
-```
-npm run start
-```
+## Instalación y Ejecución
+
+### Prerrequisitos
+- Node.js (versión 16 o superior)
+- npm o yarn
+- Git
+
+### Pasos para ejecutar el proyecto
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/CarlosSanz1505/simulador-unal.git
+   cd simulador-unal
+   ```
+
+2. **Cambiar al branch de desarrollo**
+   ```bash
+   git checkout feature/simulaciones-matriculas
+   ```
+
+3. **Navegar al directorio del proyecto**
+   ```bash
+   cd simulador-unal
+   ```
+
+4. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
+
+5. **Ejecutar en modo desarrollo**
+   ```bash
+   npm start
+   ```
+
+6. **Abrir en el navegador**
+   - La aplicación se abrirá automáticamente en `http://localhost:5173/misimulacion/`
+   - Si no se abre automáticamente, navega manualmente a esa URL
+
+### Comandos adicionales
+
+- **Build para producción:**
+  ```bash
+  npm run build
+  ```
+
+- **Vista previa del build:**
+  ```bash
+  npm run preview
+  ```
+
+- **Linting:**
+  ```bash
+  npm run lint
+  ```
+
+### Solución de problemas comunes
+
+- **Error de dependencias:** Eliminar `node_modules` y `package-lock.json`, luego ejecutar `npm install`
+- **Puerto ocupado:** Vite automáticamente usará el siguiente puerto disponible
+- **Problemas de permisos:** Ejecutar con `sudo` en sistemas Unix/Linux si es necesario
 
 # React + Vite
 
