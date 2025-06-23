@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import iconoAgregar from '../assets/iconos/agregar.svg'
-import iconoImportar from '../assets/iconos/importar.svg'
 import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import Modal from '../components/atoms/Modal'
 import SimulationCard from '../components/molecules/SimulationCard'
+import InstructiveModal from '../components/organisms/InstructiveModal'
 import { simulacionesEjemplo } from '../data/mockData'
 
 function MisSimulaciones() {
@@ -51,7 +50,7 @@ function MisSimulaciones() {
             const simulacion = JSON.parse(e.target.result)
             simulacion.id = Date.now().toString()
             setSimulaciones([...simulaciones, simulacion])
-          } catch {
+          } catch (error) {
             alert('Error al importar la simulación')
           }
         }
@@ -104,11 +103,11 @@ function MisSimulaciones() {
             <h2 className="text-2xl font-bold text-gray-800">Mis Simulaciones</h2>
             <div className="flex gap-3">
               <Button variant="primary" onClick={crearNuevaSimulacion}>
-                <img src={iconoAgregar} alt="Nueva" className="w-5 h-5" />
+                <span>➕</span>
                 <span>Nueva</span>
               </Button>
               <Button variant="secondary" onClick={importarSimulacion}>
-                <img src={iconoImportar} alt="Importar" className="w-5 h-5" />
+                <span>📥</span>
                 <span>Importar</span>
               </Button>
             </div>
@@ -123,7 +122,7 @@ function MisSimulaciones() {
                 <h3 className="text-xl font-semibold mb-2">No tienes simulaciones</h3>
                 <p className="mb-6">Crea tu primera simulación para comenzar a planificar tu carrera</p>
                 <Button variant="primary" onClick={crearNuevaSimulacion}>
-                  <img src={iconoAgregar} alt="Crear" className="w-5 h-5" />
+                  <span>➕</span>
                   <span>Crear mi primera simulación</span>
                 </Button>
               </div>
@@ -200,6 +199,9 @@ function MisSimulaciones() {
           </div>
         </div>
       </Modal>
+
+      {/* Modal instructivo que se muestra automáticamente al cargar la página */}
+      <InstructiveModal showOnLoad={true} />
     </div>
   )
 }
