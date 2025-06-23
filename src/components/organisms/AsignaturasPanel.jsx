@@ -6,18 +6,47 @@ import PrerequisitosModal from '../atoms/PrerequisitosModal'
 function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todasLasAsignaturas = [], showPanel = true, setShowPanel, isDesktop = false, simulacion }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchBy, setSearchBy] = useState('nombre')
+  const [filtroCreditos, setFiltroCreditos] = useState('todos') // Nuevo filtro por créditos
+  const [filtroTipologia, setFiltroTipologia] = useState('todas') // Nuevo filtro por tipología
   const [localSelectedAsignaturas, setLocalSelectedAsignaturas] = useState([]) // Inicializar vacío
   const [collapsedTipologias, setCollapsedTipologias] = useState({}) // Estado para colapsar tipologías
   const [showPrerequisitosModal, setShowPrerequisitosModal] = useState(false)
   const [prerequisitosFaltantes, setPrerrequisitosFaltantes] = useState([])
 
-  // Filtrar asignaturas según el término de búsqueda y excluir las ya agregadas
+  // Filtrar asignaturas según el término de búsqueda, filtros de créditos y tipología, y excluir las ya agregadas
   const filteredAsignaturas = useMemo(() => {
-    const asignaturasDisponibles = asignaturas.filter(asignatura => {
+    let asignaturasDisponibles = asignaturas.filter(asignatura => {
       // Excluir asignaturas que ya están en cualquier matrícula
       return !todasLasAsignaturas.some(a => a.codigo === asignatura.codigo)
     })
 
+    // Aplicar filtro por tipología
+    if (filtroTipologia !== 'todas') {
+      asignaturasDisponibles = asignaturasDisponibles.filter(asignatura => 
+        asignatura.tipologia === filtroTipologia
+      )
+    }
+
+    // Aplicar filtro por créditos
+    if (filtroCreditos !== 'todos') {
+      asignaturasDisponibles = asignaturasDisponibles.filter(asignatura => {
+        const creditos = asignatura.creditos
+        switch (filtroCreditos) {
+          case '1-3':
+            return creditos >= 1 && creditos <= 3
+          case '4-6':
+            return creditos >= 4 && creditos <= 6
+          case '7-9':
+            return creditos >= 7 && creditos <= 9
+          case '10+':
+            return creditos >= 10
+          default:
+            return true
+        }
+      })
+    }
+
+    // Aplicar filtro de búsqueda por término
     if (!searchTerm) return asignaturasDisponibles
 
     return asignaturasDisponibles.filter(asignatura => {
@@ -34,7 +63,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
           return true
       }
     })
-  }, [searchTerm, searchBy, todasLasAsignaturas])
+  }, [searchTerm, searchBy, filtroCreditos, filtroTipologia, todasLasAsignaturas])
 
   // Agrupar asignaturas por tipología con orden específico
   const asignaturasPorTipologia = useMemo(() => {
@@ -120,15 +149,15 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
           })
           
-          console.log('❌ Mostrando modal de prerrequisitos')
+          console.log('⚠️ Mostrando advertencia de prerrequisitos (pero se permite agregar)')
           setPrerrequisitosFaltantes(prerequisitosInfo)
           setShowPrerequisitosModal(true)
-          return // No agregar la asignatura
+          // NO HACEMOS RETURN - PERMITIMOS QUE CONTINÚE Y AGREGUE LA ASIGNATURA
         }
       }
       
       console.log('✅ Agregando asignatura:', asignatura.nombre)
-      // Agregar la asignatura
+      // Agregar la asignatura (ahora se ejecuta siempre, sin importar los prerrequisitos)
       setLocalSelectedAsignaturas(prev => [...prev, asignatura])
     }
   }
@@ -224,6 +253,46 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
               🔍
             </button>
           </div>
+
+          {/* Filtros adicionales */}
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">Filtrar por tipología</label>
+              <select 
+                value={filtroTipologia} 
+                onChange={(e) => setFiltroTipologia(e.target.value)}
+                className="w-full px-2 py-1.5 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
+              >
+                <option value="todas">Todas</option>
+                <option value="fundamentacion_obligatoria">Fund. Obligatoria</option>
+                <option value="fundamentacion_optativa">Fund. Optativa</option>
+                <option value="disciplinar_obligatoria">Disc. Obligatoria</option>
+                <option value="disciplinar_optativa">Disc. Optativa</option>
+                <option value="trabajo_de_grado">Trabajo de Grado</option>
+                <option value="libre_eleccion">Libre Elección</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">Filtrar por créditos</label>
+              <select 
+                value={filtroCreditos} 
+                onChange={(e) => setFiltroCreditos(e.target.value)}
+                className="w-full px-2 py-1.5 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
+              >
+                <option value="todos">Todos</option>
+                <option value="1-3">1-3 créditos</option>
+                <option value="4-6">4-6 créditos</option>
+                <option value="7-9">7-9 créditos</option>
+                <option value="10+">10+ créditos</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Contador de resultados */}
+          <div className="text-xs text-gray-500 text-center">
+            {Object.values(asignaturasPorTipologia).reduce((acc, curr) => acc + curr.length, 0)} asignaturas encontradas
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto">
@@ -251,7 +320,11 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
                     }`}
                     draggable
                     onDragStart={(e) => {
-                      e.dataTransfer.setData('application/json', JSON.stringify(asignatura))
+                      const dragData = {
+                        type: 'asignatura-from-panel',
+                        asignatura: asignatura
+                      }
+                      e.dataTransfer.setData('application/json', JSON.stringify(dragData))
                     }}
                   >
                     <div className="flex-shrink-0 mt-1">

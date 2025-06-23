@@ -9,13 +9,28 @@ import PrerequisitosModal from '../components/atoms/PrerequisitosModal'
 import CreditCounter from '../components/molecules/CreditCounter'
 import MatriculaColumn from '../components/molecules/MatriculaColumn'
 import AsignaturasPanel from '../components/organisms/AsignaturasPanel'
-import { simulacionesEjemplo } from '../data/mockData'
 
 function SimulacionDetalle() {
   const { id } = useParams()
-  const [simulacion, setSimulacion] = useState(
-    simulacionesEjemplo.find(sim => sim.id === id) || simulacionesEjemplo[0]
-  )
+  
+  // Obtener simulación desde localStorage
+  const obtenerSimulacionPorId = (simulacionId) => {
+    const simulacionesGuardadas = localStorage.getItem('simulaciones')
+    if (simulacionesGuardadas) {
+      try {
+        const simulaciones = JSON.parse(simulacionesGuardadas)
+        return simulaciones.find(sim => sim.id === simulacionId)
+      } catch (error) {
+        console.error('Error al cargar simulaciones:', error)
+      }
+    }
+    return null
+  }
+
+  const [simulacion, setSimulacion] = useState(() => {
+    const simulacionEncontrada = obtenerSimulacionPorId(id)
+    return simulacionEncontrada || null
+  })
   const [matriculaActiva, setMatriculaActiva] = useState(null)
   const [showPanel, setShowPanel] = useState(false) // Panel cerrado por defecto para móvil
   const [confirmModal, setConfirmModal] = useState({ show: false, matriculaId: null })
@@ -50,6 +65,38 @@ function SimulacionDetalle() {
       // En móvil no abrir automáticamente
     }
   }, [matriculaActiva, isDesktop])
+
+  // Actualizar localStorage cuando la simulación cambie
+  useEffect(() => {
+    if (simulacion) {
+      const simulacionesGuardadas = localStorage.getItem('simulaciones')
+      if (simulacionesGuardadas) {
+        try {
+          const simulaciones = JSON.parse(simulacionesGuardadas)
+          const simulacionesActualizadas = simulaciones.map(sim => 
+            sim.id === simulacion.id ? simulacion : sim
+          )
+          localStorage.setItem('simulaciones', JSON.stringify(simulacionesActualizadas))
+        } catch (error) {
+          console.error('Error al actualizar simulaciones:', error)
+        }
+      }
+    }
+  }, [simulacion])
+
+  // Si no se encuentra la simulación, mostrar mensaje o redirigir
+  if (!simulacion) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Simulación no encontrada</h2>
+          <Link to="/misimulacion" className="text-blue-600 hover:text-blue-800">
+            Volver a mis simulaciones
+          </Link>
+        </div>
+      </div>
+    )
+  }
 
   const crearMatricula = () => {
     const nuevaMatricula = {
@@ -118,7 +165,7 @@ function SimulacionDetalle() {
         )
         
         if (prerequisitosFaltantes.length > 0) {
-          console.log('❌ [DRAG&DROP] Prerrequisitos no cumplidos, mostrando modal')
+          console.log('⚠️ [DRAG&DROP] Prerrequisitos no cumplidos, mostrando advertencia (pero se permite agregar)')
           
           // Obtener información de los prerrequisitos faltantes
           import('../data/asignaturas.json').then(({ asignaturas }) => {
@@ -135,12 +182,12 @@ function SimulacionDetalle() {
             setShowPrerequisitosModal(true)
           })
           
-          return // No agregar la asignatura
+          // NO HACEMOS RETURN - PERMITIMOS QUE CONTINÚE Y AGREGUE LA ASIGNATURA
         }
       }
     }
     
-    // Si llegamos aquí, los prerrequisitos están cumplidos o no hay prerrequisitos
+    // Agregar la asignatura (ahora se ejecuta siempre, sin importar los prerrequisitos)
     console.log('✅ [DRAG&DROP] Agregando asignatura:', asignatura.nombre)
     
     setSimulacion(prev => ({
@@ -169,6 +216,100 @@ function SimulacionDetalle() {
           return {
             ...matricula,
             asignaturas: matricula.asignaturas.filter(a => a.codigo !== asignaturaCodigo)
+          }
+        }
+        return matricula
+      })
+    }))
+  }
+
+  const moverAsignatura = (sourceMatriculaId, targetMatriculaId, asignatura, targetIndex) => {
+    console.log('🔄 Moviendo asignatura:', { 
+      asignatura: asignatura.nombre, 
+      from: sourceMatriculaId, 
+      to: targetMatriculaId, 
+      index: targetIndex 
+    })
+
+    setSimulacion(prev => {
+      let updatedMatriculas = [...prev.matriculas]
+      
+      // Si es el mismo target (reordenamiento dentro de la misma matrícula)
+      if (sourceMatriculaId === targetMatriculaId) {
+        const matriculaIndex = updatedMatriculas.findIndex(m => m.id === sourceMatriculaId)
+        if (matriculaIndex !== -1) {
+          const matricula = { ...updatedMatriculas[matriculaIndex] }
+          const asignaturas = [...matricula.asignaturas]
+          
+          // Encontrar y remover la asignatura
+          const sourceIndex = asignaturas.findIndex(a => a.codigo === asignatura.codigo)
+          if (sourceIndex !== -1) {
+            const [movedAsignatura] = asignaturas.splice(sourceIndex, 1)
+            
+            // Insertar en la nueva posición
+            const finalIndex = sourceIndex < targetIndex ? targetIndex - 1 : targetIndex
+            asignaturas.splice(finalIndex, 0, movedAsignatura)
+            
+            matricula.asignaturas = asignaturas
+            updatedMatriculas[matriculaIndex] = matricula
+          }
+        }
+      } else {
+        // Mover entre diferentes matrículas
+        // 1. Remover de la matrícula origen
+        updatedMatriculas = updatedMatriculas.map(matricula => {
+          if (matricula.id === sourceMatriculaId) {
+            return {
+              ...matricula,
+              asignaturas: matricula.asignaturas.filter(a => a.codigo !== asignatura.codigo)
+            }
+          }
+          return matricula
+        })
+        
+        // 2. Agregar a la matrícula destino en la posición especificada
+        updatedMatriculas = updatedMatriculas.map(matricula => {
+          if (matricula.id === targetMatriculaId) {
+            const newAsignaturas = [...matricula.asignaturas]
+            newAsignaturas.splice(targetIndex, 0, asignatura)
+            return {
+              ...matricula,
+              asignaturas: newAsignaturas
+            }
+          }
+          return matricula
+        })
+      }
+      
+      return {
+        ...prev,
+        matriculas: updatedMatriculas
+      }
+    })
+  }
+
+  const cambiarColorAsignatura = (matriculaId, asignaturaCodigo, colorOption) => {
+    console.log('🎨 Cambiando color de asignatura:', { 
+      matricula: matriculaId, 
+      asignatura: asignaturaCodigo, 
+      color: colorOption?.name || 'Por defecto' 
+    })
+
+    setSimulacion(prev => ({
+      ...prev,
+      matriculas: prev.matriculas.map(matricula => {
+        if (matricula.id === matriculaId) {
+          return {
+            ...matricula,
+            asignaturas: matricula.asignaturas.map(asignatura => {
+              if (asignatura.codigo === asignaturaCodigo) {
+                return {
+                  ...asignatura,
+                  customColor: colorOption // null para resetear, objeto para color personalizado
+                }
+              }
+              return asignatura
+            })
           }
         }
         return matricula
@@ -408,6 +549,8 @@ function SimulacionDetalle() {
                     onEditName={editarNombreMatricula}
                     onAddAsignatura={agregarAsignaturaAMatricula}
                     onRemoveAsignatura={removerAsignaturaDeMatricula}
+                    onMoveAsignatura={moverAsignatura}
+                    onChangeAsignaturaColor={cambiarColorAsignatura}
                     isActive={matriculaActiva === matricula.id}
                   />
                 </div>

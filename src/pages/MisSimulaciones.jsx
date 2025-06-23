@@ -1,17 +1,61 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import Modal from '../components/atoms/Modal'
 import SimulationCard from '../components/molecules/SimulationCard'
 import InstructiveModal from '../components/organisms/InstructiveModal'
-import { simulacionesEjemplo } from '../data/mockData'
 
 function MisSimulaciones() {
-  const [simulaciones, setSimulaciones] = useState(simulacionesEjemplo)
+  // Función para crear una simulación vacía por defecto
+  const crearSimulacionVacia = () => ({
+    id: Date.now().toString(),
+    nombre: 'Mi Primera Simulación',
+    fechaCreacion: new Date().toISOString().split('T')[0],
+    matriculas: [
+      {
+        id: 'default-m1',
+        posicion: 1,
+        nombre: 'Matrícula 1',
+        asignaturas: []
+      }
+    ],
+    creditos: {
+      fundamentacion_obligatoria: 0,
+      fundamentacion_optativa: 0,
+      disciplinar_obligatoria: 0,
+      disciplinar_optativa: 0,
+      libre_eleccion: 0,
+      trabajo_de_grado: 0,
+      total: 0
+    }
+  })
+
+  // Inicializar simulaciones desde localStorage o crear una vacía
+  const inicializarSimulaciones = () => {
+    const simulacionesGuardadas = localStorage.getItem('simulaciones')
+    if (simulacionesGuardadas) {
+      try {
+        const simulaciones = JSON.parse(simulacionesGuardadas)
+        return simulaciones.length > 0 ? simulaciones : [crearSimulacionVacia()]
+      } catch (error) {
+        console.error('Error al cargar simulaciones guardadas:', error)
+        return [crearSimulacionVacia()]
+      }
+    }
+    // Primera vez del usuario - crear simulación vacía
+    return [crearSimulacionVacia()]
+  }
+
+  const [simulaciones, setSimulaciones] = useState(inicializarSimulaciones)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [simulacionToDelete, setSimulacionToDelete] = useState(null)
   const [showNewSimulationModal, setShowNewSimulationModal] = useState(false)
   const [newSimulationName, setNewSimulationName] = useState('')
+
+  // Guardar simulaciones en localStorage cuando cambien
+  useEffect(() => {
+    localStorage.setItem('simulaciones', JSON.stringify(simulaciones))
+  }, [simulaciones])
 
   const eliminarSimulacion = (id) => {
     const simulacion = simulaciones.find(sim => sim.id === id)
