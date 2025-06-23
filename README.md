@@ -51,21 +51,19 @@ src/
 │   │   ├── Button.jsx
 │   │   ├── Card.jsx
 │   │   ├── ConfirmModal.jsx
-│   │   └── Modal.jsx
+│   │   ├── Modal.jsx
+│   │   └── PrerequisitosModal.jsx
 │   ├── molecules/      # Componentes con lógica específica
 │   │   ├── CreditCounter.jsx
 │   │   ├── MatriculaColumn.jsx
 │   │   └── SimulationCard.jsx
 │   └── organisms/      # Componentes complejos
-│       ├── AsignaturasModal.jsx
 │       ├── AsignaturasPanel.jsx
 │       ├── Footer.jsx
 │       ├── Header.jsx
-│       ├── ImportarAsignaturasModal.jsx
 │       └── InstructiveModal.jsx
 ├── data/               # Datos y servicios
 │   ├── asignaturas.json
-│   ├── asignaturas_backup.json
 │   ├── asignaturasService.js
 │   └── mockData.js
 ├── pages/              # Páginas de la aplicación
@@ -74,7 +72,8 @@ src/
 ├── styles/             # Estilos con Tailwind CSS
 │   └── globals.css
 ├── utils/              # Utilidades
-│   └── htmlToJsonConverter.js
+│   ├── htmlToJsonConverter.js
+│   └── prerequisitosValidation.js
 ├── App.jsx
 └── main.jsx
 ```
