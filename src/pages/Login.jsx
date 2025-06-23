@@ -13,7 +13,7 @@ function Login() {
                     importantes de tu plan, como los <b>créditos</b> que cubres por <b>categoría</b>,
                     o el cumplimiento de <b>prerrequisitos</b>.
                 </p>
-                <button className="sign-in m-[40px]"></button>
+                <button className="sign-in m-[40px] shadow-md shadow-black/20 scale-110 rounded-[3px]"></button>
             </main>
         </div>
     );
