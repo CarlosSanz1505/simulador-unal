@@ -15,10 +15,18 @@
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.2",
-    "react-select": "^5.10.1"
+    "react-select": "^5.10.1",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "clsx": "^2.1.1",
+
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -27,8 +35,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.10",
+    "prop-types": "^15.8.1",
+    "tailwindcss": "^3.4.16",
     "vite": "^6.3.5"
   },
   "description": "Proyecto para organizar Plan de Estudios de la asignatura de Desarrollo Web I en la Universidad Nacional de Colombia, sede Medellín.",
