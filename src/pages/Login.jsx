@@ -1,8 +1,12 @@
+import logo from '../assets/images/logo-unal.png';
+
 function Login() {
     return (
         <div className="login flex justify-end">
-            <main className="bg-white flex flex-col w-2/5 px-[50px] pt-[160px] items-center h-full absolute top-0 right-0">
-                <h2 className="font-bold text-3xl m-[30px]">¡Bienvenido/a!</h2>
+            <main className="bg-white flex flex-col w-2/5 px-[50px] pt-[40px] items-center h-full absolute top-0 right-0">
+                <img src={logo} width="200" className="m-[60px]" alt="Logo UNAL" title="Logo UNAL" />
+                <h2 className="font-bold text-3xl mb-[30px]">
+                    ¡Bienvenido/a al <span className="text-emerald-700">Simulador UNAL</span>!</h2>
                 <p className="text-justify my-2">
                     Aquí podrás organizar tu plan de estudio para el programa de 
                     Ingeniería de sistemas (Malla Curricular 3534) de la Universidad 
