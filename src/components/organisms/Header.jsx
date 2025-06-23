@@ -12,7 +12,7 @@ function Header() {
             alt="Logo UNAL" 
             className="instructive-logo"
           />
-          <Link to="/" className="header-title-link">
+          <Link to="/misimulacion/" className="header-title-link">
             Mis Simulaciones
           </Link>
         </div>

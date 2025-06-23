@@ -294,7 +294,7 @@ function SimulacionDetalle() {
               )}
               
               <Link 
-                to="/" 
+                to="/misimulacion/" 
                 className="btn btn-secondary text-sm"
               >
                 ← Volver
