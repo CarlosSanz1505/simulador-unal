@@ -4,6 +4,7 @@ import Header from './components/organisms/Header'
 import InstructiveModal from './components/organisms/InstructiveModal'
 import MisSimulaciones from './pages/MisSimulaciones'
 import SimulacionDetalle from './pages/SimulacionDetalle'
+import AsignaturasAdmin from './pages/admin/Asignaturas'
 
 function App() {
   return (
