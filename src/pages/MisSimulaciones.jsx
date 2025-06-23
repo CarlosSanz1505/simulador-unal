@@ -63,7 +63,7 @@ function MisSimulaciones() {
             </Button>
           </div>
         ) : (
-          <div className="grid md-grid-cols-2 lg-grid-cols-3">
+          <div className="grid gap-2 md-grid-cols-2 lg-grid-cols-3">
             {simulaciones.map((simulacion) => (
               <SimulationCard 
                 key={simulacion.id}
