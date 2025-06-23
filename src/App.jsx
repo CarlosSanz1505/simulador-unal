@@ -14,6 +14,7 @@ function App() {
           <Route path="/" element={<Navigate to="/misimulacion/" replace />} />
           <Route path="/misimulacion/" element={<MisSimulaciones />} />
           <Route path="/simulacion/:id" element={<SimulacionDetalle />} />
+          <Route path="*" element={<div className="p-4">Página no encontrada</div>} />
         </Routes>
       </div>
       <Footer />
@@ -22,4 +23,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
