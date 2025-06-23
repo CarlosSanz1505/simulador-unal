@@ -246,7 +246,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
                 return (
                   <div 
                     key={asignatura.codigo}
-                    className={`flex items-start gap-3 p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors ${
+                    className={`flex items-center gap-3 p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors ${
                       isSelected ? 'bg-unal-green-50 border-unal-green-200' : ''
                     }`}
                     draggable
@@ -254,6 +254,15 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
                       e.dataTransfer.setData('application/json', JSON.stringify(asignatura))
                     }}
                   >
+                    {/* Grip handle */}
+                    <span className="flex items-center mr-2 cursor-grab select-none text-gray-400">
+                      <svg width="16" height="16" fill="none" className="inline-block">
+                        <circle cx="4" cy="4" r="1.5" fill="currentColor"/>
+                        <circle cx="4" cy="8" r="1.5" fill="currentColor"/>
+                        <circle cx="4" cy="12" r="1.5" fill="currentColor"/>
+                      </svg>
+                    </span>
+
                     <div className="flex-shrink-0 mt-1">
                       <input
                         type="checkbox"
@@ -274,10 +283,6 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
                       <div className="text-xs text-gray-600">
                         {tipologiaLabels[asignatura.tipologia]}
                       </div>
-                    </div>
-                    
-                    <div className="flex-shrink-0 text-sm font-bold text-gray-700">
-                      {asignatura.creditos}
                     </div>
                   </div>
                 )

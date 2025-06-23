@@ -5,6 +5,8 @@ import Modal from '../components/atoms/Modal'
 import SimulationCard from '../components/molecules/SimulationCard'
 import InstructiveModal from '../components/organisms/InstructiveModal'
 import { simulacionesEjemplo } from '../data/mockData'
+import { faPlus, faDownload, faUpload, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function MisSimulaciones() {
   const [simulaciones, setSimulaciones] = useState(simulacionesEjemplo)
@@ -103,11 +105,11 @@ function MisSimulaciones() {
             <h2 className="text-2xl font-bold text-gray-800">Mis Simulaciones</h2>
             <div className="flex gap-3">
               <Button variant="primary" onClick={crearNuevaSimulacion}>
-                <span>➕</span>
+                <FontAwesomeIcon icon={faPlus} className="mr-2" />
                 <span>Nueva</span>
               </Button>
               <Button variant="secondary" onClick={importarSimulacion}>
-                <span>📥</span>
+                <FontAwesomeIcon icon={faUpload} className="mr-2" />
                 <span>Importar</span>
               </Button>
             </div>
@@ -118,11 +120,13 @@ function MisSimulaciones() {
             {/* Lista de simulaciones */}
             {simulaciones.length === 0 ? (
               <div className="empty-state">
-                <div className="empty-state-icon">🎓</div>
+                <div className="empty-state-icon">
+                  <FontAwesomeIcon icon={faGraduationCap} className="text-4xl text-unal-green-600 mb-2" />
+                </div>
                 <h3 className="text-xl font-semibold mb-2">No tienes simulaciones</h3>
                 <p className="mb-6">Crea tu primera simulación para comenzar a planificar tu carrera</p>
                 <Button variant="primary" onClick={crearNuevaSimulacion}>
-                  <span>➕</span>
+                  <FontAwesomeIcon icon={faPlus} className="mr-2" />
                   <span>Crear mi primera simulación</span>
                 </Button>
               </div>

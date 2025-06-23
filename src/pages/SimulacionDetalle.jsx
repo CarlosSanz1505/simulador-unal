@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import iconoAgregar from '../assets/iconos/agregar.svg'
-import iconoEditar from '../assets/iconos/editar.svg'
-import iconoExportar from '../assets/iconos/exportar.svg'
 import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import PrerequisitosModal from '../components/atoms/PrerequisitosModal'
@@ -10,6 +7,8 @@ import CreditCounter from '../components/molecules/CreditCounter'
 import MatriculaColumn from '../components/molecules/MatriculaColumn'
 import AsignaturasPanel from '../components/organisms/AsignaturasPanel'
 import { simulacionesEjemplo } from '../data/mockData'
+import { faDownload, faEdit, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function SimulacionDetalle() {
   const { id } = useParams()
@@ -261,55 +260,45 @@ function SimulacionDetalle() {
   return (
     <div className="min-h-screen">
       {/* Contenido principal */}
-      <main className={`container py-8 transition-all duration-300 ${
-        isDesktop && showPanel && matriculaActiva ? 'pr-80' : ''
-      }`}>
-        {/* Contenedor centrado más pequeño como en la imagen */}
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <main className={`container py-8 transition-all duration-300`}>
+        {/* Contenedor  */}
+        <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header de la simulación */}
           <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <Link 
+              to="/misimulacion/" 
+              className="btn btn-secondary text-sm"
+            >
+              ← Volver
+            </Link>
+            <div className="flex items-center gap-2">
               <h1 className="text-xl font-semibold text-gray-800">{simulacion.nombre}</h1>
               <button 
-                className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-full transition-colors" 
+                className="p-2 text-gray-400 hover:text-unal-green-600 hover:bg-unal-green-50 rounded-lg transition-colors" 
                 onClick={editarNombre} 
                 title="Editar nombre"
               >
-                <img src={iconoEditar} alt="Editar" className="w-9 h-9" />
-              </button>
-              <button 
-                className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-full transition-colors" 
-                title="Descargar simulación"
-              >
-                <img src={iconoExportar} alt="Exportar" className="w-9 h-9" />
+                <FontAwesomeIcon icon={faEdit}/>
               </button>
             </div>
             
             <div className="flex items-center gap-4">
-              {/* Botón hamburguesa para abrir/cerrar panel - solo en desktop */}
               {matriculaActiva && isDesktop && (
                 <button
                   onClick={() => setShowPanel(!showPanel)}
-                  className="p-2 rounded-full transition-colors"
-                  style={{
-                    color: '#57844A'
-                  }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#f0fdf4'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  title={showPanel ? "Cerrar panel de asignaturas" : "Abrir panel de asignaturas"}
+                  className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors" 
+                  title="Buscar asignaturas"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
+                  <FontAwesomeIcon icon={faSearch}/>
                 </button>
               )}
-              
-              <Link 
-                to="/misimulacion/" 
-                className="btn btn-secondary text-sm"
+              <button 
+                className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors" 
+                title="Descargar simulación"
               >
-                ← Volver
-              </Link>
+                <FontAwesomeIcon icon={faDownload}/>
+              </button>
+              
             </div>
           </div>
 
@@ -436,14 +425,14 @@ function SimulacionDetalle() {
 
             {simulacion.matriculas.length === 0 && (
               <div className="empty-state">
-                <div className="empty-state-icon">📝</div>
+                <FontAwesomeIcon icon={faEdit} className="w-5 h-5 mr-2" />
                 <h3 className="text-xl font-semibold mb-2">No tienes matrículas creadas</h3>
                 <p className="mb-6">Crea tu primera matrícula para comenzar a planificar tu carrera</p>
                 <Button 
                   variant="primary"
                   onClick={crearMatricula}
                 >
-                  <img src={iconoAgregar} alt="Crear" className="w-5 h-5 mr-2" />
+                  <FontAwesomeIcon icon={faPlus} className="w-5 h-5 mr-2" />
                   Crear tu primera matrícula
                 </Button>
               </div>

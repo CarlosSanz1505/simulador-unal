@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
-import iconoEditar from '../../assets/iconos/editar.svg'
 import Card from '../atoms/Card'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignatura, onEditName, isActive = false }) {
   const [isDragOver, setIsDragOver] = useState(false)
@@ -137,7 +138,7 @@ function MatriculaColumn({ matricula, onDelete, onAddAsignatura, onRemoveAsignat
                 className="text-gray-400 hover:text-unal-green-600 hover:bg-unal-green-50 p-1 rounded transition-colors"
                 title="Editar nombre"
               >
-                <img src={iconoEditar} alt="Editar" className="w-7 h-7" />
+                <FontAwesomeIcon icon={faEdit} />
               </button>
             </>
           )}
