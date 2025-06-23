@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Footer from './components/organisms/Footer'
 import Header from './components/organisms/Header'
 import InstructiveModal from './components/organisms/InstructiveModal'
@@ -11,7 +11,8 @@ function App() {
       <Header />
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<MisSimulaciones />} />
+          <Route path="/" element={<Navigate to="/misimulacion/" replace />} />
+          <Route path="/misimulacion/" element={<MisSimulaciones />} />
           <Route path="/simulacion/:id" element={<SimulacionDetalle />} />
           <Route path="*" element={<div className="p-4">Página no encontrada</div>} />
         </Routes>

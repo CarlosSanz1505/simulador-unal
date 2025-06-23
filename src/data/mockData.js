@@ -1,4 +1,11 @@
 // src/data/mockData.js
+import AsignaturasService from './asignaturasService.js';
+
+// Función helper para obtener asignaturas por códigos
+const getAsignaturasPorCodigos = (codigos) => {
+  return codigos.map(codigo => AsignaturasService.getAsignaturaPorCodigo(codigo)).filter(Boolean);
+};
+
 export const simulacionesEjemplo = [
   {
     id: '1',
@@ -8,21 +15,26 @@ export const simulacionesEjemplo = [
       {
         id: 'm1',
         posicion: 1,
-        asignaturas: ['1000001', '1000002'] // IDs de asignaturas
+        asignaturas: getAsignaturasPorCodigos(['1000003-M', '1000004-M', '1000005-M'])
       },
       {
         id: 'm2', 
         posicion: 2,
-        asignaturas: ['1000003']
+        asignaturas: getAsignaturasPorCodigos(['1000006-M', '1000007-M'])
+      },
+      {
+        id: 'm3',
+        posicion: 3,
+        asignaturas: getAsignaturasPorCodigos(['1000008-M', '1000009-M'])
       }
     ],
     creditos: {
-      fundamentacionObligatoria: 45,
-      fundamentacionOptativa: 12,
-      disciplinarObligatoria: 78,
-      disciplinarOptativa: 15,
-      libreEleccion: 6,
-      total: 156
+      fundamentacion_obligatoria: 15,
+      fundamentacion_optativa: 10,
+      disciplinar_obligatoria: 10,
+      disciplinar_optativa: 10,
+      libreEleccion: 20,
+      total: 25
     }
   },
   {
@@ -31,18 +43,23 @@ export const simulacionesEjemplo = [
     fechaCreacion: '2024-02-10',
     matriculas: [
       {
-        id: 'm3',
+        id: 'm4',
         posicion: 1,
-        asignaturas: ['1000001', '1000004', '1000005']
+        asignaturas: getAsignaturasPorCodigos(['1000003-M', '1000004-M', '1000005-M'])
+      },
+      {
+        id: 'm5',
+        posicion: 2,
+        asignaturas: getAsignaturasPorCodigos(['1000002-M', '1000009-M'])
       }
     ],
     creditos: {
-      fundamentacionObligatoria: 30,
-      fundamentacionOptativa: 8,
-      disciplinarObligatoria: 45,
-      disciplinarOptativa: 10,
-      libreEleccion: 3,
-      total: 96
+      fundamentacion_obligatoria: 14,
+      fundamentacion_optativa: 0,
+      disciplinar_obligatoria: 3,
+      disciplinar_optativa: 0,
+      libreEleccion: 0,
+      total: 17
     }
   },
   {
@@ -51,63 +68,24 @@ export const simulacionesEjemplo = [
     fechaCreacion: '2024-03-05',
     matriculas: [],
     creditos: {
-      fundamentacionObligatoria: 0,
-      fundamentacionOptativa: 0,
-      disciplinarObligatoria: 0,
-      disciplinarOptativa: 0,
+      fundamentacion_obligatoria: 0,
+      fundamentacion_optativa: 0,
+      disciplinar_obligatoria: 0,
+      disciplinar_optativa: 0,
       libreEleccion: 0,
       total: 0
     }
   }
 ];
 
-export const asignaturasEjemplo = [
-  {
-    codigo: '1000001',
-    nombre: 'Cálculo Diferencial',
-    creditos: 4,
-    tipologia: 'fundamentacion_obligatoria',
-    prerrequisitos: [],
-    disponible: true
-  },
-  {
-    codigo: '1000002', 
-    nombre: 'Álgebra Lineal',
-    creditos: 3,
-    tipologia: 'fundamentacion_obligatoria',
-    prerrequisitos: [],
-    disponible: true
-  },
-  {
-    codigo: '1000003',
-    nombre: 'Cálculo Integral', 
-    creditos: 4,
-    tipologia: 'fundamentacion_obligatoria',
-    prerrequisitos: ['1000001'], // Requiere Cálculo Diferencial
-    disponible: true
-  },
-  {
-    codigo: '1000004',
-    nombre: 'Introducción a la Programación',
-    creditos: 3,
-    tipologia: 'disciplinar_obligatoria',
-    prerrequisitos: [],
-    disponible: true
-  },
-  {
-    codigo: '1000005',
-    nombre: 'Matemáticas Discretas',
-    creditos: 3,
-    tipologia: 'fundamentacion_obligatoria',
-    prerrequisitos: [],
-    disponible: true
-  },
-  {
-    codigo: '1000006',
-    nombre: 'Programación Orientada a Objetos',
-    creditos: 3,
-    tipologia: 'disciplinar_obligatoria',
-    prerrequisitos: ['1000004'],
-    disponible: true
-  }
-];
+// Función helper para obtener asignaturas usando el servicio
+export const getAsignaturas = () => {
+  return AsignaturasService.getTodasAsignaturas();
+};
+
+export const getAsignaturaPorCodigo = (codigo) => {
+  return AsignaturasService.getAsignaturaPorCodigo(codigo);
+};
+
+// Para compatibilidad hacia atrás, exportamos también las asignaturas como antes
+export const asignaturasEjemplo = AsignaturasService.getTodasAsignaturas();

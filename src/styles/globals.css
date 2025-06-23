@@ -1,0 +1,575 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Reset básico */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background-image: url('../assets/images/fondo-unal.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #111827;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Header Global */
+  .header {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #e5e7eb;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1002;
+  }
+
+  .header-content {
+    max-width: 5000px;
+    margin: 0 auto;
+    padding: 0 40px;
+    height: 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Footer Global */
+  .global-footer {
+    background: white;
+    padding: 10px 40px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+  }
+
+  /* Ajustar body para header y footer fijos */
+  .app-container {
+    padding-top: 54px;
+    padding-bottom: 60px;
+    min-height: 100vh;
+  }
+
+  /* Logo y título del header */
+  .instructive-logo {
+    height: 50px;
+    width: auto;
+  }
+
+  .instructive-header-title {
+    font-size: 18px;
+    font-weight: 100;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-title-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: inherit;
+  }
+
+  .header-title-link:hover {
+    color: #57844A;
+  }
+
+  /* Botón de cerrar sesión */
+  .instructive-close-btn {
+    background: #57844A;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .instructive-close-btn:hover {
+    background: #4a7340;
+  }
+
+  /* Botones principales */
+  .btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: #57844A;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #4a7340;
+  }
+
+  .btn-secondary {
+    background: #57844A;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background: #4a7340;
+  }
+
+  /* Cards */
+  .card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.05);
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .card-active {
+    border: 2px solid #57844A;
+  }
+
+  /* Layout utilities */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Grid responsive personalizado */
+  .md-grid-cols-2 {
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .md-grid-cols-3 {
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .lg-grid-cols-3 {
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .lg-grid-cols-4 {
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Credits */
+  .credit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .credit-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .credit-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #57844A;
+  }
+
+  .credit-label {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  /* Estado vacío */
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: #6b7280;
+  }
+
+  .empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  /* Drag and drop styles */
+  .matricula-dropzone {
+    min-height: 200px;
+    border: 2px dashed #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    transition: all 0.2s;
+  }
+
+  .matricula-dropzone:hover {
+    border-color: #57844A;
+    background-color: rgba(87, 132, 74, 0.05);
+  }
+
+  .matricula-dropzone.drag-over {
+    border-color: #57844A;
+    background-color: rgba(87, 132, 74, 0.1);
+  }
+
+  /* Asignatura pills */
+  .asignatura-pill {
+    background: linear-gradient(135deg, #57844A, #4a7340);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+  }
+
+  .asignatura-pill:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  /* Modal Instructivo Especial */
+  .instructive-modal-overlay {
+    position: fixed;
+    top: 64px; /* Altura del header */
+    left: 0;
+    right: 0;
+    bottom: 60px; /* Altura del footer */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 500; /* Menor que header (1002) y footer (1001) */
+    padding: 20px;
+  }
+
+  .instructive-modal-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+  }
+
+  .instructive-modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 95%;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Botón de cerrar en la esquina superior derecha del modal */
+  .instructive-modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+    transition: all 0.2s;
+    z-index: 10;
+  }
+
+  .instructive-modal-close-btn:hover {
+    background: #f3f4f6;
+    color: #57844A;
+    transform: scale(1.1);
+  }
+
+  .instructive-content {
+    line-height: 1.6;
+    color: #555;
+    padding: 24px 32px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .instructive-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .instructive-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .instructive-content::-webkit-scrollbar-thumb {
+    background: #57844A;
+    border-radius: 3px;
+  }
+
+  .instructive-content::-webkit-scrollbar-thumb:hover {
+    background: #4a7340;
+  }
+
+  .instructive-example-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    margin: 16px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Título del modal instructivo */
+  .instructive-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 24px;
+    text-align: center;
+    border-bottom: 2px solid #57844A;
+    padding-bottom: 16px;
+  }
+
+  .instructive-step {
+    margin-bottom: 16px;
+    padding-left: 24px;
+    position: relative;
+  }
+
+  .instructive-step-number {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #57844A;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .instructive-step-content {
+    margin-left: 8px;
+  }
+
+  .instructive-substep {
+    margin-left: 16px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .instructive-note {
+    background: #f8f9fa;
+    border-left: 4px solid #57844A;
+    padding: 16px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+
+  .instructive-note strong {
+    color: #57844A;
+  }
+
+  .instructive-continue-btn {
+    background: #57844A;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: block;
+    margin: 24px auto 0;
+    min-width: 200px;
+  }
+
+  .instructive-continue-btn:hover {
+    background: #4a7340;
+    transform: translateY(-1px);
+  }
+
+  /* Contenedores centrados para las páginas */
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  /* Cards de simulación más pequeñas */
+  .simulation-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  /* Mejora de bordes y colores verde UNAL */
+  .border-unal-green-400 {
+    border-color: rgba(87, 132, 74, 0.4);
+  }
+
+  .border-unal-green-600 {
+    border-color: #57844A;
+  }
+
+  .bg-unal-green-50 {
+    background-color: rgba(87, 132, 74, 0.05);
+  }
+
+  .bg-unal-green-100 {
+    background-color: rgba(87, 132, 74, 0.1);
+  }
+
+  .text-unal-green-600 {
+    color: #57844A;
+  }
+
+  .hover\:bg-unal-green-100:hover {
+    background-color: rgba(87, 132, 74, 0.1);
+  }
+
+  .hover\:border-unal-green-600:hover {
+    border-color: #57844A;
+  }
+
+  .hover\:bg-unal-green-50:hover {
+    background-color: rgba(87, 132, 74, 0.05);
+  }
+
+  /* Estilos para panel de asignaturas responsivo */
+  .asignaturas-panel-overlay {
+    @media (max-width: 768px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 49;
+    }
+  }
+
+  .asignaturas-panel {
+    @media (max-width: 768px) {
+      width: 100vw;
+      top: 0;
+      height: 100vh;
+    }
+  }
+
+  .main-content-with-panel {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  /* Responsive para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .instructive-modal-overlay {
+      padding: 10px;
+    }
+    
+    .instructive-modal-content {
+      max-width: 95%;
+      max-height: 90vh;
+    }
+    
+    .instructive-content {
+      padding: 16px 20px;
+    }
+  }
+}
+
+/* Animaciones personalizadas */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.fade-in {
+  animation: fade-in 0.3s ease-in;
+}
