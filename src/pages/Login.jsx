@@ -31,14 +31,9 @@ const Login = () => {
             justifyContent: 'flex-end',
             height: '100vh'
         }}>
-            <main className="bg-white" style={{
-                width: '40%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '5rem'
-            }}>
-                <h2>¡Bienvenido!</h2>
+            <main className="bg-white flex flex-col w-2/5 p-20 items-center">
+                <h2 className="font-bold text-3xl m-10">¡Bienvenido/a!</h2>
+                <p>Texto introductorio</p>
                 <button
                     onClick={handleGoogleLogin}
                     style={{
