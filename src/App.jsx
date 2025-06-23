@@ -9,7 +9,7 @@ import Login from './pages/Login'
 function App() {
   return (
     <div className="min-h-screen">
-      <Header />
+      {(window.location.href !== 'http://localhost:5173/') ? <Header /> : null}
       <div className="app-container">
         <Routes>
           <Route path="/simulacion" element={<MisSimulaciones />} />

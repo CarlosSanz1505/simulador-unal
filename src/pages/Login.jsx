@@ -1,54 +1,19 @@
-import React from 'react';
-
-const GOOGLE_CLIENT_ID = '62094170016-ohbgt13m3tum4upbk7ql3r3mj9fpf5qs.apps.googleusercontent.com';
-const REDIRECT_URI = 'http://localhost:5173/simulacion'; // Cambia esto según tu entorno
-
-const getGoogleOAuthURL = () => {
-    const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
-    const options = {
-        redirect_uri: REDIRECT_URI,
-        client_id: GOOGLE_CLIENT_ID,
-        access_type: 'online',
-        response_type: 'token',
-        prompt: 'consent',
-        scope: [
-            'openid',
-            'profile',
-            'email'
-        ].join(' '),
-    };
-    const qs = new URLSearchParams(options);
-    return `${rootUrl}?${qs.toString()}`;
-};
-
-const Login = () => {
-    const handleGoogleLogin = () => {
-        window.location.href = getGoogleOAuthURL();
-    };
-
+function Login() {
     return (
-        <div className="flex" style={{
-            justifyContent: 'flex-end',
-            height: '100vh'
-        }}>
-            <main className="bg-white flex flex-col w-2/5 p-20 items-center">
-                <h2 className="font-bold text-3xl m-10">¡Bienvenido/a!</h2>
-                <p>Texto introductorio</p>
-                <button
-                    onClick={handleGoogleLogin}
-                    style={{
-                        padding: '10px 20px',
-                        background: '#4285F4',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '4px',
-                        fontSize: '16px',
-                        cursor: 'pointer',
-                        marginTop: '20px'
-                    }}
-                >
-                    Iniciar sesión con Google
-                </button>
+        <div className="login flex justify-end">
+            <main className="bg-white flex flex-col w-2/5 px-[50px] pt-[160px] items-center h-full absolute top-0 right-0">
+                <h2 className="font-bold text-3xl m-[30px]">¡Bienvenido/a!</h2>
+                <p className="text-justify my-2">
+                    Aquí podrás organizar tu plan de estudio para el programa de 
+                    Ingeniería de sistemas (Malla Curricular 3534) de la Universidad 
+                    Nacional de Colombia, Sede Medellín.
+                </p>
+                <p className="text-justify my-2">
+                    Con ayuda de este sitio web, podrás verificar fácilmente características 
+                    importantes de tu plan, como los <b>créditos</b> que cubres por <b>categoría</b>,
+                    o el cumplimiento de <b>prerrequisitos</b>.
+                </p>
+                <button className="sign-in m-[40px]"></button>
             </main>
         </div>
     );

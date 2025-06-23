@@ -47,7 +47,7 @@ function Header() {
             </button>
 
             {/* Botón de cerrar sesión */}
-            <button className="instructive-close-btn">
+            <button onClick={() => {window.location.href = '/'}} className="instructive-close-btn">
               <span>Cerrar sesión</span>
               <img 
                 src={iconoSesion} 
