@@ -16,6 +16,7 @@
 
     <!-- Renderizado de botón de Login de Google -->
     <script>
+      // Procesar credenciales recibidas y redirigir a vista simulaciones si son válidas
       function handleCredentialResponse(response) {
         const responsePayload = decodeJwtResponse(response.credential);
         const emailDomain = responsePayload.email.split('@')[1];
@@ -27,6 +28,7 @@
         }
       }
 
+      // Decodificar string retornado por popup de Google
       function decodeJwtResponse(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -39,10 +41,12 @@
 
       window.onload = function () {
         if (window.location.href === 'http://localhost:5173/') {
+          // Proveer CLIENT_ID desde Google Cloud
           google.accounts.id.initialize({
             client_id: "62094170016-ohbgt13m3tum4upbk7ql3r3mj9fpf5qs.apps.googleusercontent.com",
             callback: handleCredentialResponse
           });
+          // Renderizar botón de login (personalizado)
           google.accounts.id.renderButton(
             document.querySelector(".sign-in"),
             { 
@@ -51,7 +55,8 @@
               text: "continue-with",
             }
           );
-          google.accounts.id.prompt(); // also display the One Tap dialog
+          // Google One Tap (ventana en esquina superior derecha para login alternativo)
+          google.accounts.id.prompt();
         }
       }
     </script>
