@@ -4,6 +4,7 @@ import Header from './components/organisms/Header'
 import InstructiveModal from './components/organisms/InstructiveModal'
 import MisSimulaciones from './pages/MisSimulaciones'
 import SimulacionDetalle from './pages/SimulacionDetalle'
+import AsignaturasAdmin from './pages/admin/Asignaturas'
 import Login from './pages/Login'
 
 function App() {
@@ -13,8 +14,8 @@ function App() {
       <div className="app-container">
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/admin/asignaturas" element={<AsignaturasAdmin />} />
           <Route path="/simulaciones" element={<MisSimulaciones />} />
-          {/* <Route path="/" element={<Navigate to="/misimulacion/" replace />} /> */}
           <Route path="/simulaciones/:id" element={<SimulacionDetalle />} />
         </Routes>
       </div>
@@ -24,4 +25,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

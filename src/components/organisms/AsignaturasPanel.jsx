@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
 import { asignaturas } from '../../data/asignaturas.json'
 import PrerequisitosModal from '../atoms/PrerequisitosModal'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todasLasAsignaturas = [], showPanel = true, setShowPanel, isDesktop = false, simulacion }) {
   const [searchTerm, setSearchTerm] = useState('')
@@ -221,7 +223,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
               className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
             />
             <button className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
-              🔍
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="w-5 h-5" />
             </button>
           </div>
         </div>
