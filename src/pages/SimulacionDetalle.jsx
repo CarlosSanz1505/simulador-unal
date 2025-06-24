@@ -194,7 +194,7 @@ function SimulacionDetalle() {
           {/* Header de la simulación */}
           <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
             <Link 
-              to="/misimulacion/" 
+              to="/simulacion/" 
               className="btn btn-secondary text-sm"
             >
               ← Volver
