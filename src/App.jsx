@@ -12,10 +12,10 @@ function App() {
       {(window.location.href !== 'http://localhost:5173/') ? <Header /> : null}
       <div className="app-container">
         <Routes>
-          <Route path="/simulacion" element={<MisSimulaciones />} />
-          {/* <Route path="/" element={<Navigate to="/misimulacion/" replace />} /> */}
-          <Route path="/simulacion/:id" element={<SimulacionDetalle />} />
           <Route path="/" element={<Login />} />
+          <Route path="/simulaciones" element={<MisSimulaciones />} />
+          {/* <Route path="/" element={<Navigate to="/misimulacion/" replace />} /> */}
+          <Route path="/simulaciones/:id" element={<SimulacionDetalle />} />
         </Routes>
       </div>
       <Footer />

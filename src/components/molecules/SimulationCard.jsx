@@ -139,7 +139,7 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
       </div>
 
       <Link 
-        to={`/simulacion/${simulacion.id}`}
+        to={`/simulaciones/${simulacion.id}`}
         className="block w-full no-underline"
       >
         <Button variant="primary" className="w-full">
