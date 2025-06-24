@@ -10,8 +10,12 @@
     <div id="root"></div>
 
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Librería con funcionalidad "Sign in with Google" (OAuth 2.0) -->
     <script src="https://accounts.google.com/gsi/client" async></script>
-    <script defer>
+
+    <!-- Renderizado de botón de Login de Google -->
+    <script>
       function handleCredentialResponse(response) {
         const responsePayload = decodeJwtResponse(response.credential);
         const emailDomain = responsePayload.email.split('@')[1];
@@ -50,6 +54,20 @@
           google.accounts.id.prompt(); // also display the One Tap dialog
         }
       }
+    </script>
+
+    <!-- DEMO: Alternar entre vistas de Estudiante y Admin (CTRL + M) -->
+    <script>
+      const views = ['/simulaciones', '/admin/asignaturas'];
+      let onView = window.location.href === 'http://localhost:5173/admin/asignaturas';
+
+      // Habilitar atajo `Ctrl + M` para alternar vistas (si no se está en la vista Login)
+      document.addEventListener('keydown', (ev) => {
+        if (ev.ctrlKey && ev.key === 'm' && window.location.href !== 'http://localhost:5173/') {
+          onView = 1 - onView;
+          window.location.href = views[onView];
+        }
+      })
     </script>
   </body>
 </html>
