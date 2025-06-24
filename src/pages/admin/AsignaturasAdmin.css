@@ -153,12 +153,18 @@ body {
 }
 
 /* editar eliminar */
+
+.awa-card-actions {          
+  display: inline-flex;      
+  gap: 0.5rem;               
+}
+
 .awa-card-actions button {
   width: 32px;
   height: 32px;
   padding: 0;
   background: none;
-  display: inline-flex;
+  display: inline-flex;  
   align-items: center;
   justify-content: center;
   border-radius: var(--radius);
