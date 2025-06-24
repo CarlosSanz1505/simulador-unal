@@ -31,7 +31,7 @@ function InstructiveModal({ showOnLoad = false, isOpen = false, onClose = () => 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[80vh] overflow-y-auto relative mx-auto my-auto">
+      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[80vh] overflow-y-auto overscroll-contain relative mx-auto my-auto">
         {/* Botón de cerrar en la esquina superior derecha */}
         <button 
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none transition-colors z-20"
