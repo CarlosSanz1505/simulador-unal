@@ -2,10 +2,12 @@ import logo from '../assets/images/logo-unal.png';
 
 function Login() {
     return (
-        <div className="login flex justify-end">
-            <main className="bg-white flex flex-col w-2/5 px-[50px] pt-[40px] items-center h-full absolute top-0 right-0">
+        <div className="login">
+            <main 
+            className="bg-white flex flex-col w-[90%] sm:min-w-[450px] sm:w-2/5 px-[50px] pt-[40px] pb-[100px] items-center min-h-full 
+            m-auto relative sm:absolute top-0 sm:right-0">
                 <img src={logo} width="200" className="m-[60px]" alt="Logo UNAL" title="Logo UNAL" />
-                <h2 className="font-bold text-3xl mb-[30px]">
+                <h2 className="font-bold text-3xl mb-[30px] text-center">
                     ¡Bienvenido/a al <span className="text-emerald-700">Simulador UNAL</span>!</h2>
                 <p className="text-justify my-2">
                     Aquí podrás organizar tu plan de estudio para el programa de 
