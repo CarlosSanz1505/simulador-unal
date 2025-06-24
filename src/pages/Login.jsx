@@ -16,7 +16,7 @@ function Login() {
                 </p>
                 <p className="text-justify my-2">
                     Con ayuda de este sitio web, podrás verificar fácilmente características 
-                    importantes de tu plan, como los <b>créditos</b> que cubres por <b>categoría</b>,
+                    importantes de tu plan, como los <b>créditos</b> que cubres por <b>tipología</b>,
                     o el cumplimiento de <b>prerrequisitos</b>.
                 </p>
                 <div className="sign-in mt-[40px] mb-[20px] scale-[1.2] shadow-md shadow-black/20 rounded-[3px]"></div>
