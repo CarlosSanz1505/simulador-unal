@@ -194,7 +194,7 @@ export default function AsignaturasAdmin() {
         </button>
       </div>
 
-      <div className="awa-list">
+      <div className="awa-list pt-0 pl-0 pr-[4px] pb-[4px]">
         {currentItems.map((a) => (
           <div key={a.id} className="awa-card">
             <div>
