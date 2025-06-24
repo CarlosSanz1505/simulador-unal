@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.sign-in.invalid::after {
-  content: "El correo debe pertencer al dominio de la universidad (@unal.edu.co).";
-  font-size: 0.7rem;
-  color: red;
-  position: absolute;
-  width: 100%;
-  text-align: justify;
-  margin: 1rem auto;
-}
-
 @layer base {
   /* Reset básico */
   * {

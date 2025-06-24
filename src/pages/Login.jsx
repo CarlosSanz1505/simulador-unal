@@ -19,7 +19,10 @@ function Login() {
                     importantes de tu plan, como los <b>créditos</b> que cubres por <b>categoría</b>,
                     o el cumplimiento de <b>prerrequisitos</b>.
                 </p>
-                <div className="sign-in my-[40px] scale-[1.2] shadow-md shadow-black/20 rounded-[3px]"></div>
+                <div className="sign-in mt-[40px] mb-[20px] scale-[1.2] shadow-md shadow-black/20 rounded-[3px]"></div>
+                <span className="login-error hidden text-[0.9rem]/[1rem] text-red-600 text-center w-[300px]">
+                    El correo debe pertencer al dominio de la universidad (@unal.edu.co).
+                </span>
             </main>
         </div>
     );

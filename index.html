@@ -18,8 +18,8 @@
         if (emailDomain === 'unal.edu.co') {
           window.location.href = '/simulaciones';
         } else {
-          const signIn = document.querySelector('.sign-in');
-          signIn.classList.add('invalid');
+          const loginError = document.querySelector('.login-error');
+          loginError.classList.remove('hidden');
         }
       }
 
