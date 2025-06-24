@@ -5,17 +5,18 @@ import InstructiveModal from './components/organisms/InstructiveModal'
 import MisSimulaciones from './pages/MisSimulaciones'
 import SimulacionDetalle from './pages/SimulacionDetalle'
 import AsignaturasAdmin from './pages/admin/Asignaturas'
+import Login from './pages/Login'
 
 function App() {
   return (
     <div className="min-h-screen">
-      <Header />
+      {(window.location.href !== 'http://localhost:5173/') ? <Header /> : null}
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<Navigate to="/misimulacion/" replace />} />
+          <Route path="/" element={<Login />} />
           <Route path="/admin/asignaturas" element={<AsignaturasAdmin />} />
-          <Route path="/misimulacion/" element={<MisSimulaciones />} />
-          <Route path="/simulacion/:id" element={<SimulacionDetalle />} />
+          <Route path="/simulaciones" element={<MisSimulaciones />} />
+          <Route path="/simulaciones/:id" element={<SimulacionDetalle />} />
         </Routes>
       </div>
       <Footer />

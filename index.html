@@ -8,6 +8,31 @@
   </head>
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script defer>
+      function handleCredentialResponse(response) {
+        window.location.href = '/simulaciones'
+      }
+
+      window.onload = function () {
+        if (window.location.href === 'http://localhost:5173/') {
+          google.accounts.id.initialize({
+            client_id: "62094170016-ohbgt13m3tum4upbk7ql3r3mj9fpf5qs.apps.googleusercontent.com",
+            callback: handleCredentialResponse
+          });
+          google.accounts.id.renderButton(
+            document.querySelector(".sign-in"),
+            { 
+              theme: "outline",
+              size: "large",
+              text: "continue-with",
+            }
+          );
+          google.accounts.id.prompt(); // also display the One Tap dialog
+        }
+      }
+    </script>
   </body>
 </html>

@@ -26,7 +26,7 @@ function Header() {
               alt="Logo UNAL" 
               className="instructive-logo"
             />
-            <Link to="/misimulacion/" className="header-title-link">
+            <Link to="/simulaciones/" className="header-title-link">
               Mis Simulaciones
             </Link>
           </div>
@@ -47,7 +47,7 @@ function Header() {
             </button>
 
             {/* Botón de cerrar sesión */}
-            <button className="instructive-close-btn">
+            <button onClick={() => {window.location.href = '/'}} className="instructive-close-btn">
               <span>Cerrar sesión</span>
               <img 
                 src={iconoSesion} 
