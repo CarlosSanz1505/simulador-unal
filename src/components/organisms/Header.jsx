@@ -10,7 +10,8 @@ function Header() {
   const location = useLocation()
   
   // Verificar si estamos en la página de Mis Simulaciones
-  const isInMisSimulaciones = location.pathname === '/simulaciones/' || location.pathname === '/simulaciones'
+  const isInMisSimulaciones = location.pathname === '/simulaciones';
+  const isAdmin = location.pathname === '/admin/asignaturas';
 
   const handleOpenInstructive = () => {
     setShowInstructive(true)
@@ -30,7 +31,7 @@ function Header() {
               alt="Logo UNAL" 
               className="instructive-logo"
             />
-            {!isInMisSimulaciones && (
+            {(!isInMisSimulaciones && !isAdmin) && (
               <Link to="/simulaciones/" className="header-title-link">
                 Mis Simulaciones
               </Link>
@@ -38,8 +39,9 @@ function Header() {
           </div>
           
           <div className="flex items-center gap-4">
-            {/* Botón de instructivo */}
-            <button 
+            {/* Botón de instructivo
+                sólo visible para estudiante */}
+            {!isAdmin && <button 
               onClick={handleOpenInstructive}
               className="flex items-center gap-2 px-3 py-2 bg-unal-green-100 hover:bg-unal-green-200 text-unal-green-700 rounded-lg transition-colors border border-unal-green-300"
               title="Instructivo - Cómo usar el simulador"
@@ -50,10 +52,10 @@ function Header() {
                 className="w-5 h-5"
               />
               <span className="text-sm font-medium">Instructivo</span>
-            </button>
+            </button>}
 
             {/* Botón de cerrar sesión */}
-            <button className="instructive-close-btn" onClick={() => {window.location.href = '/'}}>
+            <button className="instructive-close-btn" onClick={() => {window.location.href = '/';}}>
               <span>Cerrar sesión</span>
               <img 
                 src={iconoSesion} 
