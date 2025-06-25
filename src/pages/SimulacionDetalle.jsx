@@ -313,7 +313,7 @@ function SimulacionDetalle() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen m-auto">
       {/* Contenido principal */}
       <main className={`container py-8 transition-all duration-300`}>
         {/* Contenedor  */}

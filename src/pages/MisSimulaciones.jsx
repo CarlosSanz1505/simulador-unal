@@ -95,9 +95,9 @@ function MisSimulaciones() {
   }
 
   return (
-    <div className="min-h-screen">
+    <>
       {/* Contenido principal */}
-      <main className="container py-8">
+      <main className="container py-8 mx-auto">
         {/* Contenedor centrado con fondo blanco como en el panel de matrículas */}
         <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header del panel */}
@@ -206,7 +206,7 @@ function MisSimulaciones() {
 
       {/* Modal instructivo que se muestra automáticamente al cargar la página */}
       <InstructiveModal showOnLoad={true} />
-    </div>
+    </>
   )
 }
 

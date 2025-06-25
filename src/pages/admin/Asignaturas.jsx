@@ -159,7 +159,7 @@ export default function AsignaturasAdmin() {
   );
 
   return (
-    <div className="awa-container">
+    <div className="awa-container h-[80vh] m-auto">
       <div className="awa-header">
         <h1 className="awa-title">Gestión de Asignaturas</h1>
         <div className="awa-actions-header">
@@ -170,7 +170,7 @@ export default function AsignaturasAdmin() {
             className="awa-btn-import"
             onClick={() => importRef.current.click()}
           >
-            <FaPlus size={16} color="#4a7c38" /> Importar
+            <FaPlus size={16} /> Importar
           </button>
           <input
             ref={importRef}
@@ -366,14 +366,13 @@ export default function AsignaturasAdmin() {
                   onChange={(e) => setPrereqTipologia(e.target.value)}
                 >
                   <option value="">Tipología...</option>
-                  <option>Fund. Obligatoria</option>
-                  <option>Fund. Optativa</option>
-                  <option>Disc. Obligatoria</option>
-                  <option>Disc. Optativa</option>
-                  <option>Libre Elección</option>
+                  <option>Fundamentación</option>
+                  <option>Disciplinar</option>
+                  <option>General</option>
                 </select>
                 <input
                   type="number"
+                  min="0" max="100"
                   placeholder="porcentaje"
                   value={prereqPorcentaje}
                   onChange={(e) => setPrereqPorcentaje(e.target.value)}

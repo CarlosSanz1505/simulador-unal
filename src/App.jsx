@@ -9,9 +9,9 @@ import Login from './pages/Login'
 
 function App() {
   return (
-    <div className="min-h-screen">
+    <>
       {(window.location.href !== 'http://localhost:5173/') ? <Header /> : null}
-      <div className="app-container">
+      <div className="app-container pt-[54px] w-full pb-[43.2px] min-h-screen flex">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/admin/asignaturas" element={<AsignaturasAdmin />} />
@@ -21,7 +21,7 @@ function App() {
       </div>
       <Footer />
       <InstructiveModal />
-    </div>
+    </>
   )
 }
 
