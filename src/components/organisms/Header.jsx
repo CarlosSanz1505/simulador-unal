@@ -24,7 +24,7 @@ function Header() {
   return (
     <>
       <header className="header">
-        <div className="header-content">
+        <div className="header-content max-w-[5000px] mx-auto sm:px-10 h-[54px] flex justify-around sm:justify-between items-center">
           <div className="instructive-header-title">
             <img 
               src={logoUnal} 
