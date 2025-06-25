@@ -14,7 +14,7 @@ function CreditCounter({ label, value, total, isTotal = false }) {
       {/* Mensaje de celebración cuando se completa */}
       {isCompleted && !isTotal && (
         <div className="text-xs text-unal-green-500 font-medium text-center mb-2 flex items-center justify-center gap-1">
-          🎉 ¡Ya cumpliste con todos los créditos de este componente!
+          ¡Ya cumpliste con todos los créditos de este componente!
         </div>
       )}
       

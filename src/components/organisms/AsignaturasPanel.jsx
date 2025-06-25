@@ -1,13 +1,14 @@
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMemo, useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
 import { asignaturas } from '../../data/asignaturas.json'
 import PrerequisitosModal from '../atoms/PrerequisitosModal'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todasLasAsignaturas = [], showPanel = true, setShowPanel, isDesktop = false, simulacion }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchBy, setSearchBy] = useState('nombre')
+  const [creditFilter, setCreditFilter] = useState('todos') // Nuevo filtro por créditos
   const [localSelectedAsignaturas, setLocalSelectedAsignaturas] = useState([]) // Inicializar vacío
   const [collapsedTipologias, setCollapsedTipologias] = useState({}) // Estado para colapsar tipologías
   const [showPrerequisitosModal, setShowPrerequisitosModal] = useState(false)
@@ -20,23 +21,46 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
       return !todasLasAsignaturas.some(a => a.codigo === asignatura.codigo)
     })
 
-    if (!searchTerm) return asignaturasDisponibles
+    let result = asignaturasDisponibles
 
-    return asignaturasDisponibles.filter(asignatura => {
-      const searchValue = searchTerm.toLowerCase().trim()
-      
-      switch (searchBy) {
-        case 'nombre':
-          return asignatura.nombre.toLowerCase().includes(searchValue)
-        case 'codigo':
-          return asignatura.codigo.toLowerCase().includes(searchValue)
-        case 'tipologia':
-          return asignatura.tipologia.toLowerCase().includes(searchValue)
-        default:
-          return true
-      }
-    })
-  }, [searchTerm, searchBy, todasLasAsignaturas])
+    // Filtrar por término de búsqueda
+    if (searchTerm) {
+      result = result.filter(asignatura => {
+        const searchValue = searchTerm.toLowerCase().trim()
+        
+        switch (searchBy) {
+          case 'nombre':
+            return asignatura.nombre.toLowerCase().includes(searchValue)
+          case 'codigo':
+            return asignatura.codigo.toLowerCase().includes(searchValue)
+          case 'tipologia':
+            return asignatura.tipologia.toLowerCase().includes(searchValue)
+          default:
+            return true
+        }
+      })
+    }
+
+    // Filtrar por créditos
+    if (creditFilter !== 'todos') {
+      result = result.filter(asignatura => {
+        switch (creditFilter) {
+          case '1-2':
+            return asignatura.creditos >= 1 && asignatura.creditos <= 2
+          case '3-4':
+            return asignatura.creditos >= 3 && asignatura.creditos <= 4
+          case '5-6':
+            return asignatura.creditos >= 5 && asignatura.creditos <= 6
+          case '7+':
+            return asignatura.creditos >= 7
+          default:
+            return true
+        }
+      })
+    }
+
+    return result
+  }, [searchTerm, searchBy, creditFilter, todasLasAsignaturas])
 
   // Agrupar asignaturas por tipología con orden específico
   const asignaturasPorTipologia = useMemo(() => {
@@ -86,8 +110,8 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
       // VALIDACIÓN DE PRERREQUISITOS
       // Solo validar si la asignatura tiene prerrequisitos
       if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
-        console.log('🔍 Validando prerrequisitos para:', asignatura.nombre)
-        console.log('🔍 Prerrequisitos requeridos:', asignatura.prerrequisitos)
+        console.log('Validando prerrequisitos para:', asignatura.nombre)
+        console.log('Prerrequisitos requeridos:', asignatura.prerrequisitos)
         
         // Obtener todas las asignaturas ya agregadas en matrículas anteriores
         let asignaturasAprobadas = []
@@ -102,14 +126,14 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
           }
         }
         
-        console.log('🔍 Asignaturas ya aprobadas:', asignaturasAprobadas)
+        console.log('Asignaturas ya aprobadas:', asignaturasAprobadas)
         
         // Verificar si todos los prerrequisitos están cumplidos
         const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo => 
           !asignaturasAprobadas.includes(prereqCodigo)
         )
         
-        console.log('🔍 Prerrequisitos faltantes:', prerequisitosFaltantes)
+        console.log('Prerrequisitos faltantes:', prerequisitosFaltantes)
         
         if (prerequisitosFaltantes.length > 0) {
           // Obtener información de los prerrequisitos faltantes
@@ -122,14 +146,14 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
           })
           
-          console.log('❌ Mostrando modal de prerrequisitos')
+          console.log('Mostrando modal de prerrequisitos')
           setPrerrequisitosFaltantes(prerequisitosInfo)
           setShowPrerequisitosModal(true)
           return // No agregar la asignatura
         }
       }
       
-      console.log('✅ Agregando asignatura:', asignatura.nombre)
+      console.log('Agregando asignatura:', asignatura.nombre)
       // Agregar la asignatura
       setLocalSelectedAsignaturas(prev => [...prev, asignatura])
     }
@@ -226,6 +250,22 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
               <FontAwesomeIcon icon={faMagnifyingGlass} className="w-5 h-5" />
             </button>
           </div>
+
+          {/* Nuevo filtro por créditos */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Filtrar por créditos</label>
+            <select 
+              value={creditFilter} 
+              onChange={(e) => setCreditFilter(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
+            >
+              <option value="todos">Todos los créditos</option>
+              <option value="1-2">1-2 créditos</option>
+              <option value="3-4">3-4 créditos</option>
+              <option value="5-6">5-6 créditos</option>
+              <option value="7+">7+ créditos</option>
+            </select>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto">
@@ -253,7 +293,11 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
                     }`}
                     draggable
                     onDragStart={(e) => {
-                      e.dataTransfer.setData('application/json', JSON.stringify(asignatura))
+                      const dragData = {
+                        type: 'asignatura-from-panel',
+                        data: asignatura
+                      }
+                      e.dataTransfer.setData('application/json', JSON.stringify(dragData))
                     }}
                   >
                     {/* Grip handle */}

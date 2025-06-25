@@ -260,6 +260,35 @@
     background-color: rgba(87, 132, 74, 0.1);
   }
 
+  /* Estilos para drag and drop de asignaturas */
+  .asignatura-dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+
+  .asignatura-drag-over {
+    border-color: #57844A !important;
+    background-color: rgba(87, 132, 74, 0.1) !important;
+  }
+
+  .matricula-drag-over {
+    border-color: #57844A !important;
+    background-color: rgba(87, 132, 74, 0.05) !important;
+  }
+
+  /* Mejora visual para grip handle */
+  .asignatura-grip:hover {
+    color: #57844A;
+  }
+
+  .cursor-grab {
+    cursor: grab;
+  }
+
+  .cursor-grab:active {
+    cursor: grabbing;
+  }
+
   /* Asignatura pills */
   .asignatura-pill {
     background: linear-gradient(135deg, #57844A, #4a7340);

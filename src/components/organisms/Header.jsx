@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import iconoAyuda from '../../assets/iconos/ayuda.svg'
 import logoUnal from '../../assets/iconos/logo-unal.svg'
 import iconoSesion from '../../assets/iconos/sesion.png'
@@ -7,6 +7,10 @@ import InstructiveModal from './InstructiveModal'
 
 function Header() {
   const [showInstructive, setShowInstructive] = useState(false)
+  const location = useLocation()
+  
+  // Verificar si estamos en la página de Mis Simulaciones
+  const isInMisSimulaciones = location.pathname === '/misimulacion/' || location.pathname === '/misimulacion'
 
   const handleOpenInstructive = () => {
     setShowInstructive(true)
@@ -26,9 +30,11 @@ function Header() {
               alt="Logo UNAL" 
               className="instructive-logo"
             />
-            <Link to="/simulaciones/" className="header-title-link">
-              Mis Simulaciones
-            </Link>
+            {!isInMisSimulaciones && (
+              <Link to="/misimulacion/" className="header-title-link">
+                Mis Simulaciones
+              </Link>
+            )}
           </div>
           
           <div className="flex items-center gap-4">
@@ -47,7 +53,7 @@ function Header() {
             </button>
 
             {/* Botón de cerrar sesión */}
-            <button onClick={() => {window.location.href = '/'}} className="instructive-close-btn">
+            <button className="instructive-close-btn">
               <span>Cerrar sesión</span>
               <img 
                 src={iconoSesion} 

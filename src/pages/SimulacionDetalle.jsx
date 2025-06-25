@@ -1,3 +1,5 @@
+import { faDownload, faEdit, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Button from '../components/atoms/Button'
@@ -5,10 +7,9 @@ import ConfirmModal from '../components/atoms/ConfirmModal'
 import PrerequisitosModal from '../components/atoms/PrerequisitosModal'
 import MatriculaColumn from '../components/molecules/MatriculaColumn'
 import AsignaturasPanel from '../components/organisms/AsignaturasPanel'
-import { simulacionesEjemplo } from '../data/mockData'
-import { faDownload, faEdit, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CreditosPanel from '../components/organisms/CreditosPanel'
+import AsignaturasService from '../data/asignaturasService'
+import { simulacionesEjemplo } from '../data/mockData'
 
 function SimulacionDetalle() {
   const { id } = useParams()
@@ -95,8 +96,11 @@ function SimulacionDetalle() {
   }
 
   const agregarAsignaturaAMatricula = (matriculaId, asignatura) => {
+    console.log('Intentando agregar asignatura:', asignatura.nombre, 'a matrícula:', matriculaId)
+    
     // VALIDACIÓN DE PRERREQUISITOS PARA DRAG & DROP
     if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
+      console.log('Verificando prerrequisitos:', asignatura.prerrequisitos)
       
       // Encontrar la matrícula de destino
       const matriculaDestino = simulacion.matriculas.find(m => m.id === matriculaId);
@@ -107,31 +111,37 @@ function SimulacionDetalle() {
           .filter(m => m.posicion <= matriculaDestino.posicion)
           .flatMap(m => m.asignaturas.map(a => a.codigo));
         
+        console.log('Asignaturas aprobadas hasta ahora:', asignaturasAprobadas)
+        
         // Verificar prerrequisitos faltantes
         const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo => 
           !asignaturasAprobadas.includes(prereqCodigo)
         );
         
+        console.log('Prerrequisitos faltantes:', prerequisitosFaltantes)
+        
         if (prerequisitosFaltantes.length > 0) {          
-          // Obtener información de los prerrequisitos faltantes
-          import('../data/asignaturas.json').then(({ asignaturas }) => {
-            const prerequisitosInfo = prerequisitosFaltantes.map(codigo => {
-              const asignaturaInfo = asignaturas.find(a => a.codigo === codigo);
-              return asignaturaInfo ? {
-                codigo: asignaturaInfo.codigo,
-                nombre: asignaturaInfo.nombre,
-                creditos: asignaturaInfo.creditos
-              } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
-            });
+          // Obtener información de los prerrequisitos faltantes usando el servicio
+          const prerequisitosInfo = prerequisitosFaltantes.map(codigo => {
+            const asignaturaInfo = AsignaturasService.getAsignaturaPorCodigo(codigo);
             
-            setPrerrequisitosFaltantes(prerequisitosInfo);
-            setShowPrerequisitosModal(true);
-          })
+            return asignaturaInfo ? {
+              codigo: asignaturaInfo.codigo,
+              nombre: asignaturaInfo.nombre,
+              creditos: asignaturaInfo.creditos
+            } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
+          });
+          
+          console.log('Bloqueando asignatura por prerrequisitos faltantes')
+          setPrerrequisitosFaltantes(prerequisitosInfo);
+          setShowPrerequisitosModal(true);
           
           return; // No agregar la asignatura
         }
       }
     }
+    
+    console.log('Agregando asignatura sin problemas de prerrequisitos')
     
     setSimulacion(prev => ({
       ...prev,
@@ -139,11 +149,15 @@ function SimulacionDetalle() {
         if (matricula.id === matriculaId) {
           // Verificar si la asignatura ya existe
           const yaExiste = matricula.asignaturas.some(a => a.codigo === asignatura.codigo);
+          console.log('Asignatura ya existe:', yaExiste)
           if (!yaExiste) {
+            console.log('Asignatura agregada exitosamente')
             return {
               ...matricula,
               asignaturas: [...matricula.asignaturas, asignatura]
             };
+          } else {
+            console.log('Asignatura ya existe, no se agrega')
           }
         }
         return matricula;
@@ -183,6 +197,119 @@ function SimulacionDetalle() {
         agregarAsignaturaAMatricula(matriculaActiva, asignatura)
       })
     }
+  }
+
+  // Nueva función para mover asignaturas entre matrículas
+  const moverAsignatura = (sourceMatriculaId, targetMatriculaId, asignatura) => {
+    if (sourceMatriculaId === targetMatriculaId) return // No mover si es la misma matrícula
+    
+    // VALIDACIÓN DE PRERREQUISITOS PARA MOVER ENTRE MATRÍCULAS
+    if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
+      
+      // Encontrar la matrícula de destino
+      const matriculaDestino = simulacion.matriculas.find(m => m.id === targetMatriculaId);
+      
+      if (matriculaDestino) {
+        // Obtener asignaturas aprobadas hasta la matrícula anterior (incluyendo la actual menos la que se está moviendo)
+        const asignaturasAprobadas = simulacion.matriculas
+          .filter(m => m.posicion <= matriculaDestino.posicion)
+          .flatMap(m => m.asignaturas
+            .filter(a => !(a.codigo === asignatura.codigo && m.id === sourceMatriculaId)) // Excluir la asignatura que se está moviendo
+            .map(a => a.codigo)
+          );
+        
+        // Verificar prerrequisitos faltantes
+        const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo => 
+          !asignaturasAprobadas.includes(prereqCodigo)
+        );
+        
+        if (prerequisitosFaltantes.length > 0) {          
+          // Obtener información de los prerrequisitos faltantes usando el servicio
+          const prerequisitosInfo = prerequisitosFaltantes.map(codigo => {
+            const asignaturaInfo = AsignaturasService.getAsignaturaPorCodigo(codigo);
+            
+            return asignaturaInfo ? {
+              codigo: asignaturaInfo.codigo,
+              nombre: asignaturaInfo.nombre,
+              creditos: asignaturaInfo.creditos
+            } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
+          });
+          
+          setPrerrequisitosFaltantes(prerequisitosInfo);
+          setShowPrerequisitosModal(true);
+          
+          return; // No mover la asignatura
+        }
+      }
+    }
+    
+    // Si no hay problemas con prerrequisitos, proceder con el movimiento
+    setSimulacion(prev => ({
+      ...prev,
+      matriculas: prev.matriculas.map(matricula => {
+        if (matricula.id === sourceMatriculaId) {
+          // Remover de la matrícula origen
+          return {
+            ...matricula,
+            asignaturas: matricula.asignaturas.filter(a => a.codigo !== asignatura.codigo)
+          }
+        } else if (matricula.id === targetMatriculaId) {
+          // Agregar a la matrícula destino (verificar si ya existe)
+          const yaExiste = matricula.asignaturas.some(a => a.codigo === asignatura.codigo)
+          if (!yaExiste) {
+            return {
+              ...matricula,
+              asignaturas: [...matricula.asignaturas, asignatura]
+            }
+          }
+        }
+        return matricula
+      })
+    }))
+  }
+
+  // Nueva función para reordenar asignaturas dentro de una matrícula
+  const reordenarAsignaturas = (matriculaId, fromIndex, toIndex) => {
+    setSimulacion(prev => ({
+      ...prev,
+      matriculas: prev.matriculas.map(matricula => {
+        if (matricula.id === matriculaId) {
+          const nuevasAsignaturas = [...matricula.asignaturas]
+          const [asignaturaMovida] = nuevasAsignaturas.splice(fromIndex, 1)
+          nuevasAsignaturas.splice(toIndex, 0, asignaturaMovida)
+          
+          return {
+            ...matricula,
+            asignaturas: nuevasAsignaturas
+          }
+        }
+        return matricula
+      })
+    }))
+  }
+
+  // Nueva función para cambiar el color de una asignatura
+  const cambiarColorAsignatura = (matriculaId, asignaturaCodigo, nuevoColor) => {
+    setSimulacion(prev => ({
+      ...prev,
+      matriculas: prev.matriculas.map(matricula => {
+        if (matricula.id === matriculaId) {
+          return {
+            ...matricula,
+            asignaturas: matricula.asignaturas.map(asignatura => {
+              if (asignatura.codigo === asignaturaCodigo) {
+                return {
+                  ...asignatura,
+                  customColor: nuevoColor
+                }
+              }
+              return asignatura
+            })
+          }
+        }
+        return matricula
+      })
+    }))
   }
 
   return (
@@ -252,6 +379,9 @@ function SimulacionDetalle() {
                     onEditName={editarNombreMatricula}
                     onAddAsignatura={agregarAsignaturaAMatricula}
                     onRemoveAsignatura={removerAsignaturaDeMatricula}
+                    onMoveAsignatura={moverAsignatura}
+                    onReorderAsignaturas={reordenarAsignaturas}
+                    onChangeAsignaturaColor={cambiarColorAsignatura}
                     isActive={matriculaActiva === matricula.id}
                   />
                 </div>
