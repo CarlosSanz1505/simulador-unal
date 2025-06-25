@@ -189,9 +189,6 @@ export default function AsignaturasAdmin() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="awa-btn-filter" onClick={() => setSearchTerm("")}>
-          <FaTimes size={16} color="#333" />
-        </button>
       </div>
 
       <div className="awa-list pt-0 pl-0 pr-[4px] pb-[4px]">
