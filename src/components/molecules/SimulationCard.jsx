@@ -2,11 +2,10 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
 import iconoConfirmar from '../../assets/iconos/confirmar.svg'
-import iconoEditar from '../../assets/iconos/editar.svg'
-import iconoEliminar from '../../assets/iconos/eliminar.svg'
-import iconoExportar from '../../assets/iconos/exportar.svg'
 import Button from '../atoms/Button'
 import Card from '../atoms/Card'
+import { faDownload, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function SimulationCard({ simulacion, onDelete, onEdit }) {
   const [isEditing, setIsEditing] = useState(false)
@@ -98,14 +97,21 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
                 className="bg-transparent border-none text-unal-green-500 cursor-pointer p-2 hover:bg-gray-100 rounded transition-colors"
                 title="Editar nombre"
               >
-                <img src={iconoEditar} alt="Editar" className="w-8 h-8" />
+                <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
+              </button>
+              <button 
+                onClick={handleExport}
+                className="bg-transparent border-none text-unal-green-500 cursor-pointer p-2 hover:bg-gray-100 rounded transition-colors"
+                title="Exportar simulación"
+              >
+                <FontAwesomeIcon icon={faDownload} className="w-4 h-4" />
               </button>
               <button 
                 onClick={handleDelete}
                 className="bg-transparent border-none text-red-600 cursor-pointer text-sm p-1 hover:bg-gray-100 rounded transition-colors"
                 title="Eliminar simulación"
               >
-                <img src={iconoEliminar} alt="Eliminar" className="w-6 h-6" />
+                <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
               </button>
             </div>
           </>
@@ -127,15 +133,6 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
             </p>
           </div>
         </div>
-        
-        <button 
-          onClick={handleExport}
-          className="bg-unal-green-500 text-white border-none rounded px-3 py-2 cursor-pointer text-sm hover:bg-unal-green-700 transition-colors whitespace-nowrap flex items-center gap-2"
-          title="Exportar simulación"
-        >
-          <img src={iconoExportar} alt="Exportar" className="w-8 h-8" />
-          Exportar
-        </button>
       </div>
 
       <Link 

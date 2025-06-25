@@ -5,7 +5,7 @@ import Modal from '../components/atoms/Modal'
 import SimulationCard from '../components/molecules/SimulationCard'
 import InstructiveModal from '../components/organisms/InstructiveModal'
 import { simulacionesEjemplo } from '../data/mockData'
-import { faPlus, faDownload, faUpload, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faUpload, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function MisSimulaciones() {

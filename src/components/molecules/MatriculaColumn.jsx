@@ -1,55 +1,54 @@
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faPaintBrush } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
-import iconoPincel from '../../assets/iconos/pincel.svg'
 import Card from '../atoms/Card'
 import ColorPicker from '../atoms/ColorPicker'
 
 // Colores suavizados para las tipologías (más claros que los del header)
 const tipologiaColors = {
-  'fundamentacion_obligatoria': { 
+  'fundamentacion_obligatoria': {
     border: '#f87171', // red-400
     background: '#fef2f2', // red-50
     text: '#dc2626' // red-600
   },
-  'fundamentacion_optativa': { 
+  'fundamentacion_optativa': {
     border: '#fb923c', // orange-400
     background: '#fff7ed', // orange-50
     text: '#ea580c' // orange-600
   },
-  'disciplinar_obligatoria': { 
+  'disciplinar_obligatoria': {
     border: '#34d399', // emerald-400
     background: '#ecfdf5', // emerald-50
     text: '#059669' // emerald-600
   },
-  'disciplinar_optativa': { 
+  'disciplinar_optativa': {
     border: '#60a5fa', // blue-400
     background: '#eff6ff', // blue-50
     text: '#2563eb' // blue-600
   },
-  'trabajo_de_grado': { 
+  'trabajo_de_grado': {
     border: '#a78bfa', // violet-400
     background: '#f5f3ff', // violet-50
     text: '#7c3aed' // violet-600
   },
-  'libre_eleccion': { 
+  'libre_eleccion': {
     border: '#fbbf24', // amber-400
     background: '#fffbeb', // amber-50
     text: '#f59e0b' // amber-500
   }
 };
 
-function MatriculaColumn({ 
-  matricula, 
-  onDelete, 
-  onAddAsignatura, 
-  onRemoveAsignatura, 
-  onEditName, 
+function MatriculaColumn({
+  matricula,
+  onDelete,
+  onAddAsignatura,
+  onRemoveAsignatura,
+  onEditName,
   onMoveAsignatura, // Nueva prop para mover asignaturas entre matrículas
   onReorderAsignaturas, // Nueva prop para reordenar asignaturas dentro de la matrícula
   onChangeAsignaturaColor, // Nueva prop para cambiar el color de una asignatura
-  isActive = false 
+  isActive = false
 }) {
   const [isDragOver, setIsDragOver] = useState(false)
   const [draggedAsignatura, setDraggedAsignatura] = useState(null) // Para efectos visuales
@@ -105,13 +104,13 @@ function MatriculaColumn({
   const handleDrop = (e) => {
     e.preventDefault()
     setIsDragOver(false)
-    
+
     console.log('Drop detectado en matrícula:', matricula.id)
-    
+
     try {
       const dragData = JSON.parse(e.dataTransfer.getData('application/json'))
       console.log('Datos del drag:', dragData)
-      
+
       if (dragData.type === 'asignatura-from-panel') {
         // Asignatura del panel lateral (comportamiento original)
         console.log('Asignatura desde panel:', dragData.data?.nombre)
@@ -153,7 +152,7 @@ function MatriculaColumn({
   const handleOpenColorPicker = (e, asignatura) => {
     e.stopPropagation() // Evitar que se active el drag
     e.preventDefault()
-    
+
     setColorPicker({
       isOpen: true,
       asignatura: asignatura,
@@ -211,16 +210,16 @@ function MatriculaColumn({
 
   const handleAsignaturaDropOnItem = (e, targetIndex) => {
     e.preventDefault()
-    
+
     try {
       const dragData = JSON.parse(e.dataTransfer.getData('application/json'))
-      
+
       if (dragData.type === 'asignatura-from-matricula' && dragData.data.sourceMatriculaId === matricula.id) {
         // Reordenamiento dentro de la misma matrícula
         e.stopPropagation() // Solo detener propagación si es reordenamiento
         const { asignatura } = dragData.data
         const currentIndex = matricula.asignaturas.findIndex(a => a.codigo === asignatura.codigo)
-        
+
         if (currentIndex !== -1 && currentIndex !== targetIndex && onReorderAsignaturas) {
           onReorderAsignaturas(matricula.id, currentIndex, targetIndex)
         }
@@ -261,7 +260,7 @@ function MatriculaColumn({
             </>
           )}
         </div>
-        <button 
+        <button
           onClick={handleDelete}
           className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded transition-colors ml-2"
           title="Eliminar matrícula"
@@ -269,7 +268,7 @@ function MatriculaColumn({
           <img src={iconoCancelar} alt="Eliminar" className="w-8 h-8" />
         </button>
       </div>
-      
+
       <div className="text-sm text-gray-600 mb-4">
         {matricula.asignaturas.length === 0 ? (
           <p>Sin asignaturas</p>
@@ -280,12 +279,11 @@ function MatriculaColumn({
         )}
       </div>
 
-      <div 
-        className={`min-h-[200px] border-2 border-dashed rounded-lg p-3 overflow-y-auto transition-colors ${
-          isDragOver 
-            ? 'border-unal-green-400 bg-unal-green-50' 
+      <div
+        className={`min-h-[200px] border-2 border-dashed rounded-lg p-3 transition-colors ${isDragOver
+            ? 'border-unal-green-400 bg-unal-green-50'
             : 'border-gray-300 bg-gray-50'
-        }`}
+          }`}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -300,7 +298,7 @@ function MatriculaColumn({
         ) : (
           <div className="space-y-2">
             {matricula.asignaturas.map((asignatura, index) => (
-              <div 
+              <div
                 key={asignatura.codigo}
                 draggable
                 onDragStart={(e) => handleAsignaturaDragStart(e, asignatura)}
@@ -308,7 +306,7 @@ function MatriculaColumn({
                 onDragOver={(e) => handleAsignaturaDragOver(e, index)}
                 onDrop={(e) => handleAsignaturaDropOnItem(e, index)}
                 className={`bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
-                  ${asignatura.error ? 'border-red-500' : 'border-gray-200'}
+                  ${asignatura.error ? 'border-red-500 border-4' : 'border-gray-200'}
                   ${draggedAsignatura === asignatura.codigo ? 'asignatura-dragging' : ''}`}
                 style={getAsignaturaStyle(asignatura.tipologia, asignatura.customColor)}
                 title={`${asignatura.descripcion || asignatura.nombre} - Arrastra para mover o reordenar`}
@@ -318,12 +316,12 @@ function MatriculaColumn({
                     {/* Icono de grip para indicar que es arrastrable */}
                     <span className="asignatura-grip text-gray-400 cursor-grab select-none hover:text-gray-600 transition-colors">
                       <svg width="16" height="16" fill="none" className="inline-block">
-                        <circle cx="4" cy="4" r="1.5" fill="currentColor"/>
-                        <circle cx="4" cy="8" r="1.5" fill="currentColor"/>
-                        <circle cx="4" cy="12" r="1.5" fill="currentColor"/>
-                        <circle cx="12" cy="4" r="1.5" fill="currentColor"/>
-                        <circle cx="12" cy="8" r="1.5" fill="currentColor"/>
-                        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                        <circle cx="4" cy="4" r="1.5" fill="currentColor" />
+                        <circle cx="4" cy="8" r="1.5" fill="currentColor" />
+                        <circle cx="4" cy="12" r="1.5" fill="currentColor" />
+                        <circle cx="12" cy="4" r="1.5" fill="currentColor" />
+                        <circle cx="12" cy="8" r="1.5" fill="currentColor" />
+                        <circle cx="12" cy="12" r="1.5" fill="currentColor" />
                       </svg>
                     </span>
                     <span className="font-medium text-sm text-gray-800 leading-tight">
@@ -337,7 +335,7 @@ function MatriculaColumn({
                       className="text-gray-400 hover:text-blue-600 hover:bg-blue-50 p-1 rounded transition-colors"
                       title="Cambiar color"
                     >
-                      <img src={iconoPincel} alt="Cambiar color" className="w-4 h-4" />
+                      <FontAwesomeIcon icon={faPaintBrush} className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => handleRemoveAsignatura(asignatura.codigo)}
@@ -354,7 +352,16 @@ function MatriculaColumn({
                     {asignatura.creditos} Créditos
                   </span>
                 </div>
-                {/* Sin elementos adicionales aquí - el botón ya está en el header */}
+                {asignatura.error && asignatura.faltantes && (
+                  <div className="mt-2 text-red-500 text-xs">
+                    Prerrequisitos pendientes:
+                    <ul className="list-disc ml-4">
+                      {asignatura.faltantes.map(pr => (
+                        <li key={pr.codigo}>{pr.nombre} ({pr.codigo})</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             ))}
           </div>
