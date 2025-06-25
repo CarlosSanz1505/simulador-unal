@@ -99,9 +99,9 @@ function MisSimulaciones() {
       {/* Contenido principal */}
       <main className="container py-8 mx-auto">
         {/* Contenedor centrado con fondo blanco como en el panel de matrículas */}
-        <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="max-w-5xl w-[90%] sm:w-auto mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header del panel */}
-          <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
+          <div className="bg-gray-50 px-6 py-4 border-b flex flex-col gap-[10px] sm:flex-row items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-800">Mis Simulaciones</h2>
             <div className="flex gap-3">
               <Button variant="primary" onClick={crearNuevaSimulacion}>
