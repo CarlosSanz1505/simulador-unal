@@ -307,7 +307,7 @@ function MatriculaColumn({
                 onDragOver={(e) => handleAsignaturaDragOver(e, index)}
                 onDrop={(e) => handleAsignaturaDropOnItem(e, index)}
                 className={`bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
-                  ${asignatura.error ? 'border-red-500' : 'border-gray-200'}
+                  ${asignatura.error ? 'border-red-500 border-4' : 'border-gray-200'}
                   ${draggedAsignatura === asignatura.codigo ? 'asignatura-dragging' : ''}`}
                 style={getAsignaturaStyle(asignatura.tipologia, asignatura.customColor)}
                 title={`${asignatura.descripcion || asignatura.nombre} - Arrastra para mover o reordenar`}
@@ -353,7 +353,16 @@ function MatriculaColumn({
                     {asignatura.creditos} Créditos
                   </span>
                 </div>
-                {/* Sin elementos adicionales aquí - el botón ya está en el header */}
+                {asignatura.error && asignatura.faltantes && (
+                  <div className="mt-2 text-red-500 text-xs">
+                    Prerrequisitos pendientes:
+                    <ul className="list-disc ml-4">
+                      {asignatura.faltantes.map(pr => (
+                        <li key={pr.codigo}>{pr.nombre} ({pr.codigo})</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             ))}
           </div>
