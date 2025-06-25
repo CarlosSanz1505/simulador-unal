@@ -159,7 +159,7 @@ export default function AsignaturasAdmin() {
   );
 
   return (
-    <div className="awa-container h-[80vh] m-auto">
+    <div className="awa-container w-[90%] h-[80vh] m-auto">
       <div className="awa-header">
         <h1 className="awa-title">Gestión de Asignaturas</h1>
         <div className="awa-actions-header">
@@ -221,7 +221,7 @@ export default function AsignaturasAdmin() {
       </div>
 
       {totalPages > 1 && (
-        <div className="awa-pagination">
+        <div className="awa-pagination flex-wrap">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
             <button
               key={num}
