@@ -307,7 +307,7 @@ function SimulacionDetalle() {
       {/* Contenido principal */}
       <main className={`container py-8 transition-all duration-300`}>
         {/* Contenedor  */}
-        <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="w-[90vw] sm:w-auto max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header de la simulación */}
           <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
             <Link
