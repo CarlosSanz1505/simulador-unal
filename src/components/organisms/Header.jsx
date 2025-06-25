@@ -10,7 +10,7 @@ function Header() {
   const location = useLocation()
   
   // Verificar si estamos en la página de Mis Simulaciones
-  const isInMisSimulaciones = location.pathname === '/misimulacion/' || location.pathname === '/misimulacion'
+  const isInMisSimulaciones = location.pathname === '/simulaciones/' || location.pathname === '/simulaciones'
 
   const handleOpenInstructive = () => {
     setShowInstructive(true)
