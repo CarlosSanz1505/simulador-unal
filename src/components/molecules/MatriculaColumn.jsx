@@ -1,8 +1,7 @@
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faPaintBrush } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
-import iconoPincel from '../../assets/iconos/pincel.svg'
 import Card from '../atoms/Card'
 import ColorPicker from '../atoms/ColorPicker'
 
@@ -337,7 +336,7 @@ function MatriculaColumn({
                       className="text-gray-400 hover:text-blue-600 hover:bg-blue-50 p-1 rounded transition-colors"
                       title="Cambiar color"
                     >
-                      <img src={iconoPincel} alt="Cambiar color" className="w-4 h-4" />
+                      <FontAwesomeIcon icon={faPaintBrush} className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => handleRemoveAsignatura(asignatura.codigo)}
