@@ -8,7 +8,6 @@ import SimulationCard from '../components/molecules/SimulationCard'
 import InstructiveModal from '../components/organisms/InstructiveModal'
 
 function MisSimulaciones() {
-  // Función para crear una simulación vacía por defecto
   const crearSimulacionVacia = () => ({
     id: Date.now().toString(),
     nombre: 'Mi Primera Simulación',
@@ -32,7 +31,6 @@ function MisSimulaciones() {
     }
   })
 
-  // Inicializar simulaciones desde localStorage o crear una vacía
   const inicializarSimulaciones = () => {
     const simulacionesGuardadas = localStorage.getItem('simulaciones')
     if (simulacionesGuardadas) {
@@ -44,7 +42,6 @@ function MisSimulaciones() {
         return [crearSimulacionVacia()]
       }
     }
-    // Primera vez del usuario - crear simulación vacía
     return [crearSimulacionVacia()]
   }
 
@@ -53,8 +50,8 @@ function MisSimulaciones() {
   const [simulacionToDelete, setSimulacionToDelete] = useState(null)
   const [showNewSimulationModal, setShowNewSimulationModal] = useState(false)
   const [newSimulationName, setNewSimulationName] = useState('')
+  const [nombreError, setNombreError] = useState('')
 
-  // Guardar simulaciones en localStorage cuando cambien
   useEffect(() => {
     localStorage.setItem('simulaciones', JSON.stringify(simulaciones))
   }, [simulaciones])
@@ -78,7 +75,7 @@ function MisSimulaciones() {
   }
 
   const editarSimulacion = (id, nuevoNombre) => {
-    setSimulaciones(simulaciones.map(sim => 
+    setSimulaciones(simulaciones.map(sim =>
       sim.id === id ? { ...sim, nombre: nuevoNombre } : sim
     ))
   }
@@ -108,43 +105,59 @@ function MisSimulaciones() {
 
   const crearNuevaSimulacion = () => {
     setNewSimulationName('')
+    setNombreError('')
     setShowNewSimulationModal(true)
   }
 
   const confirmarNuevaSimulacion = () => {
-    if (newSimulationName && newSimulationName.trim()) {
-      const nuevaSimulacion = {
-        id: Date.now().toString(),
-        nombre: newSimulationName.trim(),
-        fechaCreacion: new Date().toISOString().split('T')[0],
-        matriculas: [],
-        creditos: {
-          fundamentacionObligatoria: 0,
-          fundamentacionOptativa: 0,
-          disciplinarObligatoria: 0,
-          disciplinarOptativa: 0,
-          libreEleccion: 0,
-          total: 0
-        }
+    const nombresExistentes = simulaciones.map(s => s.nombre.toLowerCase())
+
+    let nombreFinal = newSimulationName.trim()
+
+    if (nombreFinal) {
+      if (nombresExistentes.includes(nombreFinal.toLowerCase())) {
+        setNombreError('Ya existe una simulación con ese nombre.')
+        return
       }
-      setSimulaciones([...simulaciones, nuevaSimulacion])
-      setShowNewSimulationModal(false)
-      setNewSimulationName('')
+    } else {
+      let n = 1
+      while (nombresExistentes.includes(`simulacion ${n}`)) {
+        n++
+      }
+      nombreFinal = `simulacion ${n}`
     }
+
+    const nuevaSimulacion = {
+      id: Date.now().toString(),
+      nombre: nombreFinal,
+      fechaCreacion: new Date().toISOString().split('T')[0],
+      matriculas: [],
+      creditos: {
+        fundamentacionObligatoria: 0,
+        fundamentacionOptativa: 0,
+        disciplinarObligatoria: 0,
+        disciplinarOptativa: 0,
+        libreEleccion: 0,
+        total: 0
+      }
+    }
+
+    setSimulaciones([...simulaciones, nuevaSimulacion])
+    setShowNewSimulationModal(false)
+    setNewSimulationName('')
+    setNombreError('')
   }
 
   const cancelarNuevaSimulacion = () => {
     setShowNewSimulationModal(false)
     setNewSimulationName('')
+    setNombreError('')
   }
 
   return (
     <div className="min-h-screen">
-      {/* Contenido principal */}
       <main className="container py-8">
-        {/* Contenedor centrado con fondo blanco como en el panel de matrículas */}
         <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-          {/* Header del panel */}
           <div className="bg-gray-50 px-4 sm:px-6 py-4 border-b flex items-center justify-between">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Mis Simulaciones</h2>
             <div className="flex gap-2 sm:gap-3">
@@ -159,9 +172,7 @@ function MisSimulaciones() {
             </div>
           </div>
 
-          {/* Contenido del panel */}
           <div className="p-6">
-            {/* Lista de simulaciones */}
             {simulaciones.length === 0 ? (
               <div className="empty-state">
                 <div className="empty-state-icon">🎓</div>
@@ -175,7 +186,7 @@ function MisSimulaciones() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {simulaciones.map((simulacion) => (
-                  <SimulationCard 
+                  <SimulationCard
                     key={simulacion.id}
                     simulacion={simulacion}
                     onDelete={eliminarSimulacion}
@@ -214,7 +225,10 @@ function MisSimulaciones() {
               id="simulationName"
               type="text"
               value={newSimulationName}
-              onChange={(e) => setNewSimulationName(e.target.value)}
+              onChange={(e) => {
+                setNewSimulationName(e.target.value)
+                setNombreError('')
+              }}
               placeholder="Ej: Plan Principal, Plan Alternativo..."
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
               autoFocus
@@ -224,20 +238,22 @@ function MisSimulaciones() {
                 }
               }}
             />
+            {nombreError && (
+              <p className="text-sm text-red-600 mt-1">{nombreError}</p>
+            )}
           </div>
-          
+
           <div className="flex gap-3 pt-4">
-            <Button 
-              variant="secondary" 
+            <Button
+              variant="secondary"
               onClick={cancelarNuevaSimulacion}
               className="flex-1"
             >
               Cancelar
             </Button>
-            <Button 
-              variant="primary" 
+            <Button
+              variant="primary"
               onClick={confirmarNuevaSimulacion}
-              disabled={!newSimulationName.trim()}
               className="flex-1"
             >
               Crear Simulación
@@ -246,7 +262,6 @@ function MisSimulaciones() {
         </div>
       </Modal>
 
-      {/* Modal instructivo que se muestra automáticamente al cargar la página */}
       <InstructiveModal showOnLoad={true} />
     </div>
   )
