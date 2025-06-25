@@ -366,7 +366,8 @@ function SimulacionDetalle() {
               <h3 className="text-lg font-semibold">Matrículas</h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="border-[2px] border-solid border-gray
+            flex gap-[20px] p-[20px] max-h-[500px] overflow-x-auto">
               {simulacion.matriculas.map((matricula) => (
                 <div 
                   key={matricula.id}
@@ -392,7 +393,7 @@ function SimulacionDetalle() {
                 onClick={crearMatricula}
                 className="cursor-pointer group"
               >
-                <div className="bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 h-full min-h-[300px] flex flex-col items-center justify-center hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
+                <div className="w-[300px] bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 h-full min-h-[300px] flex flex-col items-center justify-center hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
                   <div className="text-center">
                     <div className="text-4xl text-gray-400 group-hover:text-unal-green-500 mb-4 transition-colors">
                       +

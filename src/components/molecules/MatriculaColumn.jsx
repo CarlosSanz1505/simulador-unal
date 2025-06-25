@@ -232,7 +232,7 @@ function MatriculaColumn({
   }
 
   return (
-    <Card active={isActive} className="animate-fade-in">
+    <Card active={isActive} className="animate-fade-in w-[300px] h-full flex flex-col">
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2 flex-1">
           {isEditingName ? (
@@ -281,7 +281,7 @@ function MatriculaColumn({
       </div>
 
       <div 
-        className={`min-h-[200px] border-2 border-dashed rounded-lg p-3 transition-colors ${
+        className={`min-h-[200px] border-2 border-dashed rounded-lg p-3 overflow-y-auto transition-colors ${
           isDragOver 
             ? 'border-unal-green-400 bg-unal-green-50' 
             : 'border-gray-300 bg-gray-50'
