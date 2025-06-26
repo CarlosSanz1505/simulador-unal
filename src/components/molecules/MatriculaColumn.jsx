@@ -250,7 +250,7 @@ function MatriculaColumn({
                 onDragEnd={handleAsignaturaDragEnd}
                 onDragOver={(e) => handleAsignaturaDragOver(e, index)}
                 onDrop={(e) => handleAsignaturaDropOnItem(e, index)}
-                className={`bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
+                className={`w-[220px] bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
                   ${asignatura.error ? 'border-red-500 border-4' : 'border-gray-200'}
                   ${draggedAsignatura === asignatura.codigo ? 'asignatura-dragging' : ''}`}
                 style={getAsignaturaStyle(asignatura.tipologia, asignatura.customColor)}

@@ -91,16 +91,10 @@ git clone https://github.com/CarlosSanz1505/simulador-unal.git
 # 2. Entrar al directorio
 cd simulador-unal
 
-# 3. Cambiar al branch correcto (donde están tus cambios)
-git checkout feature/simulaciones-matriculas
-
-# 4. Entrar al subdirectorio del proyecto
-cd simulador-unal
-
-# 5. Instalar dependencias
+# 3. Instalar dependencias
 npm install
 
-# 6. Ejecutar el proyecto
+# 3. Ejecutar el proyecto
 npm start
 ```
 
@@ -127,6 +121,10 @@ Contador individual para cada tipología de créditos.
 - **Breakpoints:** 768px (md), 1024px (lg)
 
 ## Estados de la Aplicación
+
+### **Página de Login**
+- Registro/Inicio de Sesión por medio de OAuth 2.0
+- Permite únicamente cuentas bajo el dominio de la universidad (`...@unal.edu.co`)
 
 ### **Página Principal**
 - Lista de simulaciones
@@ -185,29 +183,21 @@ Este frontend está diseñado para integrarse con:
    cd simulador-unal
    ```
 
-2. **Cambiar al branch de desarrollo**
-   ```bash
-   git checkout feature/simulaciones-matriculas
-   ```
-
-3. **Navegar al directorio del proyecto**
-   ```bash
-   cd simulador-unal
-   ```
-
-4. **Instalar dependencias**
+2. **Instalar dependencias**
    ```bash
    npm install
    ```
 
-5. **Ejecutar en modo desarrollo**
+3. **Ejecutar en modo desarrollo**
    ```bash
    npm start
    ```
 
-6. **Abrir en el navegador**
-   - La aplicación se abrirá automáticamente en `http://localhost:5173/misimulacion/`
+4. **Abrir en el navegador**
+   - La aplicación se abrirá automáticamente en `http://localhost:5173`
    - Si no se abre automáticamente, navega manualmente a esa URL
+
+***NOTA:*** La pantalla principal incluye un proceso de autenticación por parte del usuario con *OAuth 2.0* (Google). Una vez se ha ingresado, se visualizará la vista de *Simulaciones* (orientada al estudiante), y presionando ```Ctrl + M``` se podrá alternar entre esta vista y la de *Gestión de Asignaturas* (dedicada al admin). Esta funcionalidad es exclusiva a la etapa de **demostración** del proyecto, y la redirección a una pantalla u otra tras el login dependerá de si la cuenta de ingreso está registrada en la base de datos como Administrador o no (cuando esta se implemente en el proyecto).
 
 ### Comandos adicionales
 
