@@ -99,8 +99,6 @@ function SimulacionDetalle() {
   const agregarAsignaturaAMatricula = (matriculaId, asignatura) => {
     // VALIDACIÓN DE PRERREQUISITOS PARA DRAG & DROP
     if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
-      console.log('Verificando prerrequisitos:', asignatura.prerrequisitos)
-
       // Encontrar la matrícula de destino
       const matriculaDestino = simulacion.matriculas.find(m => m.id === matriculaId);
 
@@ -110,31 +108,22 @@ function SimulacionDetalle() {
           .filter(m => m.posicion <= matriculaDestino.posicion)
           .flatMap(m => m.asignaturas.map(a => a.codigo));
 
-        console.log('Asignaturas aprobadas hasta ahora:', asignaturasAprobadas)
-
         // Verificar prerrequisitos faltantes
-        const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo =>
+        const prerrequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo =>
           !asignaturasAprobadas.includes(prereqCodigo)
         );
 
-        console.log('Prerrequisitos faltantes:', prerequisitosFaltantes)
-
-        if (prerequisitosFaltantes.length > 0) {
+        if (prerrequisitosFaltantes.length > 0) {
           // Obtener información de los prerrequisitos faltantes usando el servicio
-          const prerequisitosInfo = prerequisitosFaltantes.map(codigo => {
+          const prerrequisitosInfo = prerrequisitosFaltantes.map(codigo => {
             const asignaturaInfo = AsignaturasService.getAsignaturaPorCodigo(codigo);
-
-            return asignaturaInfo ? {
-              codigo: asignaturaInfo.codigo,
-              nombre: asignaturaInfo.nombre,
-              creditos: asignaturaInfo.creditos
-            } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
+            return asignaturaInfo
+              ? { codigo: asignaturaInfo.codigo, nombre: asignaturaInfo.nombre, creditos: asignaturaInfo.creditos }
+              : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
           });
 
-          console.log('Bloqueando asignatura por prerrequisitos faltantes')
-          setPrerrequisitosFaltantes(prerequisitosInfo);
+          setPrerrequisitosFaltantes(prerrequisitosInfo);
           setShowPrerequisitosModal(true);
-
           return; // No agregar la asignatura
         }
       }
@@ -199,11 +188,10 @@ function SimulacionDetalle() {
     }
   }
 
-  // Nueva función para mover asignaturas entre matrículas
+  // Mover asignaturas entre matrículas
   const moverAsignatura = (sourceMatriculaId, targetMatriculaId, asignatura) => {
     if (sourceMatriculaId === targetMatriculaId) return; // No mover si es la misma matrícula
 
-    // Encontrar la matrícula de destino
     const matriculaDestino = simulacion.matriculas.find(m => m.id === targetMatriculaId);
 
     if (matriculaDestino) {
@@ -216,7 +204,6 @@ function SimulacionDetalle() {
             .map(a => a.codigo)
         );
 
-      // Validar prerrequisitos
       const faltantes = getPrerequisitosFaltantes(asignatura, asignaturasAprobadas);
       if (faltantes.length > 0) {
         setPrerrequisitosFaltantes(faltantes);
@@ -225,18 +212,14 @@ function SimulacionDetalle() {
       }
     }
 
-    // Si no hay problemas con prerrequisitos, proceder con el movimiento y recalcular errores
     setSimulacion(prev => {
-      // Mover la asignatura
       const nuevasMatriculas = prev.matriculas.map(matricula => {
         if (matricula.id === sourceMatriculaId) {
-          // Remover de la matrícula origen
           return {
             ...matricula,
             asignaturas: matricula.asignaturas.filter(a => a.codigo !== asignatura.codigo)
           }
         } else if (matricula.id === targetMatriculaId) {
-          // Agregar a la matrícula destino (verificar si ya existe)
           const yaExiste = matricula.asignaturas.some(a => a.codigo === asignatura.codigo)
           if (!yaExiste) {
             const asignaturaSinError = { ...asignatura }
@@ -258,7 +241,6 @@ function SimulacionDetalle() {
     })
   }
 
-  // Nueva función para reordenar asignaturas dentro de una matrícula
   const reordenarAsignaturas = (matriculaId, fromIndex, toIndex) => {
     setSimulacion(prev => ({
       ...prev,
@@ -278,7 +260,6 @@ function SimulacionDetalle() {
     }))
   }
 
-  // Nueva función para cambiar el color de una asignatura
   const cambiarColorAsignatura = (matriculaId, asignaturaCodigo, nuevoColor) => {
     setSimulacion(prev => ({
       ...prev,
@@ -305,23 +286,29 @@ function SimulacionDetalle() {
   return (
     <div className="min-h-screen m-auto">
       {/* Contenido principal */}
-      <main className={`container py-8 transition-all duration-300`}>
-        {/* Contenedor  */}
-        <div className="w-[90vw] sm:w-auto max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <main className="container py-8 transition-all duration-300">
+        <div
+          className={`w-[96vw] md:w-[94vw] lg:w-[92vw] max-w-7xl mx-auto bg-white
+                      rounded-lg shadow-lg overflow-hidden
+                      px-4 sm:px-6 lg:px-8
+                      ${isDesktop && showPanel ? 'lg:mr-[384px]' : ''}`}
+        >
+
           {/* Header de la simulación */}
           <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
-            <Link
-              to="/simulaciones"
-              className="btn btn-secondary text-sm"
-            >
+            <Link to="/simulaciones" className="btn btn-secondary text-sm">
               ← Volver
             </Link>
+
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-semibold text-gray-800">{simulacion.nombre}</h1>
+              <h1 className="text-xl font-semibold text-gray-800">
+                {simulacion.nombre}
+              </h1>
               <button
                 className="p-2 text-gray-400 hover:text-unal-green-600 hover:bg-unal-green-50 rounded-lg transition-colors"
                 onClick={editarNombre}
                 title="Editar nombre"
+                aria-label="Editar nombre de la simulación"
               >
                 <FontAwesomeIcon icon={faEdit} />
               </button>
@@ -333,17 +320,19 @@ function SimulacionDetalle() {
                   onClick={() => setShowPanel(!showPanel)}
                   className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors"
                   title="Buscar asignaturas"
+                  aria-label="Abrir panel de asignaturas"
                 >
                   <FontAwesomeIcon icon={faSearch} />
                 </button>
               )}
+
               <button
                 className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors"
                 title="Descargar simulación"
+                aria-label="Descargar simulación"
               >
                 <FontAwesomeIcon icon={faDownload} />
               </button>
-
             </div>
           </div>
 
@@ -356,13 +345,13 @@ function SimulacionDetalle() {
               <h3 className="text-lg font-semibold">Matrículas</h3>
             </div>
 
-            <div className="border-[2px] border-solid border-gray
-            flex gap-[20px] p-[20px] max-h-[500px] overflow-x-auto">
+            <div className="border-[2px] border-solid border-gray flex gap-[20px] p-[20px]
+                            max-h-[70vh] lg:max-h-[60vh] overflow-x-auto">
               {simulacion.matriculas.map((matricula) => (
                 <div
                   key={matricula.id}
                   onClick={() => setMatriculaActiva(matricula.id)}
-                  className="cursor-pointer"
+                  className="cursor-pointer flex-shrink-0 w-[310px]"
                 >
                   <MatriculaColumn
                     matricula={matricula}
@@ -381,9 +370,12 @@ function SimulacionDetalle() {
               {/* Tarjeta para agregar nueva matrícula */}
               <div
                 onClick={crearMatricula}
-                className="cursor-pointer group"
+                className="cursor-pointer group flex-shrink-0 w-[310px]"
               >
-                <div className="w-[300px] bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 h-full min-h-[300px] flex flex-col items-center justify-center hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
+                <div className="w-full bg-white border-2 border-dashed border-gray-300
+                                rounded-lg p-6 h-full min-h-[300px]
+                                flex flex-col items-center justify-center
+                                hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
                   <div className="text-center">
                     <div className="text-4xl text-gray-400 group-hover:text-unal-green-500 mb-4 transition-colors">
                       +
@@ -400,14 +392,11 @@ function SimulacionDetalle() {
             </div>
 
             {simulacion.matriculas.length === 0 && (
-              <div className="empty-state">
+              <div className="empty-state text-center">
                 <FontAwesomeIcon icon={faEdit} className="w-5 h-5 mr-2" />
                 <h3 className="text-xl font-semibold mb-2">No tienes matrículas creadas</h3>
                 <p className="mb-6">Crea tu primera matrícula para comenzar a planificar tu carrera</p>
-                <Button
-                  variant="primary"
-                  onClick={crearMatricula}
-                >
+                <Button variant="primary" onClick={crearMatricula}>
                   <FontAwesomeIcon icon={faPlus} className="w-5 h-5 mr-2" />
                   Crear tu primera matrícula
                 </Button>
@@ -432,7 +421,9 @@ function SimulacionDetalle() {
             }
           }}
           onSelectAsignaturas={handleSelectAsignaturas}
-          selectedAsignaturas={simulacion.matriculas.find(m => m.id === matriculaActiva)?.asignaturas || []}
+          selectedAsignaturas={
+            simulacion.matriculas.find(m => m.id === matriculaActiva)?.asignaturas || []
+          }
           todasLasAsignaturas={simulacion.matriculas.flatMap(m => m.asignaturas)}
           showPanel={showPanel}
           setShowPanel={setShowPanel}
@@ -458,18 +449,16 @@ function SimulacionDetalle() {
         prerequisitosFaltantes={prerequisitosFaltantes}
       />
 
-      {/* Botón hamburguesa flotante para móvil - altura del header del panel */}
+      {/* Botón hamburguesa flotante para móvil */}
       {!isDesktop && matriculaActiva && (
         <button
           onClick={() => setShowPanel(!showPanel)}
-          className="fixed top-[75px] right-3 z-50 p-2 rounded-full shadow-lg transition-colors"
-          style={{
-            backgroundColor: '#57844A',
-            color: 'white'
-          }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#4a6d3e'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#57844A'}
-          title={showPanel ? "Cerrar panel de asignaturas" : "Abrir panel de asignaturas"}
+          className="fixed top-[75px] right-3 z-50 p-3 rounded-full shadow-lg transition-colors lg:hidden"
+          style={{ backgroundColor: '#57844A', color: 'white' }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#4a6d3e')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#57844A')}
+          title={showPanel ? 'Cerrar panel de asignaturas' : 'Abrir panel de asignaturas'}
+          aria-label="Alternar panel de asignaturas"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
