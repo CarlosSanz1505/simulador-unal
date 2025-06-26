@@ -71,6 +71,18 @@ function SimulacionDetalle() {
   const eliminarMatricula = (matriculaId) => {
     setConfirmModal({ show: true, matriculaId })
   }
+  
+  const handleExport = (e) => {
+    e.preventDefault()
+    const dataStr = JSON.stringify(simulacion, null, 2)
+    const dataBlob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(dataBlob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${simulacion.nombre.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
 
   const confirmarEliminarMatricula = () => {
     const { matriculaId } = confirmModal
@@ -314,8 +326,8 @@ function SimulacionDetalle() {
                   <FontAwesomeIcon icon={faSearch} />
                 </button>
               )}
-
               <button
+                onClick={handleExport}
                 className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors"
                 title="Descargar simulación"
                 aria-label="Descargar simulación"
