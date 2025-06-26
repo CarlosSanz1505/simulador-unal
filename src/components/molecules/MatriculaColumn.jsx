@@ -1,4 +1,4 @@
-import { faEdit, faPaintBrush } from '@fortawesome/free-solid-svg-icons'
+import { faPaintBrush } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
@@ -44,7 +44,6 @@ function MatriculaColumn({
   onDelete, 
   onAddAsignatura, 
   onRemoveAsignatura, 
-  onEditName, 
   onMoveAsignatura, // Nueva prop para mover asignaturas entre matrículas
   onReorderAsignaturas, // Nueva prop para reordenar asignaturas dentro de la matrícula
   onChangeAsignaturaColor, // Nueva prop para cambiar el color de una asignatura
@@ -52,8 +51,6 @@ function MatriculaColumn({
 }) {
   const [isDragOver, setIsDragOver] = useState(false)
   const [draggedAsignatura, setDraggedAsignatura] = useState(null) // Para efectos visuales
-  const [isEditingName, setIsEditingName] = useState(false)
-  const [editedName, setEditedName] = useState(matricula.nombre || `Matrícula ${matricula.posicion}`)
   const [colorPicker, setColorPicker] = useState({ isOpen: false, asignatura: null, anchorElement: null })
 
   const getAsignaturaStyle = (tipologia, customColor = null) => {
@@ -77,50 +74,21 @@ function MatriculaColumn({
     onDelete(matricula.id)
   }
 
-  const handleEditName = () => {
-    setIsEditingName(true)
-  }
-
-  const handleSaveName = () => {
-    if (editedName.trim() && onEditName) {
-      onEditName(matricula.id, editedName.trim())
-    }
-    setIsEditingName(false)
-  }
-
-  const handleCancelEdit = () => {
-    setEditedName(matricula.nombre || `Matrícula ${matricula.posicion}`)
-    setIsEditingName(false)
-  }
-
-  const handleNameKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSaveName()
-    } else if (e.key === 'Escape') {
-      handleCancelEdit()
-    }
-  }
-
   const handleDrop = (e) => {
     e.preventDefault()
     setIsDragOver(false)
-    
-    console.log('Drop detectado en matrícula:', matricula.id)
-    
+        
     try {
       const dragData = JSON.parse(e.dataTransfer.getData('application/json'))
-      console.log('Datos del drag:', dragData)
       
       if (dragData.type === 'asignatura-from-panel') {
         // Asignatura del panel lateral (comportamiento original)
-        console.log('Asignatura desde panel:', dragData.data?.nombre)
         if (dragData.data && onAddAsignatura) {
           onAddAsignatura(matricula.id, dragData.data)
         }
       } else if (dragData.type === 'asignatura-from-matricula') {
         // Asignatura de otra matrícula
         const { asignatura, sourceMatriculaId } = dragData.data
-        console.log('Moviendo asignatura entre matrículas:', asignatura?.nombre)
         if (sourceMatriculaId !== matricula.id && onMoveAsignatura) {
           onMoveAsignatura(sourceMatriculaId, matricula.id, asignatura)
         }
@@ -193,7 +161,7 @@ function MatriculaColumn({
   }
 
   // Funciones para reordenamiento dentro de la matrícula
-  const handleAsignaturaDragOver = (e, targetIndex) => {
+  const handleAsignaturaDragOver = (e) => {
     e.preventDefault()
     // Solo permitir drop si es del mismo tipo y misma matrícula para reordenamiento
     try {
@@ -233,33 +201,9 @@ function MatriculaColumn({
   return (
     <Card active={isActive} className="animate-fade-in">
       <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-2 flex-1">
-          {isEditingName ? (
-            <input
-              type="text"
-              value={editedName}
-              onChange={(e) => setEditedName(e.target.value)}
-              onBlur={handleSaveName}
-              onKeyDown={handleNameKeyPress}
-              className="font-semibold text-gray-900 bg-transparent border-b-2 border-unal-green-500 focus:outline-none focus:border-unal-green-600 px-1"
-              autoFocus
-              maxLength={50}
-            />
-          ) : (
-            <>
-              <h4 className="font-semibold text-gray-900">
-                {matricula.nombre || `Matrícula ${matricula.posicion}`}
-              </h4>
-              <button
-                onClick={handleEditName}
-                className="text-gray-400 hover:text-unal-green-600 hover:bg-unal-green-50 p-1 rounded transition-colors"
-                title="Editar nombre"
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-            </>
-          )}
-        </div>
+        <h4 className="font-semibold text-gray-900">
+          {`Matrícula ${matricula.posicion}`}
+        </h4>
         <button 
           onClick={handleDelete}
           className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded transition-colors ml-2"

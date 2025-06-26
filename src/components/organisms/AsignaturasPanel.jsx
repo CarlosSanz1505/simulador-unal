@@ -110,8 +110,6 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
       // VALIDACIÓN DE PRERREQUISITOS
       // Solo validar si la asignatura tiene prerrequisitos
       if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
-        console.log('Validando prerrequisitos para:', asignatura.nombre)
-        console.log('Prerrequisitos requeridos:', asignatura.prerrequisitos)
         
         // Obtener todas las asignaturas ya agregadas en matrículas anteriores
         let asignaturasAprobadas = []
@@ -126,14 +124,10 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
           }
         }
         
-        console.log('Asignaturas ya aprobadas:', asignaturasAprobadas)
-        
         // Verificar si todos los prerrequisitos están cumplidos
         const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo => 
           !asignaturasAprobadas.includes(prereqCodigo)
         )
-        
-        console.log('Prerrequisitos faltantes:', prerequisitosFaltantes)
         
         if (prerequisitosFaltantes.length > 0) {
           // Obtener información de los prerrequisitos faltantes
@@ -146,14 +140,12 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
           })
           
-          console.log('Mostrando modal de prerrequisitos')
           setPrerrequisitosFaltantes(prerequisitosInfo)
           setShowPrerequisitosModal(true)
           return // No agregar la asignatura
         }
       }
       
-      console.log('Agregando asignatura:', asignatura.nombre)
       // Agregar la asignatura
       setLocalSelectedAsignaturas(prev => [...prev, asignatura])
     }
