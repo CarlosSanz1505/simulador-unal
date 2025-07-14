@@ -4,16 +4,26 @@ import ConfirmModal from '../components/atoms/ConfirmModal'
 import Modal from '../components/atoms/Modal'
 import SimulationCard from '../components/molecules/SimulationCard'
 import InstructiveModal from '../components/organisms/InstructiveModal'
-import { simulacionesEjemplo } from '../data/mockData'
 import { faPlus, faUpload, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect } from 'react'
+import { getSimulaciones } from '../data/services/simulaciones'
 
 function MisSimulaciones() {
-  const [simulaciones, setSimulaciones] = useState(simulacionesEjemplo)
+  const [simulaciones, setSimulaciones] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [simulacionToDelete, setSimulacionToDelete] = useState(null)
   const [showNewSimulationModal, setShowNewSimulationModal] = useState(false)
   const [newSimulationName, setNewSimulationName] = useState('')
+
+  // Fetch simulaciones
+  useEffect(() => {
+    getSimulaciones().then(data => {
+      setSimulaciones(data);
+      setLoading(false);
+    });
+  }, []);
 
   const eliminarSimulacion = (id) => {
     const simulacion = simulaciones.find(sim => sim.id === id)
@@ -35,7 +45,7 @@ function MisSimulaciones() {
 
   const editarSimulacion = (id, nuevoNombre) => {
     const nombreNormalizado = nuevoNombre.trim().toLowerCase()
-    const yaExiste = simulaciones.some(sim => 
+    const yaExiste = simulaciones.some(sim =>
       sim.id !== id && sim.nombre.trim().toLowerCase() === nombreNormalizado
     )
 
@@ -44,7 +54,7 @@ function MisSimulaciones() {
       return
     }
 
-    setSimulaciones(simulaciones.map(sim => 
+    setSimulaciones(simulaciones.map(sim =>
       sim.id === id ? { ...sim, nombre: nuevoNombre } : sim
     ))
   }
@@ -142,7 +152,14 @@ function MisSimulaciones() {
           </div>
 
           <div className="p-6">
-            {simulaciones.length === 0 ? (
+            {loading ? (
+              <div className="flex justify-center items-center py-12">
+                <svg className="animate-spin h-8 w-8 text-unal-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+              </div>
+            ) : simulaciones.length === 0 ? (
               <div className="empty-state">
                 <div className="empty-state-icon">
                   <FontAwesomeIcon icon={faGraduationCap} className="text-4xl text-unal-green-600 mb-2" />
@@ -157,7 +174,7 @@ function MisSimulaciones() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {simulaciones.map((simulacion) => (
-                  <SimulationCard 
+                  <SimulationCard
                     key={simulacion.id}
                     simulacion={simulacion}
                     onDelete={eliminarSimulacion}
