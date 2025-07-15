@@ -19,9 +19,16 @@
       // Procesar credenciales recibidas y redirigir a vista simulaciones si son válidas
       function handleCredentialResponse(response) {
         const responsePayload = decodeJwtResponse(response.credential);
-        const emailDomain = responsePayload.email.split('@')[1];
+        const [emailUser, emailDomain] = responsePayload.email.split('@');
+
         if (emailDomain === 'unal.edu.co') {
-          window.location.href = '/simulaciones';
+          fetch('http://localhost:4000/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ emailUser })
+          })
+            .then(response => response.json())
+            .then(data => {window.location.href = data.redirect});
         } else {
           const loginError = document.querySelector('.login-error');
           loginError.classList.remove('hidden');
