@@ -151,6 +151,17 @@ export default function AsignaturasAdmin() {
       a.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
       a.codigo.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+  useEffect(() => {
+    const total = Math.max(
+      1,
+      Math.ceil(filteredAsignaturas.length / itemsPerPage)
+    );
+    if (currentPage > total) {
+      setCurrentPage(total);
+    }
+  }, [filteredAsignaturas, currentPage, itemsPerPage]);  
+  
   const totalPages = Math.ceil(filteredAsignaturas.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredAsignaturas.slice(
