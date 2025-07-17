@@ -77,7 +77,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
     }
 
     return result
-  }, [searchTerm, searchBy, creditFilter, todasLasAsignaturas])
+  }, [searchTerm, searchBy, creditFilter, todasLasAsignaturas, asignaturas])
 
   // Agrupar asignaturas por tipología con orden específico
   const asignaturasPorTipologia = useMemo(() => {
