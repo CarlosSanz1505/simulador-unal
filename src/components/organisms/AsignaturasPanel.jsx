@@ -193,12 +193,12 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
   }
 
   const tipologiaColors = {
-    'fundamentacion_obligatoria': '#dc2626',
-    'fundamentacion_optativa': '#ea580c',
-    'disciplinar_obligatoria': '#059669',
-    'disciplinar_optativa': '#2563eb',
-    'trabajo_de_grado': '#7c3aed',
-    'libre_eleccion': '#f59e0b'
+    'fundamentacion_obligatoria': '#ffcfcf',
+    'fundamentacion_optativa': '#ffc596',
+    'disciplinar_obligatoria': '#60e8b6',
+    'disciplinar_optativa': '#8dbef9',
+    'trabajo_de_grado': '#c8b5ff',
+    'libre_eleccion': '#ffe39c'
   }
 
   return (
@@ -292,7 +292,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             Object.entries(asignaturasPorTipologia).map(([tipologia, asignaturasList]) => (
               <div key={tipologia}>
                 <div 
-                  className="sticky top-0 px-4 py-2 text-white text-sm font-medium z-10 flex items-center justify-between cursor-pointer"
+                  className="sticky top-0 px-4 py-2 text-sm font-medium z-10 flex items-center justify-between cursor-pointer"
                   style={{ backgroundColor: tipologiaColors[tipologia] }}
                   onClick={() => toggleTipologia(tipologia)}
                 >
