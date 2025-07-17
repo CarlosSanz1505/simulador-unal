@@ -1,17 +1,40 @@
-import { useMemo, useState } from 'react'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useMemo, useState } from 'react'
 import iconoCancelar from '../../assets/iconos/cancelar.svg'
-import { asignaturas } from '../../data/asignaturas.json'
+import { getAsignaturas } from '../../data/services/asignaturas'
 import PrerequisitosModal from '../atoms/PrerequisitosModal'
 
 function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todasLasAsignaturas = [], showPanel = true, setShowPanel, isDesktop = false, simulacion }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchBy, setSearchBy] = useState('nombre')
+<<<<<<< HEAD
   const [filtroCreditos, setFiltroCreditos] = useState('todos') // Nuevo filtro por créditos
   const [filtroTipologia, setFiltroTipologia] = useState('todas') // Nuevo filtro por tipología
+=======
+  const [creditFilter, setCreditFilter] = useState('todos') // Nuevo filtro por créditos
+>>>>>>> main
   const [localSelectedAsignaturas, setLocalSelectedAsignaturas] = useState([]) // Inicializar vacío
   const [collapsedTipologias, setCollapsedTipologias] = useState({}) // Estado para colapsar tipologías
   const [showPrerequisitosModal, setShowPrerequisitosModal] = useState(false)
   const [prerequisitosFaltantes, setPrerrequisitosFaltantes] = useState([])
+  const [asignaturas, setAsignaturas] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch asignaturas from API
+  useEffect(() => {
+    const fetchAsignaturas = async () => {
+      try {
+        const data = await getAsignaturas()
+        setAsignaturas(data)
+      } catch (error) {
+        console.error('Error al cargar asignaturas:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchAsignaturas()
+  }, [])
 
   // Filtrar asignaturas según el término de búsqueda, filtros de créditos y tipología, y excluir las ya agregadas
   const filteredAsignaturas = useMemo(() => {
@@ -20,6 +43,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
       return !todasLasAsignaturas.some(a => a.codigo === asignatura.codigo)
     })
 
+<<<<<<< HEAD
     // Aplicar filtro por tipología
     if (filtroTipologia !== 'todas') {
       asignaturasDisponibles = asignaturasDisponibles.filter(asignatura => 
@@ -64,6 +88,48 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
       }
     })
   }, [searchTerm, searchBy, filtroCreditos, filtroTipologia, todasLasAsignaturas])
+=======
+    let result = asignaturasDisponibles
+
+    // Filtrar por término de búsqueda
+    if (searchTerm) {
+      result = result.filter(asignatura => {
+        const searchValue = searchTerm.toLowerCase().trim()
+        
+        switch (searchBy) {
+          case 'nombre':
+            return asignatura.nombre.toLowerCase().includes(searchValue)
+          case 'codigo':
+            return asignatura.codigo.toLowerCase().includes(searchValue)
+          case 'tipologia':
+            return asignatura.tipologia.toLowerCase().includes(searchValue)
+          default:
+            return true
+        }
+      })
+    }
+
+    // Filtrar por créditos
+    if (creditFilter !== 'todos') {
+      result = result.filter(asignatura => {
+        switch (creditFilter) {
+          case '1-2':
+            return asignatura.creditos >= 1 && asignatura.creditos <= 2
+          case '3-4':
+            return asignatura.creditos >= 3 && asignatura.creditos <= 4
+          case '5-6':
+            return asignatura.creditos >= 5 && asignatura.creditos <= 6
+          case '7+':
+            return asignatura.creditos >= 7
+          default:
+            return true
+        }
+      })
+    }
+
+    return result
+  }, [searchTerm, searchBy, creditFilter, todasLasAsignaturas])
+>>>>>>> main
 
   // Agrupar asignaturas por tipología con orden específico
   const asignaturasPorTipologia = useMemo(() => {
@@ -113,8 +179,6 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
       // VALIDACIÓN DE PRERREQUISITOS
       // Solo validar si la asignatura tiene prerrequisitos
       if (asignatura.prerrequisitos && asignatura.prerrequisitos.length > 0) {
-        console.log('🔍 Validando prerrequisitos para:', asignatura.nombre)
-        console.log('🔍 Prerrequisitos requeridos:', asignatura.prerrequisitos)
         
         // Obtener todas las asignaturas ya agregadas en matrículas anteriores
         let asignaturasAprobadas = []
@@ -129,14 +193,10 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
           }
         }
         
-        console.log('🔍 Asignaturas ya aprobadas:', asignaturasAprobadas)
-        
         // Verificar si todos los prerrequisitos están cumplidos
         const prerequisitosFaltantes = asignatura.prerrequisitos.filter(prereqCodigo => 
           !asignaturasAprobadas.includes(prereqCodigo)
         )
-        
-        console.log('🔍 Prerrequisitos faltantes:', prerequisitosFaltantes)
         
         if (prerequisitosFaltantes.length > 0) {
           // Obtener información de los prerrequisitos faltantes
@@ -149,15 +209,22 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             } : { codigo, nombre: 'Asignatura no encontrada', creditos: 0 }
           })
           
+<<<<<<< HEAD
           console.log('⚠️ Mostrando advertencia de prerrequisitos (pero se permite agregar)')
+=======
+>>>>>>> main
           setPrerrequisitosFaltantes(prerequisitosInfo)
           setShowPrerequisitosModal(true)
           // NO HACEMOS RETURN - PERMITIMOS QUE CONTINÚE Y AGREGUE LA ASIGNATURA
         }
       }
       
+<<<<<<< HEAD
       console.log('✅ Agregando asignatura:', asignatura.nombre)
       // Agregar la asignatura (ahora se ejecuta siempre, sin importar los prerrequisitos)
+=======
+      // Agregar la asignatura
+>>>>>>> main
       setLocalSelectedAsignaturas(prev => [...prev, asignatura])
     }
   }
@@ -250,10 +317,11 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
               className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
             />
             <button className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
-              🔍
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="w-5 h-5" />
             </button>
           </div>
 
+<<<<<<< HEAD
           {/* Filtros adicionales */}
           <div className="grid grid-cols-2 gap-2">
             <div>
@@ -292,22 +360,36 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
           {/* Contador de resultados */}
           <div className="text-xs text-gray-500 text-center">
             {Object.values(asignaturasPorTipologia).reduce((acc, curr) => acc + curr.length, 0)} asignaturas encontradas
+=======
+          {/* Nuevo filtro por créditos */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Filtrar por créditos</label>
+            <select 
+              value={creditFilter} 
+              onChange={(e) => setCreditFilter(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
+            >
+              <option value="todos">Todos los créditos</option>
+              <option value="1-2">1-2 créditos</option>
+              <option value="3-4">3-4 créditos</option>
+              <option value="5-6">5-6 créditos</option>
+              <option value="7+">7+ créditos</option>
+            </select>
+>>>>>>> main
           </div>
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          {Object.entries(asignaturasPorTipologia).map(([tipologia, asignaturasList]) => (
-            <div key={tipologia}>
-              <div 
-                className="sticky top-0 px-4 py-2 text-white text-sm font-medium z-10 flex items-center justify-between cursor-pointer"
-                style={{ backgroundColor: tipologiaColors[tipologia] }}
-                onClick={() => toggleTipologia(tipologia)}
-              >
-                <span>{tipologiaLabels[tipologia] || tipologia}</span>
-                <span className="text-xs">
-                  {collapsedTipologias[tipologia] ? '▼' : '▲'}
-                </span>
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="text-center">
+                <svg className="animate-spin h-8 w-8 text-unal-green-600 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+                <p className="text-sm text-gray-600">Cargando asignaturas...</p>
               </div>
+<<<<<<< HEAD
               
               {!collapsedTipologias[tipologia] && asignaturasList.map(asignatura => {
                 const isSelected = localSelectedAsignaturas.some(a => a.codigo === asignatura.codigo)
@@ -355,8 +437,77 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
                   </div>
                 )
               })}
+=======
+>>>>>>> main
             </div>
-          ))}
+          ) : (
+            Object.entries(asignaturasPorTipologia).map(([tipologia, asignaturasList]) => (
+              <div key={tipologia}>
+                <div 
+                  className="sticky top-0 px-4 py-2 text-white text-sm font-medium z-10 flex items-center justify-between cursor-pointer"
+                  style={{ backgroundColor: tipologiaColors[tipologia] }}
+                  onClick={() => toggleTipologia(tipologia)}
+                >
+                  <span>{tipologiaLabels[tipologia] || tipologia}</span>
+                  <span className="text-xs">
+                    {collapsedTipologias[tipologia] ? '▼' : '▲'}
+                  </span>
+                </div>
+                
+                {!collapsedTipologias[tipologia] && asignaturasList.map(asignatura => {
+                  const isSelected = localSelectedAsignaturas.some(a => a.codigo === asignatura.codigo)
+                  
+                  return (
+                    <div 
+                      key={asignatura.codigo}
+                      className={`flex items-center gap-3 p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors ${
+                        isSelected ? 'bg-unal-green-50 border-unal-green-200' : ''
+                      }`}
+                      draggable
+                      onDragStart={(e) => {
+                        const dragData = {
+                          type: 'asignatura-from-panel',
+                          data: asignatura
+                        }
+                        e.dataTransfer.setData('application/json', JSON.stringify(dragData))
+                      }}
+                    >
+                      {/* Grip handle */}
+                      <span className="flex items-center mr-2 cursor-grab select-none text-gray-400">
+                        <svg width="16" height="16" fill="none" className="inline-block">
+                          <circle cx="4" cy="4" r="1.5" fill="currentColor"/>
+                          <circle cx="4" cy="8" r="1.5" fill="currentColor"/>
+                          <circle cx="4" cy="12" r="1.5" fill="currentColor"/>
+                        </svg>
+                      </span>
+
+                      <div className="flex-shrink-0 mt-1">
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => handleAsignaturaToggle(asignatura)}
+                          className="w-4 h-4 text-unal-green-500 bg-gray-100 border-gray-300 rounded focus:ring-unal-green-500"
+                        />
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-gray-900 leading-tight mb-1">
+                          {asignatura.nombre}
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                          <span className="font-mono">({asignatura.codigo})</span>
+                          <span>{asignatura.creditos} créditos</span>
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          {tipologiaLabels[asignatura.tipologia]}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            ))
+          )}
         </div>
 
         <div className="p-4 border-t border-gray-200 bg-gray-50 flex-shrink-0">
