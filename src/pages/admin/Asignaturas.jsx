@@ -1,16 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import Select from "react-select";
 import Papa from "papaparse";
-import { FaPen, FaTimes, FaPlus, FaFilter } from "react-icons/fa";
+import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
 import "./AsignaturasAdmin.css";
+
+const API_URL = "http://localhost:4000/api";
 
 export default function AsignaturasAdmin() {
 
-  const [asignaturas, setAsignaturas] = useState(() => {
-    const saved = localStorage.getItem("asignaturas");
-    return saved ? JSON.parse(saved) : [];
-  });
-
+  const [asignaturas, setAsignaturas] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [nuevaAsignatura, setNuevaAsignatura] = useState({
     nombre: "",
@@ -18,15 +16,14 @@ export default function AsignaturasAdmin() {
     creditos: "",
     tipologia: ""
   });
-  const [prerrequisitosSeleccionados, setPrerrequisitosSeleccionados] =
-    useState([]);
+  const [prerrequisitosSeleccionados, setPrerrequisitosSeleccionados] = useState([]);
   const [modoEdicion, setModoEdicion] = useState(false);
-  const [idEnEdicion, setIdEnEdicion] = useState(null);
+  const [codigoEnEdicion, setCodigoEnEdicion] = useState(null);
 
   const [showFormModal, setShowFormModal] = useState(false);
   const [showPrereqModal, setShowPrereqModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [idPendienteEliminar, setIdPendienteEliminar] = useState(null);
+  const [codigoPendienteEliminar, setCodigoPendienteEliminar] = useState(null);
 
   const [avanceReq, setAvanceReq] = useState(false);
   const [prereqTipologia, setPrereqTipologia] = useState("");
@@ -38,18 +35,16 @@ export default function AsignaturasAdmin() {
   const importRef = useRef(null);
 
   useEffect(() => {
-    localStorage.setItem("asignaturas", JSON.stringify(asignaturas));
-  }, [asignaturas]);
+    fetch(`${API_URL}/asignaturas`)
+      .then(r => r.json())
+      .then(setAsignaturas)
+      .catch(err => console.error("Error cargando asignaturas:", err));
+  }, []);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
+  useEffect(() => setCurrentPage(1), [searchTerm]);
 
-  const handleChange = (e) =>
-    setNuevaAsignatura({
-      ...nuevaAsignatura,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = e =>
+    setNuevaAsignatura({ ...nuevaAsignatura, [e.target.name]: e.target.value });
 
   const abrirModalForm = (editar = false, asignatura = null) => {
     if (editar && asignatura) {
@@ -60,20 +55,18 @@ export default function AsignaturasAdmin() {
         tipologia: asignatura.tipologia
       });
       setPrerrequisitosSeleccionados(
-        asignatura.prerrequisitos.map((c) => ({ value: c, label: c }))
+        asignatura.prerrequisitos.map(c => ({ value: c, label: c }))
       );
       setModoEdicion(true);
-      setIdEnEdicion(asignatura.id);
+      setCodigoEnEdicion(asignatura.codigo);
+      setAvanceReq(asignatura.avance ?? false);
+      setPrereqTipologia(asignatura.avanceTipologia ?? "");
+      setPrereqPorcentaje(asignatura.avancePorcentaje ?? "");
     } else {
-      setNuevaAsignatura({
-        nombre: "",
-        codigo: "",
-        creditos: "",
-        tipologia: ""
-      });
+      setNuevaAsignatura({ nombre: "", codigo: "", creditos: "", tipologia: "" });
       setPrerrequisitosSeleccionados([]);
       setModoEdicion(false);
-      setIdEnEdicion(null);
+      setCodigoEnEdicion(null);
       setAvanceReq(false);
       setPrereqTipologia("");
       setPrereqPorcentaje("");
@@ -81,87 +74,116 @@ export default function AsignaturasAdmin() {
     setShowFormModal(true);
   };
 
-  const handleAgregar = (e) => {
-    if (e && e.preventDefault) e.preventDefault(); 
-
+  const handleAgregar = async e => {
+    e.preventDefault();
     const payload = {
       ...nuevaAsignatura,
-      prerrequisitos: prerrequisitosSeleccionados.map((p) => p.value),
+      prerrequisitos: prerrequisitosSeleccionados.map(p => p.value),
       avance: avanceReq,
       avanceTipologia: prereqTipologia,
       avancePorcentaje: prereqPorcentaje
     };
 
-    setAsignaturas((prev) => {
+    try {
       if (modoEdicion) {
-        return prev.map((a) =>
-          a.id === idEnEdicion ? { ...payload, id: idEnEdicion } : a
+        const res = await fetch(
+          `${API_URL}/asignaturas/${codigoEnEdicion}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }
         );
+        const actualizada = await res.json();
+        setAsignaturas(prev =>
+          prev.map(a => (a.codigo === actualizada.codigo ? actualizada : a))
+        );
+      } else {
+        const res = await fetch(`${API_URL}/asignaturas`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const nueva = await res.json();
+        setAsignaturas(prev => [...prev, nueva]);
       }
-      return [...prev, { ...payload, id: crypto.randomUUID() }];
-    });
-
-    setShowFormModal(false);
-    setShowPrereqModal(false);
+      setShowFormModal(false);
+      setShowPrereqModal(false);
+    } catch (err) {
+      console.error("Error guardando asignatura:", err);
+    }
   };
 
-  const confirmarEliminar = (id) => {
-    setIdPendienteEliminar(id);
+  const confirmarEliminar = codigo => {
+    setCodigoPendienteEliminar(codigo);
     setShowDeleteModal(true);
   };
 
-  const ejecutarEliminar = () => {
-    setAsignaturas((prev) => prev.filter((a) => a.id !== idPendienteEliminar));
-    setShowDeleteModal(false);
+  const ejecutarEliminar = async () => {
+    try {
+      await fetch(`${API_URL}/asignaturas/${codigoPendienteEliminar}`, {
+        method: "DELETE"
+      });
+      setAsignaturas(prev =>
+        prev.filter(a => a.codigo !== codigoPendienteEliminar)
+      );
+    } catch (err) {
+      console.error("Error eliminando asignatura:", err);
+    } finally {
+      setShowDeleteModal(false);
+    }
   };
 
-  const handleImportCsv = (e) => {
+  const handleImportCsv = e => {
     const file = e.target.files[0];
     if (!file) return;
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
       complete: ({ data }) => {
-        const nuevas = data.map((r) => ({
-          id: crypto.randomUUID(),
-          nombre: r.nombre,
-          codigo: r.codigo,
-          creditos: r.creditos,
-          tipologia: r.tipologia,
-          prerrequisitos: r.prerrequisitos
-            ? r.prerrequisitos.split(",").map((x) => x.trim())
-            : [],
-          avance: r.avance === "true",
-          avanceTipologia: r.avanceTipologia,
-          avancePorcentaje: r.avancePorcentaje
-        }));
-        setAsignaturas((prev) => [...prev, ...nuevas]);
+        data.forEach(async r => {
+          const payload = {
+            nombre: r.nombre,
+            codigo: r.codigo,
+            creditos: r.creditos,
+            tipologia: r.tipologia,
+            prerrequisitos: r.prerrequisitos
+              ? r.prerrequisitos.split(",").map(x => x.trim())
+              : [],
+            avance: r.avance === "true",
+            avanceTipologia: r.avanceTipologia,
+            avancePorcentaje: r.avancePorcentaje
+          };
+          try {
+            const res = await fetch(`${API_URL}/asignaturas`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+            const nueva = await res.json();
+            setAsignaturas(prev => [...prev, nueva]);
+          } catch (err) {
+            console.error("Error importando fila CSV:", err);
+          }
+        });
       }
     });
   };
 
-  const opcionesPrerrequisitos = asignaturas.map((a) => ({
-    value: a.codigo,
-    label: `${a.nombre} (${a.codigo})`
-  }));
-
-
   const filteredAsignaturas = asignaturas.filter(
-    (a) =>
+    a =>
       a.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
       a.codigo.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
+
   useEffect(() => {
     const total = Math.max(
       1,
       Math.ceil(filteredAsignaturas.length / itemsPerPage)
     );
-    if (currentPage > total) {
-      setCurrentPage(total);
-    }
-  }, [filteredAsignaturas, currentPage, itemsPerPage]);  
-  
+    if (currentPage > total) setCurrentPage(total);
+  }, [filteredAsignaturas, currentPage]);
+
   const totalPages = Math.ceil(filteredAsignaturas.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredAsignaturas.slice(
@@ -169,8 +191,14 @@ export default function AsignaturasAdmin() {
     startIndex + itemsPerPage
   );
 
+  const opcionesPrerrequisitos = asignaturas.map(a => ({
+    value: a.codigo,
+    label: `${a.nombre} (${a.codigo})`
+  }));
+
   return (
     <div className="awa-container w-[90%] h-[80vh] m-auto">
+
       <div className="awa-header">
         <h1 className="awa-title">Gestión de Asignaturas</h1>
         <div className="awa-actions-header">
@@ -186,7 +214,7 @@ export default function AsignaturasAdmin() {
           <input
             ref={importRef}
             type="file"
-            accept=",.csv"
+            accept=".csv"
             onChange={handleImportCsv}
             style={{ display: "none" }}
           />
@@ -198,13 +226,13 @@ export default function AsignaturasAdmin() {
           className="awa-input-search"
           placeholder="Buscar Asignatura"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
 
       <div className="awa-list pt-0 pl-0 pr-[4px] pb-[4px]">
-        {currentItems.map((a) => (
-          <div key={a.id} className="awa-card">
+        {currentItems.map(a => (
+          <div key={a.codigo} className="awa-card">
             <div>
               <strong>{a.nombre}</strong>
               <br />
@@ -212,7 +240,11 @@ export default function AsignaturasAdmin() {
             </div>
             <div className="awa-card-tipologia">{a.tipologia}</div>
             <div>{a.creditos} créditos</div>
-            <div>{a.prerrequisitos.length ? a.prerrequisitos.join(", ") : "—"}</div>
+            <div>
+              {a.prerrequisitos.length
+                ? a.prerrequisitos.join(", ")
+                : "—"}
+            </div>
             <div className="awa-card-actions">
               <button
                 className="awa-action-edit"
@@ -222,7 +254,7 @@ export default function AsignaturasAdmin() {
               </button>
               <button
                 className="awa-action-delete"
-                onClick={() => confirmarEliminar(a.id)}
+                onClick={() => confirmarEliminar(a.codigo)}
               >
                 <FaTimes size={16} />
               </button>
@@ -233,10 +265,12 @@ export default function AsignaturasAdmin() {
 
       {totalPages > 1 && (
         <div className="awa-pagination flex-wrap">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(num => (
             <button
               key={num}
-              className={`awa-page-btn ${currentPage === num ? "active" : ""}`}
+              className={`awa-page-btn ${
+                currentPage === num ? "active" : ""
+              }`}
               onClick={() => setCurrentPage(num)}
             >
               {num}
@@ -266,7 +300,6 @@ export default function AsignaturasAdmin() {
                 onChange={handleChange}
                 placeholder="Escriba aquí..."
               />
-
               <label>Código</label>
               <input
                 required
@@ -274,8 +307,8 @@ export default function AsignaturasAdmin() {
                 value={nuevaAsignatura.codigo}
                 onChange={handleChange}
                 placeholder="Escriba aquí..."
+                disabled={modoEdicion}
               />
-
               <label>Tipología</label>
               <select
                 required
@@ -284,13 +317,12 @@ export default function AsignaturasAdmin() {
                 onChange={handleChange}
               >
                 <option value="">Seleccione...</option>
-                <option>Fund. Obligatoria</option>
-                <option>Fund. Optativa</option>
-                <option>Disc. Obligatoria</option>
-                <option>Disc. Optativa</option>
+                <option>Fundamentación Obligatoria</option>
+                <option>Fundamentación Optativa</option>
+                <option>Disciplinar Obligatoria</option>
+                <option>Disciplinar Optativa</option>
                 <option>Libre Elección</option>
               </select>
-
               <label>Créditos</label>
               <input
                 required
@@ -341,13 +373,13 @@ export default function AsignaturasAdmin() {
             />
 
             <div className="awa-prereq-list">
-              {prerrequisitosSeleccionados.map((item) => (
+              {prerrequisitosSeleccionados.map(item => (
                 <div key={item.value} className="awa-prereq-card">
                   <span>{item.label}</span>
                   <button
                     onClick={() =>
-                      setPrerrequisitosSeleccionados((old) =>
-                        old.filter((p) => p.value !== item.value)
+                      setPrerrequisitosSeleccionados(old =>
+                        old.filter(p => p.value !== item.value)
                       )
                     }
                     className="awa-action-delete"
@@ -371,7 +403,7 @@ export default function AsignaturasAdmin() {
               <div className="awa-prereq-advance-options">
                 <select
                   value={prereqTipologia}
-                  onChange={(e) => setPrereqTipologia(e.target.value)}
+                  onChange={e => setPrereqTipologia(e.target.value)}
                 >
                   <option value="">Tipología...</option>
                   <option>Fundamentación</option>
@@ -380,10 +412,11 @@ export default function AsignaturasAdmin() {
                 </select>
                 <input
                   type="number"
-                  min="0" max="100"
+                  min="0"
+                  max="100"
                   placeholder="porcentaje"
                   value={prereqPorcentaje}
-                  onChange={(e) => setPrereqPorcentaje(e.target.value)}
+                  onChange={e => setPrereqPorcentaje(e.target.value)}
                 />
               </div>
             )}
