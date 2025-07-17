@@ -5,9 +5,6 @@ import iconoCancelar from '../../assets/iconos/cancelar.svg'
 import Card from '../atoms/Card'
 import ColorPicker from '../atoms/ColorPicker'
 
-// medidas constantes
-const asignaturaWidth = 220;  // px
-
 // Colores suavizados para las tipologías (más claros que los del header)
 const tipologiaColors = {
   'fundamentacion_obligatoria': { 
@@ -238,7 +235,7 @@ function MatriculaColumn({
         onDragLeave={handleDragLeave}
       >
         {matricula.asignaturas.length === 0 ? (
-          <div className={`flex w-[${asignaturaWidth}px] items-center justify-center h-full text-gray-400 text-sm`}>
+          <div className={`flex w-[220px] items-center justify-center h-full text-gray-400 text-sm`}>
             <div className="text-center">
               <div className="text-2xl mb-2">+</div>
               <div>Arrastra asignaturas aquí</div>
@@ -254,7 +251,7 @@ function MatriculaColumn({
                 onDragEnd={handleAsignaturaDragEnd}
                 onDragOver={(e) => handleAsignaturaDragOver(e, index)}
                 onDrop={(e) => handleAsignaturaDropOnItem(e, index)}
-                className={`w-[${asignaturaWidth}px] bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
+                className={`w-[220px] bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
                   ${asignatura.error ? 'border-red-500 border-4' : 'border-gray-200'}
                   ${draggedAsignatura === asignatura.codigo ? 'asignatura-dragging' : ''}`}
                 style={getAsignaturaStyle(asignatura.tipologia, asignatura.customColor)}
