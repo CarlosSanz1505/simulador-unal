@@ -317,10 +317,10 @@ export default function AsignaturasAdmin() {
                 onChange={handleChange}
               >
                 <option value="">Seleccione...</option>
-                <option>Fund. Obligatoria</option>
-                <option>Fund. Optativa</option>
-                <option>Disc. Obligatoria</option>
-                <option>Disc. Optativa</option>
+                <option>Fundamentación Obligatoria</option>
+                <option>Fundamentación Optativa</option>
+                <option>Disciplinar Obligatoria</option>
+                <option>Disciplinar Optativa</option>
                 <option>Libre Elección</option>
               </select>
               <label>Créditos</label>
