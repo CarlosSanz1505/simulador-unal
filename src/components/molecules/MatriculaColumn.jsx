@@ -224,7 +224,7 @@ function MatriculaColumn({
       </div>
 
       <div 
-        className={`h-[300px] overflow-y-auto min-h-[200px] border-2 border-dashed rounded-lg p-3 transition-colors ${
+        className={`max-h-[243px] overflow-y-auto min-h-[200px] border-2 border-dashed rounded-lg p-3 transition-colors ${
           isDragOver 
             ? 'border-unal-green-400 bg-unal-green-50' 
             : 'border-gray-300 bg-gray-50'
