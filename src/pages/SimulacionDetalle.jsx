@@ -297,7 +297,7 @@ function SimulacionDetalle() {
 
           {/* Header de la simulación */}
           <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
-            <Link to="/simulaciones" className="btn btn-secondary text-sm">
+            <Link to="/simulaciones" className="btn btn-secondary text-sm hidden sm:inline">
               ← Volver
             </Link>
 
@@ -341,7 +341,7 @@ function SimulacionDetalle() {
                 <div
                   key={matricula.id}
                   onClick={() => setMatriculaActiva(matricula.id)}
-                  className="cursor-pointer flex-shrink-0 w-[310px]"
+                  className="cursor-pointer flex-shrink-0"
                 >
                   <MatriculaColumn
                     matricula={matricula}
@@ -362,7 +362,7 @@ function SimulacionDetalle() {
                 className="cursor-pointer group flex-shrink-0 w-[310px]"
               >
                 <div className="w-full bg-white border-2 border-dashed border-gray-300
-                                rounded-lg p-6 h-[243px] h-full
+                                rounded-lg p-[20px] h-full min-h-[300px]
                                 flex flex-col items-center justify-center
                                 hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
                   <div className="text-center">
