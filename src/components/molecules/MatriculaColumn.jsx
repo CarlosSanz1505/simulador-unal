@@ -176,6 +176,7 @@ function MatriculaColumn({
       // Si es desde el panel, permitir que se propague al contenedor padre
     } catch (error) {
       // No hacer nada si hay error parseando
+      console.error(error);
     }
   }
 
