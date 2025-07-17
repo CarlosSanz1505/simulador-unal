@@ -184,8 +184,8 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
   }
 
   const tipologiaLabels = {
-    'fundamentacion_obligatoria': 'Fund. Obligatoria',
-    'fundamentacion_optativa': 'Fund. Optativa',
+    'fundamentacion_obligatoria': 'Fundamentación Obligatoria',
+    'fundamentacion_optativa': 'Fundamentación Optativa',
     'disciplinar_obligatoria': 'Disciplinar Obligatoria',
     'disciplinar_optativa': 'Disciplinar Optativa',
     'trabajo_de_grado': 'Trabajo de Grado',

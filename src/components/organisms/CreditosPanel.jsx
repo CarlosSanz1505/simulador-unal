@@ -63,13 +63,13 @@ const CreditosPanel = ({ simulacion }) => {
       <h3 className="text-lg font-semibold mb-4">Créditos Acumulados</h3>
       <div className="credit-grid">
         <CreditCounter 
-          label="Fund. Obligatoria" 
+          label="Fundamentación Obligatoria" 
           value={creditos.fundamentacionObligatoria}
           total={27}
           tipologia="fundamentacion_obligatoria"
         />
         <CreditCounter 
-          label="Fund. Optativa" 
+          label="Fundamentación Optativa" 
           value={creditos.fundamentacionOptativa}
           total={16}
           tipologia="fundamentacion_optativa"
