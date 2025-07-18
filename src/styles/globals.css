@@ -139,12 +139,13 @@
   }
 
   .btn-secondary {
-    background: #57844A;
-    color: white;
+    border: 1px solid #57844A;
+    color: #57844A;
   }
 
   .btn-secondary:hover {
     background: #4a7340;
+    color: white
   }
 
   /* Cards */

@@ -7,7 +7,7 @@ import InstructiveModal from '../components/organisms/InstructiveModal'
 import { faPlus, faUpload, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect } from 'react'
-import { getSimulaciones } from '../data/services/simulaciones'
+import { createSimulacion, getSimulaciones } from '../data/services/simulaciones'
 
 function MisSimulaciones() {
   const [simulaciones, setSimulaciones] = useState([]);
@@ -87,11 +87,8 @@ function MisSimulaciones() {
     setShowNewSimulationModal(true)
   }
 
-  const confirmarNuevaSimulacion = () => {
-    const nombreLimpio = newSimulationName.trim()
-
-    // Si está vacío, generar nombre automático
-    let nombreFinal = nombreLimpio
+  const confirmarNuevaSimulacion = async () => {
+    let nombreFinal = newSimulationName.trim()
     if (!nombreFinal) {
       let contador = 1
       while (simulaciones.some(sim => sim.nombre.toLowerCase() === `simulación ${contador}`)) {
@@ -121,9 +118,14 @@ function MisSimulaciones() {
       }
     }
 
-    setSimulaciones([...simulaciones, nuevaSimulacion])
-    setShowNewSimulationModal(false)
-    setNewSimulationName('')
+    try {
+      const creada = await createSimulacion(nuevaSimulacion)
+      setSimulaciones([...simulaciones, creada])
+      setShowNewSimulationModal(false)
+      setNewSimulationName('')
+    } catch (error) {
+      alert(`Error al crear la simulación: ${error.message}`);
+    }
   }
 
   const cancelarNuevaSimulacion = () => {
@@ -220,12 +222,12 @@ function MisSimulaciones() {
               }}
             />
           </div>
-          <div className="flex gap-3 pt-4">
-            <Button variant="secondary" onClick={cancelarNuevaSimulacion} className="flex-1">
-              Cancelar
+          <div className="flex gap-3 pt-4 justify-end w-1/2 ml-auto">
+            <Button variant="primary" onClick={confirmarNuevaSimulacion}>
+              Guardar
             </Button>
-            <Button variant="primary" onClick={confirmarNuevaSimulacion} className="flex-1">
-              Crear Simulación
+            <Button variant="secondary" onClick={cancelarNuevaSimulacion}>
+              Cancelar
             </Button>
           </div>
         </div>
