@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import Modal from '../components/atoms/Modal'
@@ -6,8 +6,7 @@ import SimulationCard from '../components/molecules/SimulationCard'
 import InstructiveModal from '../components/organisms/InstructiveModal'
 import { faPlus, faUpload, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect } from 'react'
-import { createSimulacion, getSimulaciones } from '../data/services/simulaciones'
+import { createSimulacion, deleteSimulacion, getSimulaciones, updateSimulacion } from '../data/services/simulaciones'
 
 function MisSimulaciones() {
   const [simulaciones, setSimulaciones] = useState([]);
@@ -26,15 +25,19 @@ function MisSimulaciones() {
   }, []);
 
   const eliminarSimulacion = (id) => {
-    const simulacion = simulaciones.find(sim => sim.id === id)
-    setSimulacionToDelete(simulacion)
+    setSimulacionToDelete(id)
     setShowConfirmModal(true)
   }
 
-  const confirmarEliminacion = () => {
+  const confirmarEliminacion = async () => {
     if (simulacionToDelete) {
-      setSimulaciones(simulaciones.filter(sim => sim.id !== simulacionToDelete.id))
-      setSimulacionToDelete(null)
+      try {
+        await deleteSimulacion(simulacionToDelete)
+        setSimulaciones(simulaciones.filter(sim => sim.id !== simulacionToDelete))
+        setSimulacionToDelete(null)
+      } catch (error) {
+        alert(`Error al eliminar la simulación: ${error.message}`);
+      }
     }
   }
 
@@ -43,7 +46,7 @@ function MisSimulaciones() {
     setSimulacionToDelete(null)
   }
 
-  const editarSimulacion = (id, nuevoNombre) => {
+  const editarSimulacion = async (id, nuevoNombre) => {
     const nombreNormalizado = nuevoNombre.trim().toLowerCase()
     const yaExiste = simulaciones.some(sim =>
       sim.id !== id && sim.nombre.trim().toLowerCase() === nombreNormalizado
@@ -54,9 +57,14 @@ function MisSimulaciones() {
       return
     }
 
-    setSimulaciones(simulaciones.map(sim =>
-      sim.id === id ? { ...sim, nombre: nuevoNombre } : sim
-    ))
+    try {
+      const editada = await updateSimulacion(id, { nombre: nuevoNombre });
+      setSimulaciones(simulaciones.map(sim =>
+        sim.id === id ? editada : sim
+      ))
+    } catch (error) {
+      alert(`Error al crear la simulación: ${error.message}`);
+    }
   }
 
   const importarSimulacion = () => {
@@ -73,7 +81,8 @@ function MisSimulaciones() {
             simulacion.id = Date.now().toString()
             setSimulaciones([...simulaciones, simulacion])
           } catch (error) {
-            alert('Error al importar la simulación')
+            alert('Error al importar la simulación. Asegúrate de que el archivo sea un JSON válido.')
+            console.error('Error al importar simulación:', error)
           }
         }
         reader.readAsText(file)

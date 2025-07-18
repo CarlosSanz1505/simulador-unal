@@ -41,16 +41,16 @@ function ConfirmModal({ isOpen, onClose, onConfirm, title, message, confirmText 
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
             <button
-              onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
-            >
-              {cancelText}
-            </button>
-            <button
               onClick={handleConfirm}
               className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
             >
               {confirmText}
+            </button>
+            <button
+              onClick={onClose}
+              className="px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+            >
+              {cancelText}
             </button>
           </div>
         </div>

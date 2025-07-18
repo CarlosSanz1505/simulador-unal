@@ -1,22 +1,20 @@
-import { faDownload, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { simulacionesEjemplo } from '../data/mockData'
-import { getPrerequisitosFaltantes, recalcularErroresMatriculas } from '../utils/validarPrerrequisitos'
-import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import PrerequisitosModal from '../components/atoms/PrerequisitosModal'
 import MatriculaColumn from '../components/molecules/MatriculaColumn'
 import AsignaturasPanel from '../components/organisms/AsignaturasPanel'
 import CreditosPanel from '../components/organisms/CreditosPanel'
 import AsignaturasService from '../data/asignaturasService'
+import { getSimulacion } from '../data/services/simulaciones'
+import { getPrerequisitosFaltantes, recalcularErroresMatriculas } from '../utils/validarPrerrequisitos'
 
 function SimulacionDetalle() {
   const { id } = useParams()
-  const [simulacion, setSimulacion] = useState(
-    simulacionesEjemplo.find(sim => sim.id === id) || simulacionesEjemplo[0]
-  )
+  const [simulacion, setSimulacion] = useState();
+  const [loading, setLoading] = useState(true);
   const [matriculaActiva, setMatriculaActiva] = useState(null)
   const [showPanel, setShowPanel] = useState(false) // Panel cerrado por defecto para móvil
   const [confirmModal, setConfirmModal] = useState({ show: false, matriculaId: null })
@@ -33,14 +31,24 @@ function SimulacionDetalle() {
 
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    getSimulacion(id).then(data => {
+      setSimulacion(data);
+      setLoading(false);
+    }).catch(error => {
+      console.error('Error fetching simulation:', error);
+      setLoading(false);
+    });
+  }, [id]);
 
   // Establecer la primera matrícula como activa por defecto si existe
   useEffect(() => {
-    if (simulacion.matriculas.length > 0 && !matriculaActiva) {
+    if (simulacion?.matriculas.length > 0 && !matriculaActiva) {
       setMatriculaActiva(simulacion.matriculas[0].id)
     }
-  }, [simulacion.matriculas, matriculaActiva])
+  }, [simulacion, matriculaActiva])
 
   // Abrir panel automáticamente en desktop cuando hay matrícula activa
   useEffect(() => {
@@ -71,7 +79,7 @@ function SimulacionDetalle() {
   const eliminarMatricula = (matriculaId) => {
     setConfirmModal({ show: true, matriculaId })
   }
-  
+
   const handleExport = (e) => {
     e.preventDefault()
     const dataStr = JSON.stringify(simulacion, null, 2)
@@ -286,114 +294,113 @@ function SimulacionDetalle() {
 
   return (
     <div className="min-h-screen m-auto">
-      {/* Contenido principal */}
-      <main className="container py-8 transition-all duration-300">
-        <div
-          className={`w-[96vw] md:w-[94vw] lg:w-[92vw] max-w-7xl mx-auto bg-white
+      {loading ? (
+        <div className="flex justify-center items-center h-[60vh]">
+          <svg className="animate-spin h-10 w-10 text-unal-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+          </svg>
+        </div>
+      ) : (
+        <>
+          {/* Contenido principal */}
+          <main className="container py-8 transition-all duration-300">
+            <div
+              className={`w-[96vw] md:w-[94vw] lg:w-[92vw] max-w-7xl mx-auto bg-white
                       rounded-lg shadow-lg overflow-hidden
                       px-4 sm:px-6 lg:px-8
                       ${isDesktop && showPanel ? 'lg:mr-[384px]' : ''}`}
-        >
+            >
 
-          {/* Header de la simulación */}
-          <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
-            <Link to="/simulaciones" className="btn btn-secondary text-sm hidden sm:inline">
-              ← Volver
-            </Link>
+              {/* Header de la simulación */}
+              <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
+                <Link to="/simulaciones" className="btn btn-secondary text-sm hidden sm:inline">
+                  ← Volver
+                </Link>
 
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-semibold text-gray-800">
-                {simulacion.nombre}
-              </h1>
-              <button
-                className="p-2 text-gray-400 hover:text-unal-green-600 hover:bg-unal-green-50 rounded-lg transition-colors"
-                onClick={editarNombre}
-                title="Editar nombre"
-                aria-label="Editar nombre de la simulación"
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handleExport}
-                className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors"
-                title="Descargar simulación"
-                aria-label="Descargar simulación"
-              >
-                <FontAwesomeIcon icon={faDownload} />
-              </button>
-            </div>
-          </div>
-
-          {/* Panel de créditos */}
-          <CreditosPanel simulacion={simulacion} />
-
-          {/* Grid de matrículas */}
-          <div className="px-6 py-4">
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold">Matrículas</h3>
-            </div>
-
-            <div className="border-[2px] border-solid border-gray flex gap-[20px] p-[20px] overflow-x-auto">
-              {simulacion.matriculas.map((matricula) => (
-                <div
-                  key={matricula.id}
-                  onClick={() => setMatriculaActiva(matricula.id)}
-                  className="cursor-pointer flex-shrink-0"
-                >
-                  <MatriculaColumn
-                    matricula={matricula}
-                    onDelete={eliminarMatricula}
-                    onAddAsignatura={agregarAsignaturaAMatricula}
-                    onRemoveAsignatura={removerAsignaturaDeMatricula}
-                    onMoveAsignatura={moverAsignatura}
-                    onReorderAsignaturas={reordenarAsignaturas}
-                    onChangeAsignaturaColor={cambiarColorAsignatura}
-                    isActive={matriculaActiva === matricula.id}
-                  />
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl font-semibold text-gray-800">
+                    {simulacion.nombre}
+                  </h1>
+                  <button
+                    className="p-2 text-gray-400 hover:text-unal-green-600 hover:bg-unal-green-50 rounded-lg transition-colors"
+                    onClick={editarNombre}
+                    title="Editar nombre"
+                    aria-label="Editar nombre de la simulación"
+                  >
+                    <FontAwesomeIcon icon={faEdit} />
+                  </button>
                 </div>
-              ))}
 
-              {/* Tarjeta para agregar nueva matrícula */}
-              <div
-                onClick={crearMatricula}
-                className="cursor-pointer group flex-shrink-0 w-[310px]"
-              >
-                <div className="w-full bg-white border-2 border-dashed border-gray-300
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={handleExport}
+                    className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors"
+                    title="Descargar simulación"
+                    aria-label="Descargar simulación"
+                  >
+                    <FontAwesomeIcon icon={faDownload} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Panel de créditos */}
+              <CreditosPanel simulacion={simulacion} />
+
+              {/* Grid de matrículas */}
+              <div className="px-6 py-4">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold">Matrículas</h3>
+                </div>
+
+                <div className="border-[2px] border-solid border-gray flex gap-[20px] p-[20px] overflow-x-auto">
+                  {simulacion.matriculas.map((matricula) => (
+                    <div
+                      key={matricula.id}
+                      onClick={() => setMatriculaActiva(matricula.id)}
+                      className="cursor-pointer flex-shrink-0"
+                    >
+                      <MatriculaColumn
+                        matricula={matricula}
+                        onDelete={eliminarMatricula}
+                        onAddAsignatura={agregarAsignaturaAMatricula}
+                        onRemoveAsignatura={removerAsignaturaDeMatricula}
+                        onMoveAsignatura={moverAsignatura}
+                        onReorderAsignaturas={reordenarAsignaturas}
+                        onChangeAsignaturaColor={cambiarColorAsignatura}
+                        isActive={matriculaActiva === matricula.id}
+                      />
+                    </div>
+                  ))}
+
+                  {/* Tarjeta para agregar nueva matrícula */}
+                  <div
+                    onClick={crearMatricula}
+                    className="cursor-pointer group flex-shrink-0 w-[310px]"
+                  >
+                    <div className="w-full bg-white border-2 border-dashed border-gray-300
                                 rounded-lg p-[20px] h-full min-h-[300px]
                                 flex flex-col items-center justify-center
                                 hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
-                  <div className="text-center">
-                    <div className="text-4xl text-gray-400 group-hover:text-unal-green-500 mb-4 transition-colors">
-                      +
+                      <div className="text-center">
+                        <div className="text-4xl text-gray-400 group-hover:text-unal-green-500 mb-4 transition-colors">
+                          +
+                        </div>
+                        <h4 className="font-semibold text-gray-600 group-hover:text-unal-green-700 mb-2 transition-colors">
+                          Agregar Nueva Matrícula
+                        </h4>
+                        <p className="text-sm text-gray-500 group-hover:text-unal-green-600 transition-colors">
+                          Haz clic para crear una nueva matrícula
+                        </p>
+                      </div>
                     </div>
-                    <h4 className="font-semibold text-gray-600 group-hover:text-unal-green-700 mb-2 transition-colors">
-                      Agregar Nueva Matrícula
-                    </h4>
-                    <p className="text-sm text-gray-500 group-hover:text-unal-green-600 transition-colors">
-                      Haz clic para crear una nueva matrícula
-                    </p>
                   </div>
                 </div>
               </div>
             </div>
-
-            {simulacion.matriculas.length === 0 && (
-              <div className="empty-state text-center">
-                <FontAwesomeIcon icon={faEdit} className="w-5 h-5 mr-2" />
-                <h3 className="text-xl font-semibold mb-2">No tienes matrículas creadas</h3>
-                <p className="mb-6">Crea tu primera matrícula para comenzar a planificar tu carrera</p>
-                <Button variant="primary" onClick={crearMatricula}>
-                  <FontAwesomeIcon icon={faPlus} className="w-5 h-5 mr-2" />
-                  Crear tu primera matrícula
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-      </main>
+          </main>
+        </>
+      )}
 
       {/* Panel de asignaturas lateral */}
       {matriculaActiva && (
