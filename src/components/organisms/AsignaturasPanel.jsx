@@ -239,7 +239,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             <select 
               value={searchBy} 
               onChange={(e) => setSearchBy(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
+              className="cursor-pointer w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
             >
               <option value="nombre">Nombre</option>
               <option value="codigo">Código</option>
@@ -266,7 +266,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             <select 
               value={creditFilter} 
               onChange={(e) => setCreditFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
+              className="cursor-pointer w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-unal-green-500 focus:border-transparent"
             >
               <option value="todos">Todos los créditos</option>
               <option value="1-2">1-2 créditos</option>
