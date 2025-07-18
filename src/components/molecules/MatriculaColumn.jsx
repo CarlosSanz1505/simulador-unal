@@ -173,6 +173,7 @@ function MatriculaColumn({
       // Si es desde el panel, permitir que se propague al contenedor padre
     } catch (error) {
       // No hacer nada si hay error parseando
+      // console.error(error);
     }
   }
 
@@ -224,7 +225,7 @@ function MatriculaColumn({
       </div>
 
       <div 
-        className={`h-[300px] overflow-y-auto min-h-[200px] border-2 border-dashed rounded-lg p-3 transition-colors ${
+        className={`h-[243px] overflow-y-auto overflow-x-hidden min-h-[200px] border-2 border-dashed rounded-lg p-3 transition-colors ${
           isDragOver 
             ? 'border-unal-green-400 bg-unal-green-50' 
             : 'border-gray-300 bg-gray-50'
@@ -234,7 +235,7 @@ function MatriculaColumn({
         onDragLeave={handleDragLeave}
       >
         {matricula.asignaturas.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-gray-400 text-sm">
+          <div className={`flex w-[220px] items-center justify-center h-full text-gray-400 text-sm`}>
             <div className="text-center">
               <div className="text-2xl mb-2">+</div>
               <div>Arrastra asignaturas aquí</div>

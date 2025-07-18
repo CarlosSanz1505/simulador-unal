@@ -1,4 +1,4 @@
-import { faDownload, faEdit, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -297,7 +297,7 @@ function SimulacionDetalle() {
 
           {/* Header de la simulación */}
           <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
-            <Link to="/simulaciones" className="btn btn-secondary text-sm">
+            <Link to="/simulaciones" className="btn btn-secondary text-sm hidden sm:inline">
               ← Volver
             </Link>
 
@@ -316,16 +316,6 @@ function SimulacionDetalle() {
             </div>
 
             <div className="flex items-center gap-4">
-              {matriculaActiva && isDesktop && (
-                <button
-                  onClick={() => setShowPanel(!showPanel)}
-                  className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors"
-                  title="Buscar asignaturas"
-                  aria-label="Abrir panel de asignaturas"
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              )}
               <button
                 onClick={handleExport}
                 className="p-2 text-unal-green-600 hover:bg-unal-green-100 rounded-lg transition-colors"
@@ -346,13 +336,12 @@ function SimulacionDetalle() {
               <h3 className="text-lg font-semibold">Matrículas</h3>
             </div>
 
-            <div className="border-[2px] border-solid border-gray flex gap-[20px] p-[20px]
-                            max-h-[70vh] lg:max-h-[60vh] overflow-x-auto">
+            <div className="border-[2px] border-solid border-gray flex gap-[20px] p-[20px] overflow-x-auto">
               {simulacion.matriculas.map((matricula) => (
                 <div
                   key={matricula.id}
                   onClick={() => setMatriculaActiva(matricula.id)}
-                  className="cursor-pointer flex-shrink-0 w-[310px]"
+                  className="cursor-pointer flex-shrink-0"
                 >
                   <MatriculaColumn
                     matricula={matricula}
@@ -373,7 +362,7 @@ function SimulacionDetalle() {
                 className="cursor-pointer group flex-shrink-0 w-[310px]"
               >
                 <div className="w-full bg-white border-2 border-dashed border-gray-300
-                                rounded-lg p-6 h-full min-h-[300px]
+                                rounded-lg p-[20px] h-full min-h-[300px]
                                 flex flex-col items-center justify-center
                                 hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
                   <div className="text-center">

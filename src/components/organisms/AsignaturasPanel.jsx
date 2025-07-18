@@ -77,7 +77,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
     }
 
     return result
-  }, [searchTerm, searchBy, creditFilter, todasLasAsignaturas])
+  }, [searchTerm, searchBy, creditFilter, todasLasAsignaturas, asignaturas])
 
   // Agrupar asignaturas por tipología con orden específico
   const asignaturasPorTipologia = useMemo(() => {
@@ -193,12 +193,12 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
   }
 
   const tipologiaColors = {
-    'Fundamentacion Obligatoria': '#dc2626',
-    'Fundamentacion Optativa': '#ea580c',
-    'Disciplinar Obligatoria': '#059669',
-    'Disciplinar Optativa': '#2563eb',
-    'Trabajo de Grado': '#7c3aed',
-    'Libre Eleccion': '#f59e0b'
+    'Fundamentación Obligatoria': '#fef2f2',
+    'Fundamentación Optativa': '#fff7ed',
+    'Disciplinar Obligatoria': '#ecfdf5',
+    'Disciplinar Optativa': '#eff6ff',
+    'Trabajo de Grado': '#f5f3ff',
+    'Libre Elección': '#fffbeb'
   }
 
   return (
@@ -292,7 +292,7 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
             Object.entries(asignaturasPorTipologia).map(([tipologia, asignaturasList]) => (
               <div key={tipologia}>
                 <div 
-                  className="sticky top-0 px-4 py-2 text-white text-sm font-medium z-10 flex items-center justify-between cursor-pointer"
+                  className="sticky top-0 px-4 py-2 text-sm font-medium z-10 flex items-center justify-between cursor-pointer"
                   style={{ backgroundColor: tipologiaColors[tipologia] }}
                   onClick={() => toggleTipologia(tipologia)}
                 >
