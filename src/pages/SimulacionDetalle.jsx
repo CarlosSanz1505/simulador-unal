@@ -8,7 +8,7 @@ import MatriculaColumn from '../components/molecules/MatriculaColumn'
 import AsignaturasPanel from '../components/organisms/AsignaturasPanel'
 import CreditosPanel from '../components/organisms/CreditosPanel'
 import AsignaturasService from '../data/asignaturasService'
-import { getSimulacion } from '../data/services/simulaciones'
+import { getSimulacion, updateSimulacion } from '../data/services/simulaciones'
 import { getPrerequisitosFaltantes, recalcularErroresMatriculas } from '../utils/validarPrerrequisitos'
 
 function SimulacionDetalle() {
@@ -178,13 +178,16 @@ function SimulacionDetalle() {
     });
   };
 
-  const editarNombre = () => {
+  const editarNombre = async () => {
     const nuevoNombre = prompt('Nuevo nombre de la simulación:', simulacion.nombre)
     if (nuevoNombre && nuevoNombre.trim()) {
-      setSimulacion({
-        ...simulacion,
-        nombre: nuevoNombre.trim()
-      })
+
+      try {
+        const editada = await updateSimulacion(id, { nombre: nuevoNombre });
+        setSimulacion(editada);
+      } catch (error) {
+        alert(`Error al crear la simulación: ${error.message}`);
+      }
     }
   }
 
