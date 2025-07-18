@@ -193,12 +193,12 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
   }
 
   const tipologiaColors = {
-    'fundamentacion_obligatoria': '#dc2626',
-    'fundamentacion_optativa': '#ea580c',
-    'disciplinar_obligatoria': '#059669',
-    'disciplinar_optativa': '#2563eb',
-    'trabajo_de_grado': '#7c3aed',
-    'libre_eleccion': '#f59e0b'
+    'Fundamentacion Obligatoria': '#dc2626',
+    'Fundamentacion Optativa': '#ea580c',
+    'Disciplinar Obligatoria': '#059669',
+    'Disciplinar Optativa': '#2563eb',
+    'Trabajo de Grado': '#7c3aed',
+    'Libre Eleccion': '#f59e0b'
   }
 
   return (

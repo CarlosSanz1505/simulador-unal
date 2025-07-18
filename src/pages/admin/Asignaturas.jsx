@@ -322,6 +322,7 @@ export default function AsignaturasAdmin() {
                 <option>Disciplinar Obligatoria</option>
                 <option>Disciplinar Optativa</option>
                 <option>Libre Elección</option>
+                <option>Trabajo de Grado</option>
               </select>
               <label>Créditos</label>
               <input
