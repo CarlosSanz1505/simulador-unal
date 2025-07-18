@@ -379,10 +379,10 @@ function SimulacionDetalle() {
                   {/* Tarjeta para agregar nueva matrícula */}
                   <div
                     onClick={crearMatricula}
-                    className="cursor-pointer group flex-shrink-0 w-[310px]"
+                    className="cursor-pointer group flex-shrink-0"
                   >
                     <div className="w-full bg-white border-2 border-dashed border-gray-300
-                                rounded-lg p-[20px] h-full min-h-[300px]
+                                rounded-lg p-[20px] h-[378.2px]
                                 flex flex-col items-center justify-center
                                 hover:border-unal-green-400 hover:bg-unal-green-50 transition-colors">
                       <div className="text-center">
