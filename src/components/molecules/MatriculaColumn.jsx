@@ -47,6 +47,7 @@ function MatriculaColumn({
   onMoveAsignatura, // Nueva prop para mover asignaturas entre matrículas
   onReorderAsignaturas, // Nueva prop para reordenar asignaturas dentro de la matrícula
   onChangeAsignaturaColor, // Nueva prop para cambiar el color de una asignatura
+  setAsignaturaDetalle,
   isActive = false 
 }) {
   const [isDragOver, setIsDragOver] = useState(false)
@@ -275,6 +276,19 @@ function MatriculaColumn({
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
+                    {/* Botón para ver detalle de la asignatura */}
+                    <button
+                      onClick={() => setAsignaturaDetalle({ open: true, asignatura })}
+                      className="text-gray-400 hover:text-green-600 hover:bg-green-50 p-1 rounded transition-colors"
+                      title="Ver detalle"
+                    >
+                      <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
+                        <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M10 6v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                        <circle cx="10" cy="14" r="1" fill="currentColor"/>
+                      </svg>
+                    </button>
+
                     {/* Botón de pincel para cambiar color */}
                     <button
                       onClick={(e) => handleOpenColorPicker(e, asignatura)}

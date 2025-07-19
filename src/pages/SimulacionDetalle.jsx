@@ -10,6 +10,7 @@ import CreditosPanel from '../components/organisms/CreditosPanel'
 import AsignaturasService from '../data/asignaturasService'
 import { getSimulacion, updateSimulacion } from '../data/services/simulaciones'
 import { getPrerequisitosFaltantes, recalcularErroresMatriculas } from '../utils/validarPrerrequisitos'
+import AsignaturaDetalleModal from '../components/atoms/AsignaturaDetalleModal'
 
 function SimulacionDetalle() {
   const { id } = useParams()
@@ -20,6 +21,7 @@ function SimulacionDetalle() {
   const [confirmModal, setConfirmModal] = useState({ show: false, matriculaId: null })
   const [showPrerequisitosModal, setShowPrerequisitosModal] = useState(false)
   const [prerequisitosFaltantes, setPrerrequisitosFaltantes] = useState([])
+  const [asignaturaDetalle, setAsignaturaDetalle] = useState({ open: false, asignatura: null }); 
 
   // Detectar si es desktop o móvil
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
@@ -371,6 +373,7 @@ function SimulacionDetalle() {
                         onMoveAsignatura={moverAsignatura}
                         onReorderAsignaturas={reordenarAsignaturas}
                         onChangeAsignaturaColor={cambiarColorAsignatura}
+                        setAsignaturaDetalle={setAsignaturaDetalle}
                         isActive={matriculaActiva === matricula.id}
                       />
                     </div>
@@ -446,6 +449,12 @@ function SimulacionDetalle() {
         isOpen={showPrerequisitosModal}
         onClose={() => setShowPrerequisitosModal(false)}
         prerequisitosFaltantes={prerequisitosFaltantes}
+      />
+
+      <AsignaturaDetalleModal
+        open={asignaturaDetalle.open}
+        asignatura={asignaturaDetalle.asignatura}
+        onClose={() => setAsignaturaDetalle({ open: false, asignatura: null })}
       />
 
       {/* Botón hamburguesa flotante para móvil */}
