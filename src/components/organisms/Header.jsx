@@ -57,7 +57,10 @@ function Header() {
             </button>}
 
             {/* Botón de cerrar sesión */}
-            <button className="instructive-close-btn" onClick={() => {window.location.href = '/';}}>
+            <button className="instructive-close-btn" onClick={() => {
+              localStorage.removeItem('usuario');
+              window.location.href = '/';
+            }}>
               <span>Cerrar sesión</span>
               <img 
                 src={iconoSesion} 

@@ -28,7 +28,10 @@
             body: JSON.stringify({ emailUser })
           })
             .then(response => response.json())
-            .then(data => {window.location.href = data.redirect});
+            .then(data => {
+              localStorage.setItem('usuario', emailUser);
+              window.location.href = data.redirect
+            });
         } else {
           const loginError = document.querySelector('.login-error');
           loginError.classList.remove('hidden');

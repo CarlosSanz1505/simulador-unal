@@ -1,6 +1,7 @@
 import logo from '../assets/images/logo-unal.png';
 
 function Login() {
+    localStorage.removeItem('usuario');
     return (
         <div className="login">
             <main 
