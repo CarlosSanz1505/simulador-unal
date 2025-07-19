@@ -1,7 +1,12 @@
 const API_URL = 'http://localhost:4000/api/simulaciones';
 
-export async function getSimulaciones() {
-  const res = await fetch(API_URL);
+export async function getSimulaciones(userId) {
+  const res = await fetch(API_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-user-id': userId, 
+    },
+  });
   return res.json();
 }
 

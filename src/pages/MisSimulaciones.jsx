@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import Button from '../components/atoms/Button'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import Modal from '../components/atoms/Modal'
@@ -18,7 +19,8 @@ function MisSimulaciones() {
 
   // Fetch simulaciones
   useEffect(() => {
-    getSimulaciones().then(data => {
+    const userId = localStorage.getItem('usuario');
+    getSimulaciones(userId).then(data => {
       setSimulaciones(data);
       setLoading(false);
     });
@@ -113,9 +115,10 @@ function MisSimulaciones() {
     }
 
     const nuevaSimulacion = {
-      id: Date.now().toString(),
+      id: uuidv4(),
       nombre: nombreFinal,
       fechaCreacion: new Date().toISOString().split('T')[0],
+      usuario: localStorage.getItem('usuario'),
       matriculas: [],
       creditos: {
         fundamentacionObligatoria: 0,
