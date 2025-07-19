@@ -29,7 +29,7 @@
           })
             .then(response => response.json())
             .then(data => {
-              localStorage.setItem('usuario', emailUser);
+              localStorage.setItem('usuario', data.userId);
               window.location.href = data.redirect
             });
         } else {
