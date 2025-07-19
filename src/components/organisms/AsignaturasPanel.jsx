@@ -272,7 +272,6 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
               <option value="1-2">1-2 créditos</option>
               <option value="3-4">3-4 créditos</option>
               <option value="5-6">5-6 créditos</option>
-              <option value="7+">7+ créditos</option>
             </select>
           </div>
         </div>

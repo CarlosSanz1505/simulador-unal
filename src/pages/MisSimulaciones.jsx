@@ -77,11 +77,13 @@ function MisSimulaciones() {
       const file = e.target.files[0]
       if (file) {
         const reader = new FileReader()
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           try {
             const simulacion = JSON.parse(e.target.result)
-            simulacion.id = Date.now().toString()
-            setSimulaciones([...simulaciones, simulacion])
+            simulacion.id = uuidv4(); // Generar nuevo ID
+            simulacion.usuario = localStorage.getItem('usuario'); // Asignar usuario actual
+            const creada = await createSimulacion(simulacion);
+            setSimulaciones([...simulaciones, creada]);
           } catch (error) {
             alert('Error al importar la simulación. Asegúrate de que el archivo sea un JSON válido.')
             console.error('Error al importar simulación:', error)
