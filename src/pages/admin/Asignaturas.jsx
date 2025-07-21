@@ -7,16 +7,18 @@ import "./AsignaturasAdmin.css";
 const API_URL = "http://localhost:4000/api";
 
 export default function AsignaturasAdmin() {
-
   const [asignaturas, setAsignaturas] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [nuevaAsignatura, setNuevaAsignatura] = useState({
     nombre: "",
     codigo: "",
     creditos: "",
-    tipologia: ""
+    tipologia: "",
+    descripcion: ""
   });
-  const [prerrequisitosSeleccionados, setPrerrequisitosSeleccionados] = useState([]);
+  const [prerrequisitosSeleccionados, setPrerrequisitosSeleccionados] = useState(
+    []
+  );
   const [modoEdicion, setModoEdicion] = useState(false);
   const [codigoEnEdicion, setCodigoEnEdicion] = useState(null);
 
@@ -44,7 +46,10 @@ export default function AsignaturasAdmin() {
   useEffect(() => setCurrentPage(1), [searchTerm]);
 
   const handleChange = e =>
-    setNuevaAsignatura({ ...nuevaAsignatura, [e.target.name]: e.target.value });
+    setNuevaAsignatura({
+      ...nuevaAsignatura,
+      [e.target.name]: e.target.value
+    });
 
   const abrirModalForm = (editar = false, asignatura = null) => {
     if (editar && asignatura) {
@@ -52,7 +57,8 @@ export default function AsignaturasAdmin() {
         nombre: asignatura.nombre,
         codigo: asignatura.codigo,
         creditos: asignatura.creditos,
-        tipologia: asignatura.tipologia
+        tipologia: asignatura.tipologia,
+        descripcion: asignatura.descripcion ?? ""
       });
       setPrerrequisitosSeleccionados(
         asignatura.prerrequisitos.map(c => ({ value: c, label: c }))
@@ -63,7 +69,13 @@ export default function AsignaturasAdmin() {
       setPrereqTipologia(asignatura.avanceTipologia ?? "");
       setPrereqPorcentaje(asignatura.avancePorcentaje ?? "");
     } else {
-      setNuevaAsignatura({ nombre: "", codigo: "", creditos: "", tipologia: "" });
+      setNuevaAsignatura({
+        nombre: "",
+        codigo: "",
+        creditos: "",
+        tipologia: "",
+        descripcion: ""
+      });
       setPrerrequisitosSeleccionados([]);
       setModoEdicion(false);
       setCodigoEnEdicion(null);
@@ -86,14 +98,11 @@ export default function AsignaturasAdmin() {
 
     try {
       if (modoEdicion) {
-        const res = await fetch(
-          `${API_URL}/asignaturas/${codigoEnEdicion}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          }
-        );
+        const res = await fetch(`${API_URL}/asignaturas/${codigoEnEdicion}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
         const actualizada = await res.json();
         setAsignaturas(prev =>
           prev.map(a => (a.codigo === actualizada.codigo ? actualizada : a))
@@ -147,6 +156,7 @@ export default function AsignaturasAdmin() {
             codigo: r.codigo,
             creditos: r.creditos,
             tipologia: r.tipologia,
+            descripcion: r.descripcion ?? "",
             prerrequisitos: r.prerrequisitos
               ? r.prerrequisitos.split(",").map(x => x.trim())
               : [],
@@ -198,7 +208,6 @@ export default function AsignaturasAdmin() {
 
   return (
     <div className="awa-container w-[90%] h-[80vh] m-auto">
-
       <div className="awa-header">
         <h1 className="awa-title">Gestión de Asignaturas</h1>
         <div className="awa-actions-header">
@@ -241,9 +250,7 @@ export default function AsignaturasAdmin() {
             <div className="awa-card-tipologia">{a.tipologia}</div>
             <div>{a.creditos} créditos</div>
             <div>
-              {a.prerrequisitos.length
-                ? a.prerrequisitos.join(", ")
-                : "—"}
+              {a.prerrequisitos.length ? a.prerrequisitos.join(", ") : "—"}
             </div>
             <div className="awa-card-actions">
               <button
@@ -268,9 +275,7 @@ export default function AsignaturasAdmin() {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(num => (
             <button
               key={num}
-              className={`awa-page-btn ${
-                currentPage === num ? "active" : ""
-              }`}
+              className={`awa-page-btn ${currentPage === num ? "active" : ""}`}
               onClick={() => setCurrentPage(num)}
             >
               {num}
@@ -334,6 +339,15 @@ export default function AsignaturasAdmin() {
                 value={nuevaAsignatura.creditos}
                 onChange={handleChange}
                 placeholder="Escriba aquí..."
+              />
+
+              <label>Descripción</label>
+              <textarea
+                name="descripcion"
+                className="awa-textarea-desc"
+                placeholder="Escriba la descripción..."
+                value={nuevaAsignatura.descripcion}
+                onChange={handleChange}
               />
 
               <button

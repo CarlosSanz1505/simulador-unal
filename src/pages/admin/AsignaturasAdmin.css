@@ -472,3 +472,28 @@ body {
     background-attachment: scroll; 
   }
 }
+
+.awa-card-description {
+  grid-column: 1 / -1;             
+  font-size: 14px;
+  color: var(--color-gray-dark);
+  margin-top: 8px;
+  word-break: break-word;
+}
+
+.awa-textarea-desc {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--color-gray-mid);
+  border-radius: var(--radius);
+}
+
+@media (max-width: 600px) {
+  .awa-card-description {
+    margin-top: 4px;
+    font-size: 13px;
+  }
+}
