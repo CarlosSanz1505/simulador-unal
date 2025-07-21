@@ -1,11 +1,11 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Footer from './components/organisms/Footer'
 import Header from './components/organisms/Header'
 import InstructiveModal from './components/organisms/InstructiveModal'
-import MisSimulaciones from './pages/MisSimulaciones'
-import SimulacionDetalle from './pages/SimulacionDetalle'
 import AsignaturasAdmin from './pages/admin/Asignaturas'
 import Login from './pages/Login'
+import MisSimulaciones from './pages/MisSimulaciones'
+import SimulacionDetalle from './pages/SimulacionDetalle'
 
 function App() {
   return (

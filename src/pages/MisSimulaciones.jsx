@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
+import { faGraduationCap, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Button from '../components/atoms/Button'
-import ConfirmModal from '../components/atoms/ConfirmModal'
-import Modal from '../components/atoms/Modal'
-import SimulationCard from '../components/molecules/SimulationCard'
-import InstructiveModal from '../components/organisms/InstructiveModal'
-import { faPlus, faUpload, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { createSimulacion, deleteSimulacion, getSimulaciones, updateSimulacion } from '../data/services/simulaciones'
+import Button from '../components/atoms/Button';
+import ConfirmModal from '../components/atoms/ConfirmModal';
+import Modal from '../components/atoms/Modal';
+import SimulationCard from '../components/molecules/SimulationCard';
+import InstructiveModal from '../components/organisms/InstructiveModal';
+import { createSimulacion, deleteSimulacion, getSimulaciones, updateSimulacion } from '../data/services/simulaciones';
 
 function MisSimulaciones() {
   const [simulaciones, setSimulaciones] = useState([]);
@@ -19,9 +19,22 @@ function MisSimulaciones() {
 
   // Fetch simulaciones
   useEffect(() => {
-    const userId = localStorage.getItem('usuario');
-    getSimulaciones(userId).then(data => {
+    let userId = localStorage.getItem('usuario');
+    
+    // Para desarrollo, crear usuario si no existe
+    if (!userId) {
+      userId = 'dev-user-' + Date.now();
+      localStorage.setItem('usuario', userId);
+      console.log('Usuario temporal creado:', userId);
+    }
+
+    console.log('Iniciando carga de simulaciones...');
+    getSimulaciones(userId).then(async (data) => {
+      console.log('Simulaciones obtenidas del servidor:', data);
       setSimulaciones(data);
+      setLoading(false);
+    }).catch(error => {
+      console.error('Error cargando simulaciones:', error);
       setLoading(false);
     });
   }, []);

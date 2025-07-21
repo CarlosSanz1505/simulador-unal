@@ -22,15 +22,21 @@ const CreditosPanel = ({ simulacion }) => {
   }
 
   // Calcular créditos basándose en las asignaturas de todas las matrículas
-  simulacion.matriculas.forEach(matricula => {
-    matricula.asignaturas.forEach(asignatura => {
-      const creditosAsignatura = parseInt(asignatura.creditos) || 0
-      
-      switch (asignatura.tipologia) {
+  if (simulacion && simulacion.matriculas) {
+    simulacion.matriculas.forEach(matricula => {
+      matricula.asignaturas.forEach(asignatura => {
+        const creditosAsignatura = parseInt(asignatura.creditos) || 0
+        
+        // Normalizar tipología para manejo consistente
+        const tipologiaNormalizada = asignatura.tipologia?.toLowerCase().replace(/\s+/g, '_');
+        
+      switch (tipologiaNormalizada) {
         case 'fundamentacion_obligatoria':
+        case 'fundamentación_obligatoria':
           creditos.fundamentacionObligatoria += creditosAsignatura
           break
         case 'fundamentacion_optativa':
+        case 'fundamentación_optativa':
           creditos.fundamentacionOptativa += creditosAsignatura
           break
         case 'disciplinar_obligatoria':
@@ -40,14 +46,18 @@ const CreditosPanel = ({ simulacion }) => {
           creditos.disciplinarOptativa += creditosAsignatura
           break
         case 'libre_eleccion':
+        case 'libre_elección':
           creditos.libreEleccion += creditosAsignatura
           break
         case 'trabajo_de_grado':
           creditos.trabajoGrado += creditosAsignatura
           break
+        default:
+          console.warn('CreditosPanel - Tipología no reconocida:', asignatura.tipologia);
       }
     })
   })
+  }
 
   // Calcular total aplicando límites máximos para cada tipología
   creditos.total = 

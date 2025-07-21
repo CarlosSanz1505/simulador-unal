@@ -2,6 +2,7 @@ import { faDownload, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import AsignaturaDetalleModal from '../components/atoms/AsignaturaDetalleModal'
 import ConfirmModal from '../components/atoms/ConfirmModal'
 import PrerequisitosModal from '../components/atoms/PrerequisitosModal'
 import MatriculaColumn from '../components/molecules/MatriculaColumn'
@@ -10,7 +11,6 @@ import CreditosPanel from '../components/organisms/CreditosPanel'
 import AsignaturasService from '../data/asignaturasService'
 import { getSimulacion, updateSimulacion } from '../data/services/simulaciones'
 import { getPrerequisitosFaltantes, recalcularErroresMatriculas } from '../utils/validarPrerrequisitos'
-import AsignaturaDetalleModal from '../components/atoms/AsignaturaDetalleModal'
 
 function SimulacionDetalle() {
   const { id } = useParams()
@@ -61,6 +61,24 @@ function SimulacionDetalle() {
       // En móvil no abrir automáticamente
     }
   }, [matriculaActiva, isDesktop])
+
+  // Guardar automáticamente los cambios en la simulación
+  useEffect(() => {
+    if (simulacion && simulacion.id && !loading) {
+      const saveSimulation = async () => {
+        try {
+          await updateSimulacion(simulacion.id, simulacion);
+          console.log('Simulación guardada automáticamente');
+        } catch (error) {
+          console.error('Error guardando simulación:', error);
+        }
+      };
+
+      // Debounce para evitar demasiadas llamadas al API
+      const timeoutId = setTimeout(saveSimulation, 1000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [simulacion, loading])
 
   const crearMatricula = () => {
     const nuevaMatricula = {
