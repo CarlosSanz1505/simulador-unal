@@ -1,7 +1,6 @@
 import { faGraduationCap, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import Button from '../components/atoms/Button';
 import ConfirmModal from '../components/atoms/ConfirmModal';
 import Modal from '../components/atoms/Modal';
@@ -93,7 +92,8 @@ function MisSimulaciones() {
         reader.onload = async (e) => {
           try {
             const simulacion = JSON.parse(e.target.result)
-            simulacion.id = uuidv4(); // Generar nuevo ID
+            // Eliminar ID existente para que el backend genere uno nuevo
+            delete simulacion.id;
             simulacion.usuario = localStorage.getItem('usuario'); // Asignar usuario actual
             const creada = await createSimulacion(simulacion);
             setSimulaciones([...simulaciones, creada]);
@@ -130,7 +130,6 @@ function MisSimulaciones() {
     }
 
     const nuevaSimulacion = {
-      id: uuidv4(),
       nombre: nombreFinal,
       fechaCreacion: new Date().toISOString().split('T')[0],
       usuario: localStorage.getItem('usuario'),
