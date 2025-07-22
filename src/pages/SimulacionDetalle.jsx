@@ -81,9 +81,11 @@ function SimulacionDetalle() {
   }, [simulacion, loading])
 
   const crearMatricula = () => {
+    // Obtener la posición máxima actual + 1 para evitar duplicados
+    const posicionMaxima = Math.max(0, ...simulacion.matriculas.map(m => m.posicion));
     const nuevaMatricula = {
       id: `m${Date.now()}`,
-      posicion: simulacion.matriculas.length + 1,
+      posicion: posicionMaxima + 1,
       asignaturas: []
     }
 
@@ -114,9 +116,21 @@ function SimulacionDetalle() {
 
   const confirmarEliminarMatricula = () => {
     const { matriculaId } = confirmModal
+    
+    // Filtrar la matrícula a eliminar
+    const matriculasRestantes = simulacion.matriculas.filter(m => m.id !== matriculaId);
+    
+    // Recalcular posiciones para mantener secuencia consecutiva (1, 2, 3, ...)
+    const matriculasConPosicionesCorregidas = matriculasRestantes
+      .sort((a, b) => a.posicion - b.posicion) // Ordenar por posición actual
+      .map((matricula, index) => ({
+        ...matricula,
+        posicion: index + 1 // Nueva posición consecutiva
+      }));
+    
     setSimulacion({
       ...simulacion,
-      matriculas: simulacion.matriculas.filter(m => m.id !== matriculaId)
+      matriculas: matriculasConPosicionesCorregidas
     })
     if (matriculaActiva === matriculaId) {
       setMatriculaActiva(null)

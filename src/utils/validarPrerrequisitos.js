@@ -14,7 +14,14 @@ export function getPrerequisitosFaltantes(asignatura, asignaturasAprobadas) {
 
 export function recalcularErroresMatriculas(matriculas) {
   let aprobadasHasta = [];
-  return matriculas.map(matricula => {
+  
+  // IMPORTANTE: Ordenar matrículas por posición antes de procesar para validar prerrequisitos correctamente
+  const matriculasOrdenadas = [...matriculas].sort((a, b) => a.posicion - b.posicion);
+  
+  // Crear un mapa para guardar las validaciones procesadas
+  const matriculasValidadas = {};
+  
+  matriculasOrdenadas.forEach(matricula => {
     // CORREGIDO: Primero validar cada asignatura con solo las matrículas ANTERIORES
     const matriculaConErrores = {
       ...matricula,
@@ -34,12 +41,16 @@ export function recalcularErroresMatriculas(matriculas) {
       })
     };
     
+    // Guardar la matrícula validada usando su id como clave
+    matriculasValidadas[matricula.id] = matriculaConErrores;
+    
     // DESPUÉS de validar, agregar las asignaturas de esta matrícula a las aprobadas
     aprobadasHasta = [
       ...aprobadasHasta,
       ...matricula.asignaturas.map(a => a.codigo)
     ];
-    
-    return matriculaConErrores;
   });
+  
+  // Devolver las matrículas en el ORDEN ORIGINAL, pero con las validaciones aplicadas
+  return matriculas.map(matricula => matriculasValidadas[matricula.id]);
 }

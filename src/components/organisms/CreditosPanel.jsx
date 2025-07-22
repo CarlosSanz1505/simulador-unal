@@ -150,26 +150,17 @@ const CreditosPanel = ({ simulacion }) => {
         />
         {/* Mensaje especial de graduación */}
         {creditos.total >= 160 && (
-          <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="mt-4 pt-4 border-t border-gray-200">
             <div className="text-center">
-              <div className="bg-gradient-to-br from-yellow-50 via-green-50 to-blue-50 border-2 border-yellow-300 rounded-xl p-6 shadow-lg">
-                <div className="text-4xl mb-4 font-bold text-green-600">
-                  ¡GRADUADO!
-                </div>
-                <h2 className="text-2xl font-bold text-green-800 mb-3">
+              <div className="bg-gradient-to-br from-yellow-50 via-green-50 to-blue-50 border-2 border-yellow-300 rounded-xl p-3 shadow-lg">
+                <div className="text-xs text-unal-green-500 font-medium text-center mb-1 flex items-center justify-center gap-1">
                   ¡Felicitaciones, te graduaste!
-                </h2>
-                <p className="text-lg text-gray-700 mb-2 leading-relaxed">
+                </div>
+                <p className="text-xs text-gray-700 leading-relaxed">
                   Has completado exitosamente todos los créditos académicos de la
                   <span className="font-semibold text-green-700"> Universidad Nacional de Colombia</span>,
-                  la mejor universidad del país
+                  la mejor universidad del país.
                 </p>
-                <p className="text-base text-gray-600 font-medium">
-                  ¡Muchos éxitos en tu vida profesional y laboral!
-                </p>
-                <div className="mt-4 text-xl font-semibold text-green-700">
-                  ¡Éxito en tu futuro profesional!
-                </div>
               </div>
             </div>
           </div>

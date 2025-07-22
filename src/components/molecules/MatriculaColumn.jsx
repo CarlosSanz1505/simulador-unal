@@ -141,7 +141,10 @@ function MatriculaColumn({
   }
 
   const calcularCreditos = () => {
-    return matricula.asignaturas.reduce((total, asignatura) => total + asignatura.creditos, 0)
+    return matricula.asignaturas.reduce((total, asignatura) => {
+      const creditosAsignatura = parseInt(asignatura.creditos) || 0;
+      return total + creditosAsignatura;
+    }, 0);
   }
 
   // Funciones para drag and drop de asignaturas individuales
@@ -312,7 +315,7 @@ function MatriculaColumn({
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-gray-600 font-mono">{asignatura.codigo}</span>
                   <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
-                    {asignatura.creditos} Créditos
+                    {parseInt(asignatura.creditos) || 0} Créditos
                   </span>
                 </div>
                 {asignatura.error && asignatura.faltantes && (
