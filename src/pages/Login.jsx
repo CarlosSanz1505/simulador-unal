@@ -1,7 +1,10 @@
 import logo from '../assets/images/logo-unal.png';
 
 function Login() {
+    // Borrar credenciales
     localStorage.removeItem('usuario');
+    localStorage.removeItem('rol');
+    
     return (
         <div className="login">
             <main 
