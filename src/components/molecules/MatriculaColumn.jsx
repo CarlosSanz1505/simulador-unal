@@ -48,6 +48,7 @@ function MatriculaColumn({
   onReorderAsignaturas, // Nueva prop para reordenar asignaturas dentro de la matrícula
   onChangeAsignaturaColor, // Nueva prop para cambiar el color de una asignatura
   setAsignaturaDetalle,
+  setShowPanel,
   isActive = false 
 }) {
   const [isDragOver, setIsDragOver] = useState(false)
@@ -236,7 +237,10 @@ function MatriculaColumn({
         onDragLeave={handleDragLeave}
       >
         {matricula.asignaturas.length === 0 ? (
-          <div className={`flex flex-col md:w-[220px] items-center justify-center h-full text-gray-400 text-sm`}>
+          <div
+            className={`flex flex-col md:w-[220px] items-center justify-center h-full text-gray-400 text-sm`}
+            onClick={() => setShowPanel(true)}
+          >
               <div className="text-2xl mb-2">+</div>
               <div className="hidden md:block">Arrastra asignaturas aquí</div>
               <div className="block md:hidden">Clic aquí para agregar asignaturas</div>

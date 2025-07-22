@@ -393,6 +393,7 @@ function SimulacionDetalle() {
                         onReorderAsignaturas={reordenarAsignaturas}
                         onChangeAsignaturaColor={cambiarColorAsignatura}
                         setAsignaturaDetalle={setAsignaturaDetalle}
+                        setShowPanel={setShowPanel}
                         isActive={matriculaActiva === matricula.id}
                       />
                     </div>
