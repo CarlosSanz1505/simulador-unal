@@ -312,9 +312,7 @@ function SimulacionDetalle() {
   }
 
   return (
-    <div
-      className="m-auto h-[calc(100vh-45px)]"
-    >
+    <div className="m-auto min-h-100vh">
       {loading ? (
         <div className="flex justify-center items-center h-[60vh]">
           <svg className="animate-spin h-10 w-10 text-unal-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
