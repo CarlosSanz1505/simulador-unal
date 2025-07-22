@@ -21,7 +21,7 @@ function SimulacionDetalle() {
   const [confirmModal, setConfirmModal] = useState({ show: false, matriculaId: null })
   const [showPrerequisitosModal, setShowPrerequisitosModal] = useState(false)
   const [prerequisitosFaltantes, setPrerrequisitosFaltantes] = useState([])
-  const [asignaturaDetalle, setAsignaturaDetalle] = useState({ open: false, asignatura: null }); 
+  const [asignaturaDetalle, setAsignaturaDetalle] = useState({ open: false, asignatura: null });
 
   // Detectar si es desktop o móvil
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
@@ -365,14 +365,15 @@ function SimulacionDetalle() {
 
               {/* Panel de créditos */}
               <CreditosPanel simulacion={simulacion} />
+              <hr className="my-6 border-t border-gray-200" />
 
-              {/* Grid de matrículas */}
-              <div className="px-6 py-4">
+              { /* Grid de matrículas */}
+              <div className="py-4 px-6">
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold">Matrículas</h3>
                 </div>
 
-                <div className="border-[2px] border-solid border-gray flex gap-[20px] p-[20px] overflow-x-auto">
+                <div className="flex flex-col md:flex-row gap-[20px] p-0 md:p-[20px] overflow-x-auto border-0 md:border-[2px] md:border-solid md:border-gray">
                   {simulacion.matriculas.map((matricula) => (
                     <div
                       key={matricula.id}
