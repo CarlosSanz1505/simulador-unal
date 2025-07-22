@@ -329,7 +329,6 @@ function SimulacionDetalle() {
                       rounded-lg shadow-lg overflow-hidden
                       ${isDesktop && showPanel ? 'lg:mr-[384px]' : ''}`}
             >
-
               {/* Header de la simulación */}
               <div className="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
                 <Link to="/simulaciones" className="btn btn-secondary text-sm hidden sm:inline">
@@ -362,9 +361,6 @@ function SimulacionDetalle() {
                 </div>
               </div>
 
-              {/* Panel de créditos */}
-              <CreditosPanel simulacion={simulacion} />
-              <hr className="my-6 border-t border-gray-200" />
 
               { /* Grid de matrículas */}
               <div className="py-4 px-6">
@@ -417,6 +413,10 @@ function SimulacionDetalle() {
                     </div>
                   </div>
                 </div>
+
+                <hr className="my-6 border-t border-gray-200" />
+                {/* Panel de créditos */}
+                <CreditosPanel simulacion={simulacion} />
               </div>
             </div>
           </main>
