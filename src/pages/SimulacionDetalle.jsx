@@ -21,7 +21,7 @@ function SimulacionDetalle() {
   const [confirmModal, setConfirmModal] = useState({ show: false, matriculaId: null })
   const [showPrerequisitosModal, setShowPrerequisitosModal] = useState(false)
   const [prerequisitosFaltantes, setPrerrequisitosFaltantes] = useState([])
-  const [asignaturaDetalle, setAsignaturaDetalle] = useState({ open: false, asignatura: null }); 
+  const [asignaturaDetalle, setAsignaturaDetalle] = useState({ open: false, asignatura: null });
 
   // Detectar si es desktop o móvil
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
@@ -132,9 +132,9 @@ function SimulacionDetalle() {
       const matriculaDestino = simulacion.matriculas.find(m => m.id === matriculaId);
 
       if (matriculaDestino) {
-        // Obtener asignaturas aprobadas hasta la matrícula anterior
+        // Obtener asignaturas aprobadas hasta las matrículas ANTERIORES (no incluye la actual)
         const asignaturasAprobadas = simulacion.matriculas
-          .filter(m => m.posicion <= matriculaDestino.posicion)
+          .filter(m => m.posicion < matriculaDestino.posicion)
           .flatMap(m => m.asignaturas.map(a => a.codigo));
 
         // Verificar prerrequisitos faltantes
@@ -227,14 +227,10 @@ function SimulacionDetalle() {
     const matriculaDestino = simulacion.matriculas.find(m => m.id === targetMatriculaId);
 
     if (matriculaDestino) {
-      // Obtener asignaturas aprobadas hasta la matrícula destino (excluyendo la que se mueve)
+      // Obtener asignaturas aprobadas hasta las matrículas ANTERIORES (excluyendo la matrícula destino)
       const asignaturasAprobadas = simulacion.matriculas
-        .filter(m => m.posicion <= matriculaDestino.posicion)
-        .flatMap(m =>
-          m.asignaturas
-            .filter(a => !(a.codigo === asignatura.codigo && m.id === sourceMatriculaId))
-            .map(a => a.codigo)
-        );
+        .filter(m => m.posicion < matriculaDestino.posicion)
+        .flatMap(m => m.asignaturas.map(a => a.codigo));
 
       const faltantes = getPrerequisitosFaltantes(asignatura, asignaturasAprobadas);
       if (faltantes.length > 0) {
@@ -316,7 +312,9 @@ function SimulacionDetalle() {
   }
 
   return (
-    <div className="min-h-screen m-auto">
+    <div
+      className="m-auto h-[calc(100vh-45px)]"
+    >
       {loading ? (
         <div className="flex justify-center items-center h-[60vh]">
           <svg className="animate-spin h-10 w-10 text-unal-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -331,7 +329,6 @@ function SimulacionDetalle() {
             <div
               className={`w-[96vw] md:w-[94vw] lg:w-[92vw] max-w-7xl mx-auto bg-white
                       rounded-lg shadow-lg overflow-hidden
-                      px-4 sm:px-6 lg:px-8
                       ${isDesktop && showPanel ? 'lg:mr-[384px]' : ''}`}
             >
 
@@ -369,14 +366,15 @@ function SimulacionDetalle() {
 
               {/* Panel de créditos */}
               <CreditosPanel simulacion={simulacion} />
+              <hr className="my-6 border-t border-gray-200" />
 
-              {/* Grid de matrículas */}
-              <div className="px-6 py-4">
+              { /* Grid de matrículas */}
+              <div className="py-4 px-6">
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold">Matrículas</h3>
                 </div>
 
-                <div className="border-[2px] border-solid border-gray flex gap-[20px] p-[20px] overflow-x-auto">
+                <div className="flex flex-col md:flex-row gap-[20px] p-0 md:p-[20px] overflow-x-auto border-0 md:border-[2px] md:border-solid md:border-gray">
                   {simulacion.matriculas.map((matricula) => (
                     <div
                       key={matricula.id}
@@ -392,6 +390,7 @@ function SimulacionDetalle() {
                         onReorderAsignaturas={reordenarAsignaturas}
                         onChangeAsignaturaColor={cambiarColorAsignatura}
                         setAsignaturaDetalle={setAsignaturaDetalle}
+                        setShowPanel={setShowPanel}
                         isActive={matriculaActiva === matricula.id}
                       />
                     </div>

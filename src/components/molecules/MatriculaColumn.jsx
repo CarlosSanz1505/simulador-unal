@@ -48,6 +48,7 @@ function MatriculaColumn({
   onReorderAsignaturas, // Nueva prop para reordenar asignaturas dentro de la matrícula
   onChangeAsignaturaColor, // Nueva prop para cambiar el color de una asignatura
   setAsignaturaDetalle,
+  setShowPanel,
   isActive = false 
 }) {
   const [isDragOver, setIsDragOver] = useState(false)
@@ -236,11 +237,13 @@ function MatriculaColumn({
         onDragLeave={handleDragLeave}
       >
         {matricula.asignaturas.length === 0 ? (
-          <div className={`flex w-[220px] items-center justify-center h-full text-gray-400 text-sm`}>
-            <div className="text-center">
+          <div
+            className={`flex flex-col md:w-[220px] items-center justify-center h-full text-gray-400 text-sm`}
+            onClick={() => setShowPanel(true)}
+          >
               <div className="text-2xl mb-2">+</div>
-              <div>Arrastra asignaturas aquí</div>
-            </div>
+              <div className="hidden md:block">Arrastra asignaturas aquí</div>
+              <div className="block md:hidden">Clic aquí para agregar asignaturas</div>
           </div>
         ) : (
           <div className="space-y-2">
@@ -252,7 +255,7 @@ function MatriculaColumn({
                 onDragEnd={handleAsignaturaDragEnd}
                 onDragOver={(e) => handleAsignaturaDragOver(e, index)}
                 onDrop={(e) => handleAsignaturaDropOnItem(e, index)}
-                className={`w-[220px] bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
+                className={`md:w-[220px] bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition-all cursor-move
                   ${asignatura.error ? 'border-red-500 border-4' : 'border-gray-200'}
                   ${draggedAsignatura === asignatura.codigo ? 'asignatura-dragging' : ''}`}
                 style={getAsignaturaStyle(asignatura.tipologia, asignatura.customColor)}
