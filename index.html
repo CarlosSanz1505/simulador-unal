@@ -15,23 +15,53 @@
     <script src="https://accounts.google.com/gsi/client" async></script>
 
     <!-- Renderizado de botón de Login de Google -->
-    <script>
+    <script type="module">
+      import { createSimulacion } from './src/data/services/simulaciones';
+
       // Procesar credenciales recibidas y redirigir a vista simulaciones si son válidas
       function handleCredentialResponse(response) {
         const responsePayload = decodeJwtResponse(response.credential);
         const [emailUser, emailDomain] = responsePayload.email.split('@');
 
         if (emailDomain === 'unal.edu.co') {
+          let userCreated;
           fetch('http://localhost:4000/api/auth', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ emailUser })
           })
-            .then(response => response.json())
+            .then(response => {
+              userCreated = response.status === 201;
+              return response.json();
+            })
             .then(data => {
-              localStorage.setItem('usuario', data.userId);
+              const userId = data.userId;
+
+              // Mantener credenciales del usuario
+              localStorage.setItem('usuario', userId);
               localStorage.setItem('rol', data.userRole);
-              window.location.href = data.redirect
+
+              // Crear simulación vacía para usuario nuevo
+              if (userCreated) {
+                const nuevaSimulacion = {
+                  nombre: 'Simulación 1',
+                  fechaCreacion: new Date().toISOString().split('T')[0],
+                  usuario: userId,
+                  matriculas: [],
+                  creditos: {
+                    fundamentacionObligatoria: 0,
+                    fundamentacionOptativa: 0,
+                    disciplinarObligatoria: 0,
+                    disciplinarOptativa: 0,
+                    libreEleccion: 0,
+                    total: 0
+                  }
+                }
+
+                createSimulacion(nuevaSimulacion);
+              }
+              
+              window.location.href = data.redirect;
             });
         } else {
           const loginError = document.querySelector('.login-error');
