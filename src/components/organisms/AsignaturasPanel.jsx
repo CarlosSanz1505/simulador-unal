@@ -5,6 +5,12 @@ import iconoCancelar from '../../assets/iconos/cancelar.svg'
 import { getAsignaturas } from '../../data/services/asignaturas'
 import PrerequisitosModal from '../atoms/PrerequisitosModal'
 
+const normalizeText = str =>
+  str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
 function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todasLasAsignaturas = [], showPanel = true, setShowPanel, isDesktop = false, simulacion }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchBy, setSearchBy] = useState('nombre')
@@ -43,15 +49,15 @@ function AsignaturasPanel({ onSelectAsignaturas, onClose, matriculaActiva, todas
     // Filtrar por término de búsqueda
     if (searchTerm) {
       result = result.filter(asignatura => {
-        const searchValue = searchTerm.toLowerCase().trim()
+        const searchValue = normalizeText(searchTerm.trim())
         
         switch (searchBy) {
           case 'nombre':
-            return asignatura.nombre.toLowerCase().includes(searchValue)
+            return normalizeText(asignatura.nombre).includes(searchValue)
           case 'codigo':
-            return asignatura.codigo.toLowerCase().includes(searchValue)
+            return normalizeText(asignatura.codigo).includes(searchValue)
           case 'tipologia':
-            return asignatura.tipologia.toLowerCase().includes(searchValue)
+            return normalizeText(asignatura.tipologia).includes(searchValue)
           default:
             return true
         }
