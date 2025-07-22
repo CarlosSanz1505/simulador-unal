@@ -497,3 +497,82 @@ body {
     font-size: 13px;
   }
 }
+
+.awa-modal-box h2 {
+  font-size: 20px;               
+  font-weight: 600;              
+  color: var(--color-primary);   
+  text-align: center;            
+  margin-bottom: 16px;           
+  position: relative;            
+  letter-spacing: 0.3px;         
+}
+
+.awa-modal-box h2::after {
+  content: "";
+  display: block;
+  width: 48px;                  
+  height: 3px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  margin: 8px auto 0;            
+}
+
+.awa-list-header {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1fr 2fr 0.8fr;  
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--color-gray-lighter);
+  color: var(--color-gray-dark);
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.awa-list-header.sticky {
+  position: sticky;
+  top: 0;                 
+  z-index: 2;             
+}
+
+@media (max-width: 600px) {
+  .awa-list-header {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .awa-card-prereq::before {
+    content: "Prerrequisitos: ";
+    font-weight: 600;
+    color: var(--color-gray-dark);
+  }
+}
+
+@media (max-width: 991px) and (min-width: 601px) {
+  .awa-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  .awa-list-header,
+  .awa-card {
+    grid-template-columns: 2fr 1.2fr 0.9fr 1.8fr 0.8fr; 
+    gap: 8px;
+    font-size: 13px;               
+  }
+
+  .awa-card-tipologia {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .awa-card-actions button {
+    width: 28px;
+    height: 28px;
+  }
+}

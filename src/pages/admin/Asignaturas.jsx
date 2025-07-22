@@ -4,6 +4,12 @@ import Papa from "papaparse";
 import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
 import "./AsignaturasAdmin.css";
 
+const normalizeText = str =>
+  str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
 const API_URL = "http://localhost:4000/api";
 
 export default function AsignaturasAdmin() {
@@ -180,11 +186,13 @@ export default function AsignaturasAdmin() {
     });
   };
 
-  const filteredAsignaturas = asignaturas.filter(
-    a =>
-      a.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      a.codigo.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredAsignaturas = asignaturas.filter(a => {
+    const term = normalizeText(searchTerm);
+    return (
+      normalizeText(a.nombre).includes(term) ||
+      normalizeText(a.codigo).includes(term)
+    );
+  });
 
   useEffect(() => {
     const total = Math.max(
@@ -238,7 +246,13 @@ export default function AsignaturasAdmin() {
           onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
-
+      <div className="awa-list-header">
+        <div>Asignatura</div>
+        <div>Tipología</div>
+        <div>Créditos</div>
+        <div>Prerrequisitos</div>
+        <div>Acciones</div>
+      </div>
       <div className="awa-list pt-0 pl-0 pr-[4px] pb-[4px]">
         {currentItems.map(a => (
           <div key={a.codigo} className="awa-card">
@@ -249,7 +263,7 @@ export default function AsignaturasAdmin() {
             </div>
             <div className="awa-card-tipologia">{a.tipologia}</div>
             <div>{a.creditos} créditos</div>
-            <div>
+            <div className="awa-card-prereq">
               {a.prerrequisitos.length ? a.prerrequisitos.join(", ") : "—"}
             </div>
             <div className="awa-card-actions">
