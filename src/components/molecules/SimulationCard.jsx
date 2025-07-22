@@ -181,13 +181,6 @@ function SimulationCard({ simulacion, onDelete, onEdit }) {
             </h3>
             <div className="flex gap-1">
               <button 
-                onClick={handleEdit}
-                className="bg-transparent border-none text-unal-green-500 p-2 hover:bg-gray-100 rounded"
-                title="Editar nombre"
-              >
-                <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
-              </button>
-              <button 
                 onClick={handleExport}
                 className="bg-transparent border-none text-unal-green-500 p-2 hover:bg-gray-100 rounded"
                 title="Exportar simulación"
