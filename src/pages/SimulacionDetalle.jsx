@@ -132,9 +132,9 @@ function SimulacionDetalle() {
       const matriculaDestino = simulacion.matriculas.find(m => m.id === matriculaId);
 
       if (matriculaDestino) {
-        // Obtener asignaturas aprobadas hasta la matrícula anterior
+        // Obtener asignaturas aprobadas hasta las matrículas ANTERIORES (no incluye la actual)
         const asignaturasAprobadas = simulacion.matriculas
-          .filter(m => m.posicion <= matriculaDestino.posicion)
+          .filter(m => m.posicion < matriculaDestino.posicion)
           .flatMap(m => m.asignaturas.map(a => a.codigo));
 
         // Verificar prerrequisitos faltantes
@@ -227,14 +227,10 @@ function SimulacionDetalle() {
     const matriculaDestino = simulacion.matriculas.find(m => m.id === targetMatriculaId);
 
     if (matriculaDestino) {
-      // Obtener asignaturas aprobadas hasta la matrícula destino (excluyendo la que se mueve)
+      // Obtener asignaturas aprobadas hasta las matrículas ANTERIORES (excluyendo la matrícula destino)
       const asignaturasAprobadas = simulacion.matriculas
-        .filter(m => m.posicion <= matriculaDestino.posicion)
-        .flatMap(m =>
-          m.asignaturas
-            .filter(a => !(a.codigo === asignatura.codigo && m.id === sourceMatriculaId))
-            .map(a => a.codigo)
-        );
+        .filter(m => m.posicion < matriculaDestino.posicion)
+        .flatMap(m => m.asignaturas.map(a => a.codigo));
 
       const faltantes = getPrerequisitosFaltantes(asignatura, asignaturasAprobadas);
       if (faltantes.length > 0) {

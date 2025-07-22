@@ -1,4 +1,4 @@
-import AsignaturasService from '../data/asignaturasService'
+import AsignaturasService from '../data/asignaturasService';
 
 export function getPrerequisitosFaltantes(asignatura, asignaturasAprobadas) {
   if (!asignatura.prerrequisitos || asignatura.prerrequisitos.length === 0) return [];
@@ -15,11 +15,8 @@ export function getPrerequisitosFaltantes(asignatura, asignaturasAprobadas) {
 export function recalcularErroresMatriculas(matriculas) {
   let aprobadasHasta = [];
   return matriculas.map(matricula => {
-    aprobadasHasta = [
-      ...aprobadasHasta,
-      ...matricula.asignaturas.map(a => a.codigo)
-    ];
-    return {
+    // CORREGIDO: Primero validar cada asignatura con solo las matrículas ANTERIORES
+    const matriculaConErrores = {
       ...matricula,
       asignaturas: matricula.asignaturas.map(asig => {
         const faltantes = getPrerequisitosFaltantes(asig, aprobadasHasta);
@@ -35,6 +32,14 @@ export function recalcularErroresMatriculas(matriculas) {
         }
         return asig;
       })
-    }
+    };
+    
+    // DESPUÉS de validar, agregar las asignaturas de esta matrícula a las aprobadas
+    aprobadasHasta = [
+      ...aprobadasHasta,
+      ...matricula.asignaturas.map(a => a.codigo)
+    ];
+    
+    return matriculaConErrores;
   });
 }
