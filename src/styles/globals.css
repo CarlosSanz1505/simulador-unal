@@ -61,6 +61,7 @@
   /* Footer Global */
   .global-footer {
     background: white;
+    height: 45px;
     padding: 10px 40px;
     border-top: 1px solid #e5e7eb;
     text-align: center;
@@ -208,7 +209,7 @@
   /* Credits */
   .credit-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 16px;
     margin-bottom: 24px;
   }

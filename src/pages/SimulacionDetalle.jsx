@@ -312,7 +312,9 @@ function SimulacionDetalle() {
   }
 
   return (
-    <div className="min-h-screen m-auto">
+    <div
+      className="m-auto h-[calc(100vh-45px)]"
+    >
       {loading ? (
         <div className="flex justify-center items-center h-[60vh]">
           <svg className="animate-spin h-10 w-10 text-unal-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -327,7 +329,6 @@ function SimulacionDetalle() {
             <div
               className={`w-[96vw] md:w-[94vw] lg:w-[92vw] max-w-7xl mx-auto bg-white
                       rounded-lg shadow-lg overflow-hidden
-                      px-4 sm:px-6 lg:px-8
                       ${isDesktop && showPanel ? 'lg:mr-[384px]' : ''}`}
             >
 
