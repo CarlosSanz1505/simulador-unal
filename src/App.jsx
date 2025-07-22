@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/organisms/Footer'
 import Header from './components/organisms/Header'
 import InstructiveModal from './components/organisms/InstructiveModal'
@@ -9,9 +9,11 @@ import MisSimulaciones from './pages/MisSimulaciones'
 import SimulacionDetalle from './pages/SimulacionDetalle'
 
 function App() {
+  const location = useLocation();
+
   return (
     <>
-      {(window.location.href !== 'http://localhost:5173/') ? <Header /> : null}
+      {(location.pathname !== '/') ? <Header /> : null}
       <div className="app-container pt-[54px] w-full pb-[43.2px] min-h-screen flex">
         <Routes>
           <Route path="/" element={<Login />} />
@@ -25,7 +27,11 @@ function App() {
               <MisSimulaciones />
             </ProtectedRoute>
           } />
-          <Route path="/simulaciones/:id" element={<SimulacionDetalle />} />
+          <Route path="/simulaciones/:id" element={
+            <ProtectedRoute role="estudiante">
+              <SimulacionDetalle />
+            </ProtectedRoute>
+          } />
         </Routes>
       </div>
       <Footer />
