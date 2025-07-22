@@ -30,6 +30,7 @@
             .then(response => response.json())
             .then(data => {
               localStorage.setItem('usuario', data.userId);
+              localStorage.setItem('rol', data.userRole);
               window.location.href = data.redirect
             });
         } else {
